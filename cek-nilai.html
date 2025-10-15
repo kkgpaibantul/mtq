@@ -168,6 +168,12 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.1);
             margin-bottom: 20px;
             border: 1px solid rgba(212, 160, 23, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
 
         .card-title {
@@ -238,6 +244,11 @@
             background: #e8b731;
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(212, 160, 23, 0.3);
+        }
+
+        .btn:focus {
+            outline: 2px solid var(--gold);
+            outline-offset: 2px;
         }
 
         .btn:active {
@@ -617,9 +628,38 @@
             margin-bottom: 4px;
         }
 
+        .team-member-details {
+            display: flex;
+            gap: 10px;
+            font-size: 0.8em;
+            margin-top: 4px;
+        }
+
+        .team-member-gender {
+            background: var(--primary-green);
+            color: var(--light-gold);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75em;
+        }
+
         .team-member-school {
-            font-size: 0.85em;
             color: var(--secondary-green);
+            font-weight: 500;
+        }
+
+        .team-member-number {
+            background: var(--primary-green);
+            color: var(--light-gold);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-right: 8px;
         }
 
         @keyframes medalGlow {
@@ -640,6 +680,22 @@
         .medal-glow {
             animation: medalGlow 2s ease-in-out infinite;
             display: inline-block;
+        }
+
+        .loading-text {
+            color: var(--secondary-green);
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .error-state {
+            background: #fef2f2;
+            color: var(--error);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid var(--error);
         }
 
         /* Responsive */
@@ -694,6 +750,21 @@
             .tidak-lolos-badge {
                 font-size: 0.75em;
                 padding: 4px 8px;
+            }
+            
+            .team-member-details {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .team-member {
+                padding: 12px 10px;
+            }
+            
+            .scores-table {
+                font-size: 0.75em;
             }
         }
     </style>
@@ -781,14 +852,6 @@
                         
                         <div class="table-container">
                             <table class="scores-table" id="scores-table">
-                                <thead>
-                                    <tr class="header-row">
-                                        <th>Aspek Penilaian</th>
-                                        <th>Juri 1</th>
-                                        <th>Juri 2</th>
-                                        <th>Juri 3</th>
-                                    </tr>
-                                </thead>
                                 <tbody id="scores-body">
                                     <!-- Data nilai akan dimuat di sini -->
                                 </tbody>
@@ -903,7 +966,6 @@
 
             async searchParticipant() {
                 const participantId = document.getElementById('participant-id').value.trim();
-                console.log('🔍 Searching for:', participantId);
                 
                 if (!participantId) {
                     this.showError('Harap masukkan nomor peserta');
@@ -920,24 +982,24 @@
                 this.hideError();
 
                 try {
-                    console.log('📡 Fetching data from GAS...');
-                    const data = await this.fetchParticipantData(participantId);
-                    console.log('📦 Response received:', data);
+                    console.log('🔍 Searching for:', participantId);
+                    const data = await this.fetchWithTimeout(participantId, 10000);
+                    
+                    if (!data) {
+                        throw new Error('Tidak ada response dari server');
+                    }
                     
                     if (data && data.success) {
-                        console.log('✅ Data found, displaying...');
                         this.displayParticipantData(data);
                         this.showDashboard();
                     } else if (data && data.error) {
-                        console.log('❌ Error in response:', data.error);
                         this.showError(data.error);
                     } else {
-                        console.log('❌ Unexpected response format');
-                        this.showError('Format response tidak dikenali');
+                        this.showError('Format data tidak dikenali');
                     }
                 } catch (error) {
                     console.error('💥 Fetch error:', error);
-                    this.showError('Gagal mengambil data. Silakan coba lagi atau refresh halaman.');
+                    this.showError(this.getErrorMessage(error));
                 } finally {
                     this.hideLoader();
                 }
@@ -948,31 +1010,31 @@
                 return pattern.test(participantId);
             }
 
-            async fetchParticipantData(participantId) {
-                const url = `${this.WEB_APP_URL}?id=${encodeURIComponent(participantId)}`;
-                console.log('🌐 Request URL:', url);
+            async fetchWithTimeout(participantId, timeout) {
+                const controller = new AbortController();
+                const id = setTimeout(() => controller.abort(), timeout);
                 
                 try {
-                    const response = await fetch(url);
+                    const url = `${this.WEB_APP_URL}?id=${encodeURIComponent(participantId)}`;
+                    const response = await fetch(url, { signal: controller.signal });
+                    
+                    clearTimeout(id);
                     
                     if (!response.ok) {
-                        throw new Error(`HTTP error: ${response.status}`);
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                     }
                     
-                    const data = await response.json();
-                    return data;
+                    return await response.json();
                 } catch (error) {
-                    console.log('🔄 Trying JSONP fallback...');
+                    clearTimeout(id);
                     return await this.fetchWithJsonp(participantId);
                 }
             }
 
-            fetchWithJsonp(participantId) {
+            async fetchWithJsonp(participantId) {
                 return new Promise((resolve, reject) => {
                     const callbackName = 'jsonp_callback_' + Date.now();
                     const url = `${this.WEB_APP_URL}?id=${encodeURIComponent(participantId)}&callback=${callbackName}`;
-                    
-                    console.log('🎯 JSONP URL:', url);
                     
                     window[callbackName] = function(data) {
                         console.log('📨 JSONP response received:', data);
@@ -1011,18 +1073,111 @@
                 });
             }
 
+            getErrorMessage(error) {
+                if (error.name === 'AbortError') {
+                    return 'Request timeout. Silakan coba lagi.';
+                } else if (error.message.includes('HTTP')) {
+                    return 'Gagal terhubung ke server. Cek koneksi internet.';
+                } else {
+                    return 'Gagal mengambil data. Silakan refresh halaman dan coba lagi.';
+                }
+            }
+
             displayParticipantData(data) {
+                if (!data || !data.participant) {
+                    this.showError('Data peserta tidak lengkap');
+                    return;
+                }
+
                 const participant = data.participant;
-                const scores = data.scores;
+                const scores = data.scores || [];
+                const teamMembers = data.teamMembers || [];
                 
-                console.log('🎨 Displaying participant data:', participant);
-                
+                console.log('🔍 [DEBUG] Data dari GAS:', { participant, scores, teamMembers });
+
                 const cabangKode = this.getCabangKode(participant['No Peserta']);
                 const template = this.scoringTemplates[cabangKode];
                 
+                this.displayParticipantInfo(participant, template, teamMembers);
+                this.displayScoresTable(scores, participant, cabangKode);
+            }
+
+            displayParticipantInfo(participant, template, teamMembers) {
                 const infoContainer = document.getElementById('participant-info');
                 
-                const displayFields = [
+                if (template && template.isTeam) {
+                    infoContainer.innerHTML = this.renderTeamInfo(participant, teamMembers);
+                } else {
+                    infoContainer.innerHTML = this.renderIndividualInfo(participant);
+                }
+            }
+
+            renderTeamInfo(participant, teamMembers) {
+                const kapanewon = participant['Kapanewon'] || 'Kapanewon';
+                
+                return `
+                    <div class="info-item">
+                        <div class="info-label">Nomor Peserta</div>
+                        <div class="info-value">${this.escapeHtml(participant['No Peserta'])}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Kapanewon</div>
+                        <div class="info-value">
+                            ${this.escapeHtml(kapanewon)}
+                            <span class="kapanewon-badge">1 dari 17 Kapanewon</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Cabang Lomba</div>
+                        <div class="info-value">${this.escapeHtml(participant['Cabang Lomba'] || 'Lomba Cerdas Cermat PAI')}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Jenis Peserta</div>
+                        <div class="info-value">
+                            <span class="team-indicator">Tim ${this.escapeHtml(kapanewon)}</span>
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    ${this.renderTeamMembers(kapanewon, teamMembers)}
+                `;
+            }
+
+            renderTeamMembers(kapanewon, teamMembers) {
+                if (!teamMembers || teamMembers.length === 0) {
+                    return `
+                        <div class="info-item" style="grid-column: 1 / -1;">
+                            <div class="info-label">Anggota Tim ${this.escapeHtml(kapanewon)}</div>
+                            <div style="text-align: center; color: var(--secondary-green); font-style: italic; padding: 20px;">
+                                <i class="fas fa-info-circle"></i> Data anggota tim sedang dimuat...
+                            </div>
+                        </div>
+                    `;
+                }
+
+                return `
+                    <div class="info-item" style="grid-column: 1 / -1;">
+                        <div class="info-label">Anggota Tim ${this.escapeHtml(kapanewon)}</div>
+                        <div class="team-members">
+                            ${teamMembers.map((member, index) => `
+                                <div class="team-member">
+                                    <div class="team-member-number">${index + 1}</div>
+                                    <i class="fas fa-user-graduate"></i>
+                                    <div class="team-member-content">
+                                        <div class="team-member-name">${this.escapeHtml(member.Nama || 'Anggota ' + (index + 1))}</div>
+                                        <div class="team-member-details">
+                                            <span class="team-member-gender">${this.escapeHtml(member['Jenis Kelamin'] || '-')}</span>
+                                            <span class="team-member-school">${this.escapeHtml(member['Asal Sekolah'] || '-')}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderIndividualInfo(participant) {
+                const fields = [
                     { key: 'No Peserta', label: 'Nomor Peserta' },
                     { key: 'Nama', label: 'Nama' },
                     { key: 'Jenis Kelamin', label: 'Jenis Kelamin' },
@@ -1031,126 +1186,78 @@
                     { key: 'Cabang Lomba', label: 'Cabang Lomba' }
                 ];
                 
-                let infoHTML = '';
-                
-                displayFields.forEach(field => {
+                return fields.map(field => {
                     if (participant[field.key]) {
                         const isKapanewon = field.key === 'Kapanewon';
                         const value = isKapanewon ? 
-                            `${participant[field.key]} <span class="kapanewon-badge">1 dari 17 Kapanewon</span>` : 
-                            participant[field.key];
+                            `${this.escapeHtml(participant[field.key])} <span class="kapanewon-badge">1 dari 17 Kapanewon</span>` : 
+                            this.escapeHtml(participant[field.key]);
                             
-                        infoHTML += `
+                        return `
                             <div class="info-item">
                                 <div class="info-label">${field.label}</div>
                                 <div class="info-value">${value}</div>
                             </div>
                         `;
                     }
-                });
-
-                if (template && template.isTeam) {
-                    const kapanewon = participant['Kapanewon'] || 'Kapanewon';
-                    
-                    infoHTML += `
-                        <div class="info-item">
-                            <div class="info-label">Jenis Peserta</div>
-                            <div class="info-value">
-                                <span class="team-indicator">Tim ${kapanewon}</span>
-                                <i class="fas fa-users"></i>
-                            </div>
-                        </div>
-                    `;
-                    
-                    const teamMembers = this.getTeamMembers(participant);
-                    if (teamMembers.length > 0) {
-                        infoHTML += `
-                            <div class="info-item" style="grid-column: 1 / -1;">
-                                <div class="info-label">Anggota Tim ${kapanewon}</div>
-                                <div class="team-members">
-                                    ${teamMembers.map(member => `
-                                        <div class="team-member">
-                                            <i class="fas fa-user-graduate"></i>
-                                            <div class="team-member-content">
-                                                <div class="team-member-name">${member.split(' - ')[0]}</div>
-                                                <div class="team-member-school">${member.split(' - ')[1]}</div>
-                                            </div>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        `;
-                    }
-                }
-
-                infoContainer.innerHTML = infoHTML;
-                this.displayScoresTable(scores, participant, cabangKode);
+                    return '';
+                }).join('');
             }
 
-            getTeamMembers(participant) {
-                const teamData = {
-                    'LCP-1': ['Ahmad Fauzi - SDN Banguntapan 1', 'Siti Rahma - SDN Banguntapan 2', 'Budi Santoso - SDN Banguntapan 3'],
-                    'LCP-2': ['Maya Sari - SDN Jetis 1', 'Rizki Pratama - SDN Jetis 2', 'Dewi Lestari - SDN Jetis 3'],
-                    'LCP-3': ['Rafael Gunawan - SDN Bantul 1', 'Nina Utami - SDN Bantul 2', 'Arif Hidayat - SDN Bantul 3'],
-                    'LCP-4': ['Citra Anggraeni - SDN Imogiri 1', 'Fajar Nugroho - SDN Imogiri 2', 'Lia Amelia - SDN Imogiri 3'],
-                    'LCP-5': ['Dimas Prayoga - SDN Dlingo 1', 'Rara Sekar - SDN Dlingo 2', 'Hendra Setiawan - SDN Dlingo 3'],
-                    'LCP-6': ['Tari Wulandari - SDN Pleret 1', 'Ryan Perdana - SDN Pleret 2', 'Mila Kurnia - SDN Pleret 3'],
-                    'LCP-7': ['Aditya Wijaya - SDN Piyungan 1', 'Salsa Bila - SDN Piyungan 2', 'Rizky Ramadhan - SDN Piyungan 3'],
-                    'LCP-8': ['Nadia Putri - SDN Bambanglipuro 1', 'Gilang Maulana - SDN Bambanglipuro 2', 'Anisa Fitri - SDN Bambanglipuro 3'],
-                    'LCP-9': ['Bayu Aji - SDN Pundong 1', 'Cinta Laura - SDN Pundong 2', 'Firman Syah - SDN Pundong 3'],
-                    'LCP-10': ['Dinda Maharani - SDN Sanden 1', 'Reza Pahlevi - SDN Sanden 2', 'Sari Indah - SDN Sanden 3'],
-                    'LCP-11': ['Irfan Hakim - SDN Kretek 1', 'Mutiara Dewi - SDN Kretek 2', 'Yoga Pratama - SDN Kretek 3'],
-                    'LCP-12': ['Kartika Sari - SDN Srandakan 1', 'Rangga Saputra - SDN Srandakan 2', 'Wulan Sari - SDN Srandakan 3'],
-                    'LCP-13': ['Fahri Ramadhan - SDN Pandak 1', 'Lestari Wati - SDN Pandak 2', 'Joko Susilo - SDN Pandak 3'],
-                    'LCP-14': ['Surya Adi - SDN Kasihan 1', 'Maya Anggun - SDN Kasihan 2', 'Rina Marlina - SDN Kasihan 3'],
-                    'LCP-15': ['Dodi Pratama - SDN Sewon 1', 'Sinta Nur - SDN Sewon 2', 'Rizki Ananda - SDN Sewon 3'],
-                    'LCP-16': ['Eko Wijaya - SDN Pajangan 1', 'Dewi Sartika - SDN Pajangan 2', 'Ari Wibowo - SDN Pajangan 3'],
-                    'LCP-17': ['Rina Permatasari - SDN Sedayu 1', 'Fajar Setiawan - SDN Sedayu 2', 'Lia Amelia - SDN Sedayu 3']
-                };
-                
-                return teamData[participant['No Peserta']] || [
-                    'Anggota 1 - SDN [Kapanewon] 1',
-                    'Anggota 2 - SDN [Kapanewon] 2', 
-                    'Anggota 3 - SDN [Kapanewon] 3'
-                ];
+            escapeHtml(unsafe) {
+                if (unsafe === null || unsafe === undefined) return '';
+                return unsafe.toString()
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
             }
 
             displayScoresTable(scores, participant, cabangKode) {
                 const scoresBody = document.getElementById('scores-body');
                 const rankingInfo = document.getElementById('ranking-info');
-                const template = this.scoringTemplates[cabangKode];
                 
                 scoresBody.innerHTML = '';
                 rankingInfo.style.display = 'none';
 
-                const hasScores = scores && scores.length > 0;
-                const isPlaceholder = hasScores && 
+                if (!scores || scores.length === 0) {
+                    scoresBody.innerHTML = this.renderNoScores();
+                    return;
+                }
+
+                const isPlaceholder = scores.length === 1 && 
                     scores[0].aspek === 'Informasi' && 
                     typeof scores[0].nilai === 'string' && 
                     scores[0].nilai.includes('Belum ada');
-                
-                if (hasScores && !isPlaceholder) {
-                    if (cabangKode === 'LCP') {
-                        this.displayLCPScores(scores, participant);
-                    } else {
-                        this.displayIndividualScores(scores, participant, template);
-                    }
-                } else {
-                    scoresBody.innerHTML = `
-                        <tr>
-                            <td colspan="4" style="text-align: center; color: var(--secondary-green); font-style: italic; padding: 30px;">
-                                <i class="fas fa-info-circle" style="font-size: 2em; margin-bottom: 10px; display: block; color: var(--gold);"></i>
-                                Belum ada nilai yang diinput oleh panitia
-                            </td>
-                        </tr>
-                    `;
+
+                if (isPlaceholder) {
+                    scoresBody.innerHTML = this.renderNoScores();
+                    return;
                 }
+
+                if (cabangKode === 'LCP') {
+                    this.displayLCPScores(scores, participant);
+                } else {
+                    const template = this.scoringTemplates[cabangKode];
+                    this.displayIndividualScores(scores, participant, template);
+                }
+            }
+
+            renderNoScores() {
+                return `
+                    <tr>
+                        <td colspan="4" style="text-align: center; color: var(--secondary-green); font-style: italic; padding: 30px;">
+                            <i class="fas fa-info-circle" style="font-size: 2em; margin-bottom: 10px; display: block; color: var(--gold);"></i>
+                            Belum ada nilai yang diinput oleh panitia
+                        </td>
+                    </tr>
+                `;
             }
 
             displayIndividualScores(scores, participant, template) {
                 const scoresBody = document.getElementById('scores-body');
                 let tableHTML = '';
-                let finalScore = 0;
 
                 tableHTML += `
                     <tr class="header-row">
@@ -1161,48 +1268,85 @@
                     </tr>
                 `;
 
-                if (template && template.criteria) {
-                    template.criteria.forEach((criteria, index) => {
-                        const juri1Score = this.getCriteriaScore(scores, 'Juri 1', index);
-                        const juri2Score = this.getCriteriaScore(scores, 'Juri 2', index);
-                        const juri3Score = this.getCriteriaScore(scores, 'Juri 3', index);
-                        
-                        tableHTML += `
-                            <tr class="aspect-row">
-                                <td><strong>${String.fromCharCode(65 + index)}. ${criteria}</strong></td>
-                                <td>${juri1Score}</td>
-                                <td>${juri2Score}</td>
-                                <td>${juri3Score}</td>
-                            </tr>
-                        `;
-                    });
+                const hasDetailedScores = this.hasDetailedScores(scores);
+                
+                if (hasDetailedScores && template) {
+                    tableHTML += this.renderDetailedScores(scores, template);
+                } else {
+                    tableHTML += this.renderFallbackScores(scores);
                 }
 
+                const finalScore = this.getFinalScore(scores);
+                tableHTML += this.renderScoreTotals(scores, finalScore);
+
+                scoresBody.innerHTML = tableHTML;
+                this.displayRankingInfo(finalScore, participant, this.getCabangKode(participant['No Peserta']));
+            }
+
+            hasDetailedScores(scores) {
+                return scores.some(score => 
+                    score.aspek && 
+                    (score.aspek.includes('Juri') || score.aspek.includes('Kriteria'))
+                );
+            }
+
+            renderDetailedScores(scores, template) {
+                let html = '';
+                
+                template.criteria.forEach((criteria, index) => {
+                    const juri1Score = this.getCriteriaScore(scores, 'Juri 1', index);
+                    const juri2Score = this.getCriteriaScore(scores, 'Juri 2', index);
+                    const juri3Score = this.getCriteriaScore(scores, 'Juri 3', index);
+                    
+                    html += `
+                        <tr class="aspect-row">
+                            <td><strong>${String.fromCharCode(65 + index)}. ${criteria}</strong></td>
+                            <td>${juri1Score}</td>
+                            <td>${juri2Score}</td>
+                            <td>${juri3Score}</td>
+                        </tr>
+                    `;
+                });
+                
+                return html;
+            }
+
+            renderFallbackScores(scores) {
+                let html = '';
+                
+                scores.forEach((score, index) => {
+                    if (score.aspek && !score.aspek.includes('Nilai Akhir')) {
+                        html += `
+                            <tr class="aspect-row">
+                                <td>${this.escapeHtml(score.aspek)}</td>
+                                <td colspan="3" style="text-align: center;">
+                                    ${typeof score.nilai === 'number' ? score.nilai.toFixed(2) : score.nilai}
+                                </td>
+                            </tr>
+                        `;
+                    }
+                });
+                
+                return html;
+            }
+
+            renderScoreTotals(scores, finalScore) {
                 const juri1Total = this.calculateJuriTotal(scores, 'Juri 1');
                 const juri2Total = this.calculateJuriTotal(scores, 'Juri 2');
                 const juri3Total = this.calculateJuriTotal(scores, 'Juri 3');
                 
-                tableHTML += `
+                return `
                     <tr class="total-row">
                         <td><strong>Total per Juri</strong></td>
                         <td><strong>${juri1Total}</strong></td>
                         <td><strong>${juri2Total}</strong></td>
                         <td><strong>${juri3Total}</strong></td>
                     </tr>
-                `;
-
-                const nilaiAkhir = this.getFinalScore(scores);
-                finalScore = nilaiAkhir;
-                
-                tableHTML += `
                     <tr class="final-row">
                         <td><strong>NILAI AKHIR</strong></td>
-                        <td colspan="3"><strong>${nilaiAkhir.toFixed(2)}</strong></td>
+                        <td colspan="3"><strong>${finalScore.toFixed(2)}</strong></td>
                     </tr>
                 `;
-
-                scoresBody.innerHTML = tableHTML;
-                this.displayRankingInfo(finalScore, participant, this.getCabangKode(participant['No Peserta']));
             }
 
             displayLCPScores(scores, participant) {
