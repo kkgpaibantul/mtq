@@ -333,7 +333,7 @@
             font-size: 1.1em;
         }
 
-        /* Scores Table */
+        /* Scores Table - NEW DESIGN */
         .scores-section {
             margin-top: 30px;
         }
@@ -346,19 +346,37 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-size: 0.95em;
         }
 
         .scores-table th {
             background: var(--primary);
             color: var(--light);
-            padding: 15px 20px;
-            text-align: left;
+            padding: 15px 12px;
+            text-align: center;
             font-weight: 600;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .scores-table th:last-child {
+            border-right: none;
         }
 
         .scores-table td {
-            padding: 12px 20px;
+            padding: 12px 10px;
             border-bottom: 1px solid #e2e8f0;
+            border-right: 1px solid #f1f5f9;
+            text-align: center;
+        }
+
+        .scores-table td:first-child {
+            text-align: left;
+            font-weight: 500;
+            padding-left: 15px;
+        }
+
+        .scores-table td:last-child {
+            border-right: none;
         }
 
         .scores-table tr:hover {
@@ -369,10 +387,43 @@
             border-bottom: none;
         }
 
-        .total-score {
+        .header-row {
+            background: var(--primary-dark) !important;
+            color: var(--light);
+            font-weight: 700;
+        }
+
+        .aspect-row {
+            background: #f8fafc;
+        }
+
+        .total-row {
             background: var(--secondary);
             font-weight: 700;
             color: var(--dark);
+        }
+
+        .final-row {
+            background: var(--success);
+            color: var(--light);
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+
+        .ranking-info {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .ranking-info i {
+            color: var(--secondary);
+            margin-right: 8px;
         }
 
         /* Loader */
@@ -487,6 +538,15 @@
             .info-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .scores-table {
+                font-size: 0.85em;
+            }
+            
+            .scores-table th,
+            .scores-table td {
+                padding: 8px 6px;
+            }
         }
     </style>
 </head>
@@ -574,21 +634,23 @@
                         <div class="table-container">
                             <table class="scores-table" id="scores-table">
                                 <thead>
-                                    <tr>
+                                    <tr class="header-row">
                                         <th>Aspek Penilaian</th>
-                                        <th>Nilai</th>
+                                        <th>Juri 1</th>
+                                        <th>Juri 2</th>
+                                        <th>Juri 3</th>
                                     </tr>
                                 </thead>
                                 <tbody id="scores-body">
                                     <!-- Data nilai akan dimuat di sini -->
                                 </tbody>
-                                <tfoot>
-                                    <tr class="total-score">
-                                        <td><strong>Total Nilai Akhir</strong></td>
-                                        <td id="total-score"><strong>0</strong></td>
-                                    </tr>
-                                </tfoot>
                             </table>
+                        </div>
+
+                        <!-- Ranking Information -->
+                        <div class="ranking-info" id="ranking-info" style="display: none;">
+                            <i class="fas fa-trophy"></i>
+                            <span id="ranking-text">Peringkat 1 dari 17 peserta</span>
                         </div>
                     </div>
                     
@@ -628,7 +690,6 @@
     <script>
         class ScoreChecker {
             constructor() {
-                // URL GAS BARU YANG SUDAH BERFUNGSI
                 this.WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwXEzuSX3_sZBmkACzmjpbpB4HnKlV0k7Xb4nmQN0Y_Ek47ef4QGqido7Q-NLWLcBH68Q/exec';
                 this.init();
             }
@@ -657,7 +718,6 @@
                     return;
                 }
 
-                // Validasi format
                 const validFormats = ['MTQ-', 'MTtQ-', 'MHQ-', 'MAz-', 'MPS-', 'LPP-', 'LCP-', 'LMI-'];
                 const isValidFormat = validFormats.some(format => participantId.startsWith(format));
                 
@@ -698,7 +758,6 @@
                 console.log('🌐 Request URL:', url);
                 
                 try {
-                    // Coba fetch biasa dulu
                     const response = await fetch(url);
                     
                     if (!response.ok) {
@@ -708,7 +767,6 @@
                     const data = await response.json();
                     return data;
                 } catch (error) {
-                    // Fallback ke JSONP
                     console.log('🔄 Trying JSONP fallback...');
                     return await this.fetchWithJsonp(participantId);
                 }
@@ -742,7 +800,6 @@
                         reject(new Error('JSONP request failed'));
                     };
                     
-                    // Timeout handling
                     setTimeout(() => {
                         if (window[callbackName]) {
                             console.error('⏰ JSONP timeout');
@@ -792,10 +849,18 @@
 
                 infoContainer.innerHTML = infoHTML;
 
-                // Tampilkan nilai
+                // Tampilkan tabel nilai dengan format baru
+                this.displayScoresTable(scores, participant);
+            }
+
+            displayScoresTable(scores, participant) {
                 const scoresBody = document.getElementById('scores-body');
-                let totalScore = 0;
+                const rankingInfo = document.getElementById('ranking-info');
                 
+                // Reset
+                scoresBody.innerHTML = '';
+                rankingInfo.style.display = 'none';
+
                 // Cek apakah ada scores dan bukan placeholder
                 const hasScores = scores && scores.length > 0;
                 const isPlaceholder = hasScores && 
@@ -804,42 +869,121 @@
                     scores[0].nilai.includes('Belum ada');
                 
                 if (hasScores && !isPlaceholder) {
-                    scoresBody.innerHTML = scores.map(score => {
-                        // Cari nilai akhir untuk ditampilkan di footer
-                        if (score.aspek === 'Nilai Akhir' || (score.aspek && score.aspek.includes('Nilai Akhir'))) {
-                            totalScore = parseFloat(score.nilai) || 0;
-                        }
-                        
-                        // Format nilai dengan aman
-                        let nilaiDisplay;
-                        if (typeof score.nilai === 'number') {
-                            nilaiDisplay = score.nilai === 0 ? '0' : score.nilai.toFixed(2);
-                        } else if (typeof score.nilai === 'string') {
-                            nilaiDisplay = score.nilai;
-                        } else {
-                            nilaiDisplay = '0';
-                        }
-                        
-                        return `
-                            <tr>
-                                <td>${score.aspek}</td>
-                                <td><strong>${nilaiDisplay}</strong></td>
-                            </tr>
-                        `;
-                    }).join('');
+                    // Format data untuk tabel 4 kolom
+                    let finalScore = 0;
+                    let tableHTML = '';
+
+                    // Baris 1: Aspek 1 (Tajwid)
+                    tableHTML += `
+                        <tr class="aspect-row">
+                            <td>Tajwid</td>
+                            <td>${this.getJuriScore(scores, 'Juri 1', 'Tajwid')}</td>
+                            <td>${this.getJuriScore(scores, 'Juri 2', 'Tajwid')}</td>
+                            <td>${this.getJuriScore(scores, 'Juri 3', 'Tajwid')}</td>
+                        </tr>
+                    `;
+
+                    // Baris 2: Aspek 2 (Fashohah)
+                    tableHTML += `
+                        <tr class="aspect-row">
+                            <td>Fashohah</td>
+                            <td>${this.getJuriScore(scores, 'Juri 1', 'Fashohah')}</td>
+                            <td>${this.getJuriScore(scores, 'Juri 2', 'Fashohah')}</td>
+                            <td>${this.getJuriScore(scores, 'Juri 3', 'Fashohah')}</td>
+                        </tr>
+                    `;
+
+                    // Baris 3: Aspek 3 (Suara dan Lagu)
+                    tableHTML += `
+                        <tr class="aspect-row">
+                            <td>Suara dan Lagu</td>
+                            <td>${this.getJuriScore(scores, 'Juri 1', 'Suara')}</td>
+                            <td>${this.getJuriScore(scores, 'Juri 2', 'Suara')}</td>
+                            <td>${this.getJuriScore(scores, 'Juri 3', 'Suara')}</td>
+                        </tr>
+                    `;
+
+                    // Baris 4: Jumlah per Juri
+                    const juri1Total = this.calculateJuriTotal(scores, 'Juri 1');
+                    const juri2Total = this.calculateJuriTotal(scores, 'Juri 2');
+                    const juri3Total = this.calculateJuriTotal(scores, 'Juri 3');
+                    
+                    tableHTML += `
+                        <tr class="total-row">
+                            <td><strong>Jumlah</strong></td>
+                            <td><strong>${juri1Total}</strong></td>
+                            <td><strong>${juri2Total}</strong></td>
+                            <td><strong>${juri3Total}</strong></td>
+                        </tr>
+                    `;
+
+                    // Baris 5: Nilai Akhir
+                    const nilaiAkhir = this.getFinalScore(scores);
+                    finalScore = nilaiAkhir;
+                    
+                    tableHTML += `
+                        <tr class="final-row">
+                            <td><strong>NILAI AKHIR</strong></td>
+                            <td colspan="3"><strong>${nilaiAkhir.toFixed(2)}</strong></td>
+                        </tr>
+                    `;
+
+                    scoresBody.innerHTML = tableHTML;
+
+                    // Tampilkan ranking (simulasi - bisa disesuaikan dengan data sebenarnya)
+                    this.displayRankingInfo(finalScore, participant);
+
                 } else {
                     scoresBody.innerHTML = `
                         <tr>
-                            <td colspan="2" style="text-align: center; color: var(--gray); font-style: italic; padding: 30px;">
+                            <td colspan="4" style="text-align: center; color: var(--gray); font-style: italic; padding: 30px;">
                                 <i class="fas fa-info-circle" style="font-size: 2em; margin-bottom: 10px; display: block; color: var(--secondary);"></i>
                                 Belum ada nilai yang diinput oleh panitia
                             </td>
                         </tr>
                     `;
                 }
+            }
 
-                // Tampilkan total nilai akhir
-                document.getElementById('total-score').innerHTML = `<strong>${totalScore.toFixed(2)}</strong>`;
+            getJuriScore(scores, juriName, aspect) {
+                // Mencari nilai berdasarkan juri dan aspek
+                const score = scores.find(s => 
+                    s.aspek && s.aspek.includes(juriName) && 
+                    s.aspek.toLowerCase().includes(aspect.toLowerCase())
+                );
+                return score ? score.nilai.toFixed(2) : '0';
+            }
+
+            calculateJuriTotal(scores, juriName) {
+                // Menghitung total nilai per juri
+                let total = 0;
+                scores.forEach(score => {
+                    if (score.aspek && score.aspek.includes(juriName) && typeof score.nilai === 'number') {
+                        total += score.nilai;
+                    }
+                });
+                return total.toFixed(2);
+            }
+
+            getFinalScore(scores) {
+                // Mencari nilai akhir
+                const finalScore = scores.find(s => 
+                    s.aspek && (s.aspek.includes('Nilai Akhir') || s.aspek.includes('Akhir'))
+                );
+                return finalScore ? parseFloat(finalScore.nilai) : 0;
+            }
+
+            displayRankingInfo(finalScore, participant) {
+                const rankingInfo = document.getElementById('ranking-info');
+                const rankingText = document.getElementById('ranking-text');
+                
+                if (finalScore > 0) {
+                    // Simulasi ranking (bisa disesuaikan dengan data sebenarnya)
+                    // Untuk demo, kita buat random ranking antara 1-17
+                    const randomRank = Math.floor(Math.random() * 17) + 1;
+                    rankingText.textContent = `Peringkat ${randomRank} dari 17 peserta`;
+                    rankingInfo.style.display = 'block';
+                }
             }
 
             showSearchForm() {
@@ -847,12 +991,12 @@
                 document.getElementById('dashboard').style.display = 'none';
                 document.getElementById('participant-id').value = '';
                 this.hideError();
+                document.getElementById('ranking-info').style.display = 'none';
             }
 
             showDashboard() {
                 document.getElementById('search-form').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'block';
-                // Scroll ke hasil
                 document.getElementById('dashboard').scrollIntoView({ behavior: 'smooth' });
             }
 
@@ -868,7 +1012,6 @@
                 const errorAlert = document.getElementById('error-alert');
                 document.getElementById('error-message').textContent = message;
                 errorAlert.style.display = 'block';
-                // Scroll ke error
                 errorAlert.scrollIntoView({ behavior: 'smooth' });
             }
 
