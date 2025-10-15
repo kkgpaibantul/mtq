@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <style>
+        #navbar-iframe {
+            display: none !important;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="description" content="Dashboard resmi MTQ Pelajar SD Tingkat Kabupaten Bantul 2025. Pantau pendaftaran, kejuaraan, dan klasemen.">
+    <meta name="keywords" content="MTQ Bantul 2025, MTQ Pelajar, Kabupaten Bantul, Dashboard MTQ">
+    <title>Dashboard MTQ Bantul 2025</title>
+    <link rel="icon" type="image/png" href="https://i.imghippo.com/files/ZnpG6770LpA.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Mono:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .navbar, .header-section, .blogger-bar {
+            display: none !important;
+        }
+        
+        :root {
+            --primary-green: #1A3C34;
+            --secondary-green: #2E4F47;
+            --gold: #D4A017;
+            --light-gold: #F5F6E8;
+            --white: #ffffff;
+            --dark-text: #1A3C34;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--primary-green), var(--gold));
+            background-image: url('https://i.ibb.co.com/Cpwy9Lv5/images-7.jpg');
+            background-blend-mode: overlay;
+            background-attachment: fixed;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .container {
+            padding: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            position: relative;
+            min-height: 100px;
+        }
+
+        .header-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .main-text {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--light-gold);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .sub-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--light-gold);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        header img {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            margin-top: 5px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            display: block;
+            object-fit: cover;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 10px 20px;
+            margin: 10px 0;
+            background: var(--primary-green);
+            border-radius: 12px;
+            font-size: 14px;
+        }
+
+        .date-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 600;
+            text-align: left;
+            flex: 1;
+        }
+
+        .clock-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: right;
+            justify-content: flex-end;
+            flex: 1;
+        }
+
+        .clock {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1.1rem;
+        }
+
+        .hijri-date {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--light-gold);
+            opacity: 0.9;
+        }
+
+        .date-separator {
+            margin: 0 5px;
+            color: var(--light-gold);
+            opacity: 0.7;
+        }
+
+        .countdown-wrapper {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 12px;
+            margin: 10px 0;
+        }
+
+        .countdown-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin: 0 0 15px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .countdown-number {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1;
+            padding: 10px;
+            background: var(--gold);
+            border-radius: 10px;
+            min-width: 80px;
+            color: var(--dark-text);
+        }
+
+        .countdown-label {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 5px;
+            text-transform: uppercase;
+        }
+
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            background: var(--primary-green);
+            border-radius: 12px;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--light-gold);
+        }
+
+        .marquee-text {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 20s linear infinite;
+        }
+
+        .marquee-container:hover .marquee-text {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            color: var(--dark-text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin: 5px 0;
+            line-height: 1;
+        }
+
+        .stat-label {
+            color: var(--dark-text);
+            font-weight: 600;
+            font-size: 0.75rem;
+            line-height: 1.2;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .tabs button {
+            background: var(--secondary-green);
+            color: var(--white);
+            border: 2px solid transparent;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex: 1;
+            min-width: 200px;
+            max-width: 280px;
+        }
+
+        .tabs button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        .tabs button.active {
+            background: var(--gold);
+            color: var(--dark-text);
+            border-color: var(--light-gold);
+            transform: scale(1.05);
+        }
+
+        /* Kontrol Refresh */
+        .refresh-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--secondary-green);
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .refresh-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .refresh-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .refresh-options {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .refresh-btn {
+            background: var(--gold);
+            color: var(--dark-text);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .refresh-btn:hover {
+            background: var(--light-gold);
+            transform: scale(1.05);
+        }
+
+        .refresh-btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .interval-select {
+            background: var(--white);
+            color: var(--dark-text);
+            border: 1px solid var(--gold);
+            padding: 6px 10px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .refresh-status {
+            font-weight: 600;
+            color: var(--light-gold);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Data Container untuk Google Sheets API */
+        .data-container {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            padding: 20px;
+            min-height: 400px;
+            margin: 10px 0;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            color: var(--dark-text);
+        }
+
+        .data-table th {
+            background: var(--primary-green);
+            color: var(--light-gold);
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            border: none;
+        }
+
+        .data-table td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #e0e0e0;
+            text-align: left;
+        }
+
+        .data-table tr:hover {
+            background: var(--light-gold);
+        }
+
+        .data-loading {
+            padding: 40px 20px;
+            color: var(--dark-text);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 300px;
+        }
+        
+        .data-loading p {
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        .data-error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .last-updated {
+            text-align: right;
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .loader {
+            display: none;
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 10;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            color: var(--dark-text);
+            font-size: 20px;
+        }
+
+        .loader.show {
+            display: flex;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--light-gold);
+            border-top-color: var(--primary-green);
+            border-bottom-color: var(--primary-green);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .status {
+            display: none;
+        }
+
+        footer {
+            background: var(--primary-green);
+            color: var(--light-gold);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .download-wrapper {
+            background: var(--white);
+            padding: 15px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .download-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin: 0 0 15px 0;
+            color: var(--dark-text);
+            display: flex;
+            align-items: center;
+        }
+
+        .download-wrapper ul {
+            list-style-type: none;
+            padding: 0;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark-text);
+        }
+
+        .download-wrapper li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .download-wrapper a {
+            color: var(--secondary-green);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .download-wrapper a:hover {
+            color: var(--gold);
+            text-decoration: underline;
+        }
+
+        .location-wrapper {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .location-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin: 0 0 15px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .location-wrapper p {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--light-gold);
+            margin-bottom: 15px;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 25px;
+            right: 25px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+            text-decoration: none;
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+            box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.4);
+            text-decoration: none;
+        }
+
+        .whatsapp-float i {
+            text-decoration: none;
+            border: none;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .announcement-wrapper {
+            background: rgba(212, 160, 23, 0.85);
+            padding: 15px;
+            border-radius: 12px;
+            margin: 10px 0;
+            text-align: left;
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .announcement-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin: 0 0 15px 0;
+            color: var(--dark-text);
+            display: flex;
+            align-items: center;
+        }
+
+        .announcement-wrapper p {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .highlight-text {
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+
+        .refresh-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--gold);
+            color: var(--dark-text);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            animation: slideInRight 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Pagination Styles */
+        .pagination-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .pagination-btn {
+            background: var(--gold);
+            color: var(--dark-text);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .pagination-btn:hover {
+            background: var(--light-gold);
+            transform: scale(1.05);
+        }
+
+        .pagination-btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .pagination-info {
+            font-weight: 600;
+            color: var(--dark-text);
+            font-size: 0.9rem;
+        }
+        
+        /* Search Filter Styles (Rata Kanan) */
+        .search-container {
+            position: relative;
+            margin-bottom: 15px;
+            max-width: 400px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        .search-container .fa-search {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+        }
+        
+        /* CSS BARU: Dropdown Filter Kejuaraan */
+        .filter-container {
+            margin-bottom: 15px;
+            max-width: 450px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .filter-container label {
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+
+        .filter-container select {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 0.9rem;
+            font-family: 'Poppins', sans-serif;
+            background-color: white;
+            color: var(--dark-text);
+            cursor: pointer;
+            flex-grow: 1;
+            max-width: 300px;
+        }
+
+        /* CSS untuk alignment tabel yang diperbarui */
+        .data-table th.center-align,
+        .data-table td.center-align {
+            text-align: center !important;
+        }
+
+        .data-table th.left-align,
+        .data-table td.left-align {
+            text-align: left !important;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .top-bar {
+                justify-content: center;
+                margin: 10px 0;
+                flex-direction: column;
+                gap: 10px;
+            }
+            .countdown-wrapper {
+                padding: 12px;
+                margin: 10px 0;
+            }
+            .marquee-container {
+                margin: 10px 0;
+                padding: 10px;
+            }
+            .countdown-title { 
+                font-size: 1.2rem; 
+                margin-bottom: 12px;
+            }
+            .countdown-number { 
+                font-size: 2.5rem; 
+                min-width: 50px; 
+                padding: 8px;
+            }
+            .countdown-label { 
+                font-size: 0.8rem; 
+                margin-top: 3px;
+            }
+            .tabs { 
+                margin-bottom: 15px;
+                gap: 8px;
+            }
+            .tabs button { 
+                flex: 1 1 40%; 
+                font-size: 14px; 
+                padding: 10px 15px;
+                min-width: 140px;
+            }
+            footer { 
+                font-size: 0.9rem; 
+                padding: 12px;
+                margin-top: 15px;
+            }
+            header img {
+                border-radius: 8px;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                max-width: 100%;
+                margin-top: 5px;
+            }
+            .header-text {
+                gap: 3px;
+            }
+            .main-text {
+                font-size: 1.5rem;
+            }
+            .sub-text {
+                font-size: 0.9rem;
+            }
+            .data-container {
+                padding: 15px;
+                min-height: 300px;
+            }
+            .data-table {
+                font-size: 0.8rem;
+            }
+            .data-table th,
+            .data-table td {
+                padding: 8px 10px;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            .stat-card {
+                padding: 15px;
+            }
+            .stat-number {
+                font-size: 1.5rem;
+            }
+            .refresh-controls {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+            .refresh-left, .refresh-right {
+                justify-content: center;
+            }
+            .refresh-options {
+                justify-content: center;
+            }
+            .download-title, .location-title, .announcement-title {
+                font-size: 1.1rem;
+            }
+            .download-wrapper ul, .location-wrapper p, .announcement-wrapper p {
+                font-size: 0.9rem;
+            }
+            .marquee-container {
+                font-size: 0.9rem;
+            }
+            .pagination-controls {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .pagination-btn {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+            .pagination-info {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            .countdown-number { 
+                font-size: 2rem; 
+                min-width: 40px; 
+                padding: 6px;
+            }
+            .countdown-label { 
+                font-size: 0.7rem; 
+            }
+            header img { 
+                max-height: 150px; 
+                object-fit: cover; 
+                margin-top: 3px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .data-table {
+                font-size: 0.7rem;
+            }
+            .data-table th,
+            .data-table td {
+                padding: 6px 8px;
+            }
+            .tabs button {
+                min-width: 120px;
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+            .main-text {
+                font-size: 1.2rem;
+            }
+            .sub-text {
+                font-size: 0.8rem;
+            }
+            .top-bar {
+                font-size: 12px;
+            }
+            .clock {
+                font-size: 0.9rem;
+            }
+            .hijri-date {
+                font-size: 0.75rem;
+            }
+            .pagination-controls {
+                gap: 6px;
+            }
+            .pagination-btn {
+                padding: 5px 10px;
+                font-size: 0.8rem;
+            }
+            .filter-container {
+                justify-content: center;
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 15px;
+            }
+            .stat-card {
+                padding: 20px;
+                min-height: 100px;
+            }
+            .stat-number {
+                font-size: 2.2rem;
+            }
+            .stat-label {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-text">
+                <span class="main-text">MTQ Pelajar Sekolah Dasar</span>
+                <span class="sub-text">Tingkat Kabupaten Bantul Tahun 2025</span>
+            </div>
+            <img src="https://i.imghippo.com/files/ZLqy8057Q.png" alt="Header MTQ Bantul 2025" loading="lazy" onerror="this.src='https://via.placeholder.com/1200x200/1A3C34/D4A017?text=MTQ+Bantul+2025';">
+        </header>
+
+        <div class="top-bar">
+            <div class="date-container">
+                <span id="masehi-date"></span>
+                <span class="date-separator">/</span>
+                <span id="hijri-date"></span>
+            </div>
+            <div class="clock-container">
+                <div class="clock" id="clock"></div>
+            </div>
+        </div>
+
+        <div class="countdown-wrapper">
+            <h3 class="countdown-title">Acara Akan Dimulai Dalam</h3>
+            <div class="countdown-container">
+                <div class="countdown-item">
+                    <span id="days" class="countdown-number" aria-label="Hari tersisa">00</span>
+                    <span class="countdown-label">Hari</span>
+                </div>
+                <div class="countdown-item">
+                    <span id="hours" class="countdown-number" aria-label="Jam tersisa">00</span>
+                    <span class="countdown-label">Jam</span>
+                </div>
+                <div class="countdown-item">
+                    <span id="minutes" class="countdown-number" aria-label="Menit tersisa">00</span>
+                    <span class="countdown-label">Menit</span>
+                </div>
+                <div class="countdown-item">
+                    <span id="seconds" class="countdown-number" aria-label="Detik tersisa">00</span>
+                    <span class="countdown-label">Detik</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="marquee-container">
+            <div class="marquee-text">
+                SELAMAT DATANG DI WEBSITE MTQ PELAJAR SD TINGKAT KABUPATEN BANTUL TAHUN 2025 - DATA LIVE DENGAN GOOGLE SHEETS API
+            </div>
+        </div>
+
+        <div class="announcement-wrapper">
+            <h3 class="announcement-title"><i class="fas fa-bullhorn" style="margin-right: 8px;"></i>Pengumuman</h3>
+            <p>Pendaftaran dimulai dari hari <span class="highlight-text">Rabu, 1 Oktober 2025 s.d. Jumat, 24 Oktober 2025 pukul 12.00 WIB</span>. Pastikan Bapak/Ibu Ofisial mendaftarkan sesuai dengan waktu pendaftaran. Terima kasih.</p>
+        </div>
+
+        <div class="stats-grid" id="stats-grid"></div>
+
+        <div class="tabs" id="tabs" role="tablist"></div>
+
+        <div class="refresh-controls" id="refresh-controls">
+            <div class="refresh-left">
+                <div class="refresh-status">
+                    <i class="fas fa-sync-alt"></i>
+                    <span id="refresh-display-status">Auto Refresh: ON</span>
+                </div>
+                <div class="refresh-options">
+                    <select class="interval-select" id="refresh-interval">
+                        <option value="30">30 detik</option>
+                        <option value="60" selected>1 menit</option>
+                        <option value="120">2 menit</option>
+                        <option value="300">5 menit</option>
+                        <option value="600">10 menit</option>
+                    </select>
+                </div>
+            </div>
+            <div class="refresh-right">
+                <button class="refresh-btn" id="manual-refresh">
+                    <i class="fas fa-redo"></i>
+                    Refresh Manual
+                </button>
+                <button class="refresh-btn" id="toggle-auto-refresh">
+                    <i class="fas fa-power-off"></i>
+                    Matikan Auto Refresh
+                </button>
+            </div>
+        </div>
+
+        <div class="data-container" id="data-container">
+            <div class="data-loading">
+                <div class="spinner"></div>
+                <p>Memuat data terbaru...</p>
+            </div>
+        </div>
+
+        <div class="download-wrapper">
+            <h3 class="download-title"><i class="fas fa-file-download" style="margin-right: 8px;"></i>Unduh Dokumen</h3>
+            <ul>
+                <li><i class="fas fa-download" style="margin-right: 8px;"></i><a href="https://drive.usercontent.google.com/download?id=1zWrUEcZoMY0KjXCo1H4joAAMwntgt28P&export=download&authuser=0" target="_blank">Unduh Petunjuk Pelaksanaan</a></li>
+            </ul>
+        </div>
+
+        <div class="location-wrapper">
+            <h3 class="location-title"><i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i>Lokasi Pelaksanaan</h3>
+            <p>Acara akan dilaksanakan di SD IT Ar-Raihan, Bantul, Yogyakarta. Berikut peta lokasi:</p>
+              <iframe data-src="https://www.google.com/maps/embed?pb=!1m12!1m8!1m3!1d3951.842697840551!2d110.339957!3d-7.9114957!3m2!1i1024!2i768!4f13.1!2m1!1ssd%20it%20ar%20raihan%20bantul!5e0!3m2!1sid!2sid!4v1758955647716!5m2!1sid!2sid" width="100%" height="450" style="border:0; border-radius: 10px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+        <div class="status" id="status"></div>
+
+        <footer>
+            MTQ Pelajar SD Tingkat Kabupaten Bantul Tahun 2025 - Powered by Google Sheets API
+        </footer>
+    </div>
+
+    <a href="https://wa.me/6285643238821?text=Halo%20panitia%20MTQ%20Bantul%202025,%20saya%20ingin%20bertanya..." class="whatsapp-float" target="_blank" aria-label="Hubungi via WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdpzadRtH-72k6Yjk9o_IEXd4aMui5oz9SjhLCBH2-KK5M7mw/viewform?embedded=true';
+        const TARGET_DATE_STRING = '2025-10-29T08:00:00+07:00';
+
+        class StatsManager {
+            constructor(webAppUrl) {
+                this.webAppUrl = webAppUrl;
+                this.statsData = { totalPeserta: 0, totalSekolah: 0, totalKapanewon: 0, kategoriLomba: 0 };
+            }
+
+            async calculateAllStats() {
+                try {
+                    const response = await fetch(`${this.webAppUrl}?request=stats`);
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    const data = await response.json();
+                    this.statsData = data;
+                    return this.statsData;
+                } catch (error) {
+                    console.error('Error calculating stats:', error);
+                    return { totalPeserta: 'N/A', totalSekolah: 'N/A', totalKapanewon: 'N/A', kategoriLomba: 'N/A' };
+                }
+            }
+
+            getStatsForDisplay() {
+                return [
+                    { label: 'Kategori Lomba', value: this.statsData.kategoriLomba, icon: 'fas fa-trophy', color: '#D4A017' },
+                    { label: 'Kapanewon', value: this.statsData.totalKapanewon, icon: 'fas fa-map-marker-alt', color: '#2E4F47' },
+                    { label: 'Sekolah Terdaftar', value: this.statsData.totalSekolah, icon: 'fas fa-school', color: '#1A3C34' },
+                    { label: 'Total Peserta', value: this.statsData.totalPeserta, icon: 'fas fa-users', color: '#D4A017' },
+                ];
+            }
+        }
+
+        class HijriDateSystem {
+            constructor() {
+                this.cache = { data: null, lastFetch: null, cacheDuration: 864e5 };
+                this.initMonthMapping();
+            }
+            
+            initMonthMapping() {
+                this.monthMapping = {
+                    'Muharram': 'Muharam', 'Muḥarram': 'Muharam', 'Safar': 'Safar', 'Ṣafar': 'Safar',
+                    'Rabi al-awwal': 'Rabiulawal', 'Rabīʿ al-awwal': 'Rabiulawal', "Rabi' al-awwal": 'Rabiulawal',
+                    'Rabiul Awal': 'Rabiulawal', 'Rabi al-Awwal': 'Rabiulawal', 'Rabi al-thani': 'Rabiulakhir',
+                    'Rabīʿ al-thānī': 'Rabiulakhir', "Rabi' al-thani": 'Rabiulakhir', 'Rabiul Akhir': 'Rabiulakhir',
+                    'Rabi al-Akhir': 'Rabiulakhir', 'Rabi al-Thani': 'Rabiulakhir', 'Jumada al-awwal': 'Jumadilawal',
+                    'Jumādá al-ūlá': 'Jumadilawal', 'Jumada al-ula': 'Jumadilawal', 'Jumadil Awal': 'Jumadilawal',
+                    'Jumada al-Awwal': 'Jumadilawal', 'Jumada al-thani': 'Jumadilakhir', 'Jumādá al-ākhirah': 'Jumadilakhir',
+                    'Jumada al-akhirah': 'Jumadilakhir', 'Jumadil Akhir': 'Jumadilakhir', 'Jumada al-Akhir': 'Jumadilakhir',
+                    'Jumada al-Thani': 'Jumadilakhir', 'Rajab': 'Rajab', "Sha'ban": 'Syakban', 'Shaʿbān': 'Syakban',
+                    'Shaban': 'Syakban', 'Shaaban': 'Syakban', 'Ramadan': 'Ramadan', 'Ramaḍān': 'Ramadan',
+                    'Ramadhan': 'Ramadan', 'Ramadān': 'Ramadan', 'Shawwal': 'Syawal', 'Shawwāl': 'Syawal',
+                    'Syawal': 'Syawal', "Dhu al-Qi'dah": 'Zulkaidah', 'Dhū al-Qaʿdah': 'Zulkaidah',
+                    "Dhu al-Qa'dah": 'Zulkaidah', 'Zulkaidah': 'Zulkaidah', 'Dhū al-Qa‘dah': 'Zulkaidah',
+                    'Dhu al-Qa‘dah': 'Zulkaidah', 'Dhu al-Hijjah': 'Zulhijah', 'Dhū al-Ḥijjah': 'Zulhijah',
+                    'Zulhijah': 'Zulhijah', 'محرم': 'Muharam', 'صفر': 'Safar', 'ربيع الأول': 'Rabiulawal',
+                    'ربيع الثاني': 'Rabiulakhir', 'جمادى الأولى': 'Jumadilawal', 'جمادى الآخرة': 'Jumadilakhir',
+                    'رجب': 'Rajab', 'شعبان': 'Syakban', 'رمضان': 'Ramadan', 'شوال': 'Syawal',
+                    'ذو القعدة': 'Zulkaidah', 'ذو الحجة': 'Zulhijah'
+                };
+                
+                this.normalizedMapping = {};
+                Object.keys(this.monthMapping).forEach(key => {
+                    const normalizedKey = this.normalizeMonthKey(key);
+                    this.normalizedMapping[normalizedKey] = this.monthMapping[key];
+                });
+            }
+            
+            normalizeMonthKey(monthName) {
+                return monthName.toLowerCase().replace(/[^a-z0-9]/g, '').trim();
+            }
+            
+            async getHijriDate() {
+                if (this.isCacheValid()) {
+                    return this.cache.data;
+                }
+                
+                try {
+                    const hijriDate = await this.fetchHijriDateWithRetry();
+                    this.cache.data = hijriDate;
+                    this.cache.lastFetch = Date.now();
+                    return hijriDate;
+                } catch (error) {
+                    console.error('Error getting Hijri date:', error);
+                    return this.getFallbackHijriDate();
+                }
+            }
+            
+            isCacheValid() {
+                return this.cache.data && this.cache.lastFetch && 
+                    (Date.now() - this.cache.lastFetch) < this.cache.cacheDuration;
+            }
+            
+            async fetchHijriDateWithRetry(retries = 3) {
+                for (let attempt = 1; attempt <= retries; attempt++) {
+                    try {
+                        return await this.fetchHijriDate();
+                    } catch (error) {
+                        console.warn(`Attempt ${attempt} failed:`, error.message);
+                        if (attempt === retries) {
+                            throw error;
+                        }
+                        await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+                    }
+                }
+            }
+            
+            async fetchHijriDate() {
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = now.getMonth() + 1;
+                const day = now.getDate();
+                
+                const response = await fetch(`https://api.aladhan.com/v1/gToH/${day}-${month}-${year}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                if (data.code === 200) {
+                    const hijri = data.data.hijri;
+                    const monthName = this.normalizeHijriMonth(hijri.month.en, hijri.month.ar);
+                    return `${hijri.day} ${monthName} ${hijri.year} H`;
+                } else {
+                    throw new Error(`API error: ${data.code}`);
+                }
+            }
+            
+            normalizeHijriMonth(englishName, arabicName) {
+                let monthName = this.monthMapping[englishName];
+                if (!monthName) {
+                    monthName = this.monthMapping[arabicName];
+                }
+                if (!monthName) {
+                    const normalizedKey = this.normalizeMonthKey(englishName);
+                    monthName = this.normalizedMapping[normalizedKey];
+                }
+                if (!monthName) {
+                    console.warn('Bulan tidak ditemukan dalam mapping:', {english: englishName, arabic: arabicName});
+                    monthName = englishName;
+                }
+                return monthName;
+            }
+            
+            getFallbackHijriDate() {
+                const now = new Date();
+                const hijriMonths = ['Muharam', 'Safar', 'Rabiulawal', 'Rabiulakhir', 'Jumadilawal', 
+                                    'Jumadilakhir', 'Rajab', 'Syakban', 'Ramadan', 'Syawal', 'Zulkaidah', 'Zulhijah'];
+                const hijriYear = 1446 + Math.floor((now.getFullYear() - 2024) * 0.97);
+                const hijriMonth = hijriMonths[now.getMonth()];
+                const hijriDay = now.getDate();
+                
+                return `${hijriDay} ${hijriMonth} ${hijriYear} H`;
+            }
+        }
+
+        class MTQDataManager {
+            constructor() {
+                this.WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxmywzrf7z9a8agbf-xw6OOYNS17ST609Ced3DFnXMUjH16DRqtoIqQbqH7WHRxOqyR/exec';
+                this.tabDataAbortController = null;
+                this.currentTab = 'pendaftaran';
+                this.isAutoRefreshEnabled = true;
+                this.refreshInterval = 60;
+                this.refreshIntervalId = null;
+                this.countdownIntervalId = null;
+                this.hijriDateSystem = new HijriDateSystem();
+                this.statsManager = new StatsManager(this.WEB_APP_URL);
+                this.currentPage = 1;
+                this.rowsPerPage = 10;
+                this.pesertaDataCache = null;
+                this.searchTerm = '';
+                this.kejuaraanDataCache = null;
+                this.selectedLomba = 'Semua';
+                this.init();
+            }
+
+            init() {
+                this.setupTabs();
+                this.setupEventListeners();
+                this.loadInitialData();
+                this.startAutoRefresh();
+                this.startClockAndCountdown();
+            }
+
+            setupTabs() {
+                const tabsContainer = document.getElementById('tabs');
+                const tabs = [
+                    { id: 'pendaftaran', name: 'Pendaftaran', icon: 'fas fa-user-plus' },
+                    { id: 'peserta', name: 'Daftar Peserta', icon: 'fas fa-users' },
+                    { id: 'pemantauan', name: 'Pemantauan', icon: 'fas fa-eye' },
+                    { id: 'kejuaraan', name: 'Kejuaraan', icon: 'fas fa-trophy' },
+                    { id: 'klasemen', name: 'Klasemen', icon: 'fas fa-chart-bar' }
+                ];
+                
+                tabs.forEach(tab => {
+                    const button = document.createElement('button');
+                    button.innerHTML = `<i class="${tab.icon}"></i> ${tab.name}`;
+                    button.setAttribute('data-tab', tab.id);
+                    button.addEventListener('click', () => this.switchTab(tab.id));
+                    tabsContainer.appendChild(button);
+                });
+                
+                this.switchTab(this.currentTab);
+            }
+
+            setupEventListeners() {
+                document.getElementById('manual-refresh').addEventListener('click', () => this.refreshData());
+                document.getElementById('toggle-auto-refresh').addEventListener('click', () => this.toggleAutoRefresh());
+                document.getElementById('refresh-interval').addEventListener('change', (e) => {
+                    this.refreshInterval = parseInt(e.target.value);
+                    if (this.isAutoRefreshEnabled) {
+                        this.startAutoRefresh();
+                    }
+                    this.updateRefreshDisplay();
+                });
+
+                document.addEventListener("visibilitychange", () => {
+                    if (document.visibilityState === 'hidden') {
+                        this.stopAutoRefresh();
+                        console.log('Tab is hidden, auto-refresh paused.');
+                    } else {
+                        this.startAutoRefresh();
+                        console.log('Tab is visible, auto-refresh resumed.');
+                    }
+                });
+            }
+
+            async switchTab(tabId) {
+                this.currentTab = tabId;
+                this.currentPage = 1;
+                this.searchTerm = '';
+                this.selectedLomba = 'Semua';
+
+                document.querySelectorAll('#tabs button').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.tab === tabId);
+                });
+                
+                await this.loadTabData(tabId);
+                this.updateRefreshControls();
+            }
+            
+            async loadInitialData() {
+                await this.loadTabData(this.currentTab);
+                await this.loadStats();
+            }
+
+            async loadTabData(tabId) {
+                if (this.tabDataAbortController) {
+                    this.tabDataAbortController.abort();
+                }
+                this.tabDataAbortController = new AbortController();
+
+                const container = document.getElementById('data-container');
+                try {
+                    container.innerHTML = `<div class="data-loading"><div class="spinner"></div><p>Memuat data terbaru...</p></div>`;
+                    
+                    if (tabId === 'pendaftaran') {
+                        container.innerHTML = `<iframe src="${FORM_URL}" width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0">Memuat formulir pendaftaran...</iframe>`;
+                        return;
+                    }
+
+                    const data = await this.fetchSheetData(tabId, this.tabDataAbortController.signal);
+                    
+                    if (data) {
+                        if (tabId === 'peserta') this.pesertaDataCache = data;
+                        if (tabId === 'kejuaraan') this.kejuaraanDataCache = data;
+                        this.renderData(tabId, data);
+                    }
+                } catch (error) {
+                    if (error.name === 'AbortError') {
+                        console.log('Permintaan data sebelumnya dibatalkan.');
+                        return;
+                    }
+                    console.error(`Error loading ${tabId} data:`, error);
+                    this.showError(`Gagal memuat data ${tabId}: ${error.message}`);
+                }
+            }
+            
+            async fetchSheetData(tabId, signal) {
+                const url = `${this.WEB_APP_URL}?request=${tabId}`;
+                const response = await fetch(url, { signal });
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const data = await response.json();
+                if (data.error) throw new Error(data.error);
+                return data;
+            }
+
+            renderData(tabId, data) {
+                const container = document.getElementById('data-container');
+                if (!data || !data.headers) {
+                    container.innerHTML = `<div class="data-loading"><p>Data tidak tersedia.</p></div>`;
+                    return;
+                }
+                
+                let html = `
+                    <h3 style="color: var(--dark-text); margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-${this.getTabIcon(tabId)}"></i> ${this.getTabTitle(tabId)}
+                    </h3>`;
+
+                if (tabId === 'peserta') {
+                    html += this.renderPesertaTab(data);
+                } else if (tabId === 'kejuaraan') {
+                    html += this.renderKejuaraanTab(data);
+                } else {
+                    html += this.renderGenericTab(data);
+                }
+
+                html += `<div class="last-updated"><i class="fas fa-clock"></i> Terakhir diperbarui: ${new Date().toLocaleString('id-ID')}</div>`;
+                container.innerHTML = html;
+                
+                this.setupTabEventListeners(tabId);
+            }
+            
+            renderPesertaTab(data) {
+                let filteredRows = data.rows;
+                if (this.searchTerm.trim() !== '') {
+                    const lowercasedTerm = this.searchTerm.toLowerCase();
+                    filteredRows = data.rows.filter(row => 
+                        Object.values(row).some(value => 
+                            String(value).toLowerCase().includes(lowercasedTerm)
+                        )
+                    );
+                }
+                
+                const totalPages = Math.ceil(filteredRows.length / this.rowsPerPage);
+                if (this.currentPage > totalPages) this.currentPage = 1;
+                const startIndex = (this.currentPage - 1) * this.rowsPerPage;
+                const paginatedRows = filteredRows.slice(startIndex, startIndex + this.rowsPerPage);
+                
+                let tableBodyHtml = '';
+                if (paginatedRows.length > 0) {
+                    tableBodyHtml = paginatedRows.map(row => 
+                        `<tr>${data.headers.map(header => `<td>${row[header] || '-'}</td>`).join('')}</tr>`
+                    ).join('');
+                } else {
+                    tableBodyHtml = `<tr><td colspan="${data.headers.length}" style="text-align: center; padding: 20px;">
+                        ${this.searchTerm ? `Tidak ada hasil ditemukan untuk "${this.searchTerm}"` : 'Belum ada data peserta'}
+                    </td></tr>`;
+                }
+                
+                return `
+                    <div class="search-container">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-input" placeholder="Cari berdasarkan nama, sekolah, kapanewon..." value="${this.searchTerm}">
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>${data.headers.map(header => `<th>${header}</th>`).join('')}</tr>
+                            </thead>
+                            <tbody>${tableBodyHtml}</tbody>
+                        </table>
+                    </div>
+                    <div class="pagination-controls">
+                        <button class="pagination-btn" id="prev-page" ${this.currentPage === 1 ? 'disabled' : ''}>
+                            <i class="fas fa-chevron-left"></i> Sebelumnya
+                        </button>
+                        <span class="pagination-info">Halaman ${this.currentPage} dari ${totalPages > 0 ? totalPages : 1}</span>
+                        <button class="pagination-btn" id="next-page" ${this.currentPage === totalPages || totalPages === 0 ? 'disabled' : ''}>
+                            Berikutnya <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>`;
+            }
+            
+            renderKejuaraanTab(data) {
+                const lombaOptions = [
+                    'Semua', 
+                    "Musabaqah Tilawatil Qur'an (MTQ)", 
+                    "Musabaqah Tartil Qur'an (MTtQ)", 
+                    "Musabaqah Hifdzil Qur'an (MHQ)", 
+                    "Musabaqah Azan (Maz)", 
+                    "Musabaqah Puitisasi Saritilawah", 
+                    "Lomba Pidato PAI (LPP)", 
+                    "Lomba Cerdas Cermat PAI (LCP)", 
+                    "Lomba Melukis Islami"
+                ];
+                
+                let filteredRows = data.rows;
+                if (this.selectedLomba !== 'Semua') {
+                    filteredRows = data.rows.filter(row => row['Cabang Lomba'] === this.selectedLomba);
+                }
+                
+                let tableBodyHtml = '';
+                if (filteredRows.length > 0) {
+                    tableBodyHtml = filteredRows.map(row => 
+                        `<tr>${data.headers.map(header => `<td>${row[header] || '-'}</td>`).join('')}</tr>`
+                    ).join('');
+                } else {
+                    tableBodyHtml = `<tr><td colspan="${data.headers.length}" style="text-align: center; padding: 20px;">
+                        ${this.selectedLomba !== 'Semua' ? `Belum ada data kejuaraan untuk ${this.selectedLomba}` : 'Belum ada data kejuaraan'}
+                    </td></tr>`;
+                }
+                
+                return `
+                    <div class="filter-container">
+                        <label for="championship-filter">Filter Lomba:</label>
+                        <select id="championship-filter">
+                            ${lombaOptions.map(lomba => 
+                                `<option value="${lomba}" ${this.selectedLomba === lomba ? 'selected' : ''}>${lomba}</option>`
+                            ).join('')}
+                        </select>
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>${data.headers.map(header => `<th>${header}</th>`).join('')}</tr>
+                            </thead>
+                            <tbody>${tableBodyHtml}</tbody>
+                        </table>
+                    </div>`;
+            }
+            
+            renderGenericTab(data) {
+                if (data.rows.length === 0) {
+                    return `<div class="data-loading"><p>Belum ada data untuk ditampilkan</p></div>`;
+                } else {
+                    // Deteksi kolom yang perlu di-center berdasarkan tab
+                    const centerColumns = [];
+                    data.headers.forEach((header, index) => {
+                        if (this.currentTab === 'pemantauan') {
+                            // Di pemantauan, hanya "Cabang Lomba" yang rata kiri, lainnya center
+                            if (!header.includes('Cabang Lomba')) {
+                                centerColumns.push(index);
+                            }
+                        } else if (this.currentTab === 'klasemen') {
+                            // Di klasemen, hanya "Kapanewon" yang rata kiri, lainnya center
+                            if (!header.includes('Kapanewon')) {
+                                centerColumns.push(index);
+                            }
+                        }
+                        // Tab lainnya tetap default (rata kiri semua)
+                    });
+
+                    return `
+                        <div style="overflow-x: auto;">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>${data.headers.map((header, index) => 
+                                        `<th class="${centerColumns.includes(index) ? 'center-align' : 'left-align'}">${header}</th>`
+                                    ).join('')}</tr>
+                                </thead>
+                                <tbody>
+                                    ${data.rows.map(row => 
+                                        `<tr>${data.headers.map((header, index) => 
+                                            `<td class="${centerColumns.includes(index) ? 'center-align' : 'left-align'}">${row[header] || '-'}</td>`
+                                        ).join('')}</tr>`
+                                    ).join('')}
+                                </tbody>
+                            </table>
+                        </div>`;
+                }
+            }
+            
+            setupTabEventListeners(tabId) {
+                if (tabId === 'peserta') {
+                    const searchInput = document.getElementById('search-input');
+                    if (searchInput) {
+                        searchInput.value = this.searchTerm;
+                        searchInput.addEventListener('input', (e) => {
+                            this.searchTerm = e.target.value;
+                            this.currentPage = 1;
+                            this.renderData('peserta', this.pesertaDataCache);
+                        });
+                        
+                        if (document.activeElement.id !== 'search-input' && this.searchTerm.length > 0) {
+                            searchInput.focus();
+                            const endOfText = searchInput.value.length;
+                            searchInput.setSelectionRange(endOfText, endOfText);
+                        }
+                    }
+                    
+                    document.getElementById('prev-page')?.addEventListener('click', () => {
+                        if (this.currentPage > 1) {
+                            this.currentPage--;
+                            this.renderData(tabId, this.pesertaDataCache);
+                        }
+                    });
+                    
+                    document.getElementById('next-page')?.addEventListener('click', () => {
+                        const filteredRows = this.pesertaDataCache.rows.filter(row => 
+                            Object.values(row).some(value => 
+                                String(value).toLowerCase().includes(this.searchTerm.toLowerCase())
+                            )
+                        );
+                        const totalPages = Math.ceil(filteredRows.length / this.rowsPerPage);
+                        if (this.currentPage < totalPages) {
+                            this.currentPage++;
+                            this.renderData(tabId, this.pesertaDataCache);
+                        }
+                    });
+                }
+
+                if (tabId === 'kejuaraan') {
+                    const filterDropdown = document.getElementById('championship-filter');
+                    filterDropdown?.addEventListener('change', (e) => {
+                        this.selectedLomba = e.target.value;
+                        this.renderData('kejuaraan', this.kejuaraanDataCache);
+                    });
+                }
+            }
+            
+            async refreshData() {
+                if (this.currentTab !== 'pendaftaran') {
+                    if (this.currentTab === 'peserta') {
+                        this.pesertaDataCache = null;
+                    }
+                    if (this.currentTab === 'kejuaraan') {
+                        this.kejuaraanDataCache = null;
+                    }
+                    await this.loadTabData(this.currentTab);
+                    await this.loadStats();
+                    this.showRefreshNotification();
+                }
+            }
+            
+            getTabIcon(tabId) {
+                const icons = {
+                    pendaftaran: 'user-plus',
+                    peserta: 'users',
+                    pemantauan: 'eye',
+                    kejuaraan: 'trophy',
+                    klasemen: 'chart-bar'
+                };
+                return icons[tabId] || 'table';
+            }
+            
+            getTabTitle(tabId) {
+                const titles = {
+                    pendaftaran: 'Formulir Pendaftaran',
+                    peserta: 'Daftar Peserta',
+                    pemantauan: 'Real-time Pemantauan',
+                    kejuaraan: 'Hasil Kejuaraan',
+                    klasemen: 'Klasemen Kapanewon'
+                };
+                return titles[tabId] || 'Data';
+            }
+            
+            async loadStats() {
+                try {
+                    await this.statsManager.calculateAllStats();
+                    this.renderStats();
+                } catch (error) {
+                    console.error('Error loading stats:', error);
+                    this.renderStats();
+                }
+            }
+            
+            renderStats() {
+                document.getElementById('stats-grid').innerHTML = this.statsManager.getStatsForDisplay()
+                    .map(stat => `
+                        <div class="stat-card">
+                            <div class="stat-label">${stat.label}</div>
+                            <div class="stat-number">${stat.value}</div>
+                            <i class="${stat.icon}" style="color: ${stat.color}; font-size: 1.5rem;"></i>
+                        </div>
+                    `).join('');
+            }
+            
+            startAutoRefresh() {
+                this.stopAutoRefresh();
+                if (this.isAutoRefreshEnabled && this.currentTab !== 'pendaftaran') {
+                    this.refreshIntervalId = setInterval(() => this.refreshData(), 1000 * this.refreshInterval);
+                }
+                this.updateRefreshDisplay();
+            }
+            
+            stopAutoRefresh() {
+                if (this.refreshIntervalId) {
+                    clearInterval(this.refreshIntervalId);
+                    this.refreshIntervalId = null;
+                }
+            }
+            
+            toggleAutoRefresh() {
+                this.isAutoRefreshEnabled = !this.isAutoRefreshEnabled;
+                if (this.isAutoRefreshEnabled) {
+                    this.startAutoRefresh();
+                } else {
+                    this.stopAutoRefresh();
+                }
+                this.updateRefreshDisplay();
+            }
+            
+            updateRefreshDisplay() {
+                const statusElement = document.getElementById('refresh-display-status');
+                const toggleButton = document.getElementById('toggle-auto-refresh');
+                
+                if (this.currentTab === 'pendaftaran') {
+                    statusElement.textContent = 'Auto Refresh: Tidak Tersedia';
+                    toggleButton.innerHTML = '<i class="fas fa-power-off"></i> Matikan Auto Refresh';
+                    toggleButton.disabled = true;
+                    return;
+                }
+                
+                toggleButton.disabled = false;
+                
+                if (this.isAutoRefreshEnabled) {
+                    statusElement.textContent = `Auto Refresh: ON (${this.refreshInterval} detik)`;
+                    toggleButton.innerHTML = '<i class="fas fa-power-off"></i> Matikan Auto Refresh';
+                } else {
+                    statusElement.textContent = 'Auto Refresh: OFF';
+                    toggleButton.innerHTML = '<i class="fas fa-power-on"></i> Nyalakan Auto Refresh';
+                }
+            }
+            
+            updateRefreshControls() {
+                this.updateRefreshDisplay();
+            }
+            
+            showRefreshNotification() {
+                const notification = document.createElement('div');
+                notification.className = 'refresh-notification';
+                notification.innerHTML = `<i class="fas fa-check-circle"></i> Data diperbarui - ${new Date().toLocaleTimeString('id-ID')}`;
+                document.body.appendChild(notification);
+                setTimeout(() => notification.remove(), 3000);
+            }
+            
+            showError(message) {
+                document.getElementById('data-container').innerHTML = `
+                    <div class="data-error">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div style="margin-bottom: 10px;"><strong>Gagal memuat data</strong></div>
+                        <div style="margin-bottom: 15px; font-size: 0.9rem;">${message}</div>
+                        <button onclick="mtqDataManager.refreshData()" class="refresh-btn">
+                            <i class="fas fa-redo"></i> Coba Lagi
+                        </button>
+                    </div>
+                `;
+            }
+            
+            startClockAndCountdown() {
+                setInterval(() => this.updateClock(), 1000);
+                this.updateClock();
+                this.startCountdown();
+            }
+            
+            async updateClock() {
+                let masehiDate = new Date().toLocaleDateString('id-ID', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    timeZone: 'Asia/Jakarta'
+                }).replace(/Minggu/g, 'Ahad');
+                
+                document.getElementById('masehi-date').textContent = masehiDate;
+                
+                const time = new Date().toLocaleTimeString('id-ID', {
+                    timeZone: 'Asia/Jakarta',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false
+                }).replace(/\./g, ':');
+                
+                document.getElementById('clock').textContent = time;
+                document.getElementById('hijri-date').textContent = await this.hijriDateSystem.getHijriDate();
+            }
+            
+            startCountdown() {
+                const targetDate = new Date(TARGET_DATE_STRING).getTime();
+                
+                if (isNaN(targetDate)) {
+                    document.querySelector('.countdown-container').innerHTML = '<h2 style="color: var(--light-gold);">Tanggal acara tidak valid!</h2>';
+                    document.querySelector('.countdown-title').style.display = 'none';
+                    return;
+                }
+                
+                this.countdownIntervalId = setInterval(() => this.updateCountdown(targetDate), 1000);
+                this.updateCountdown(targetDate);
+            }
+            
+            updateCountdown(targetDate) {
+                const now = Date.now();
+                const timeLeft = targetDate - now;
+                
+                if (timeLeft < 0) {
+                    document.querySelector('.countdown-container').innerHTML = '<h2 style="color: var(--light-gold);">🎉 Acara Sedang Berlangsung! Ikuti di SD IT Ar-Raihan, Bantul! 🎉</h2>';
+                    document.querySelector('.countdown-title').style.display = 'none';
+                    clearInterval(this.countdownIntervalId);
+                    return;
+                }
+                
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                
+                document.getElementById('days').textContent = String(days).padStart(2, '0');
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            }
+        }
+
+        let mtqDataManager;
+        document.addEventListener('DOMContentLoaded', function() {
+            mtqDataManager = new MTQDataManager();
+            
+            // Lazy load iframe peta lokasi
+            const locationIframe = document.querySelector('.location-wrapper iframe');
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    locationIframe.src = locationIframe.getAttribute('data-src');
+                    observer.unobserve(locationIframe);
+                }
+            });
+            observer.observe(locationIframe);
+        });
+    </script>
+</body>
+</html>
