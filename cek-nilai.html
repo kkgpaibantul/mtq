@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cek Nilai MTQ Pelajar SD Tingkat Kabupaten Bantul 2025 - KKG PAI Bantul">
+    <meta name="keywords" content="Cek Nilai MTQ, MTQ Bantul 2025, Nilai Peserta MTQ, KKG PAI Bantul">
+    <title>Cek Nilai MTQ - KKG PAI Bantul 2025</title>
+    <link rel="icon" type="image/png" href="https://i.imghippo.com/files/ZnpG6770LpA.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-green: #1A5D39;
+            --secondary-green: #2D8A5A;
+            --accent-gold: #F2C94C;
+            --light-bg: #F8F9FA;
+            --white: #ffffff;
+            --dark-text: #2D3748;
+            --gray-text: #718096;
+            --error-red: #E53E3E;
+            --success-green: #38A169;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            color: var(--dark-text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            border-bottom: 5px solid var(--accent-gold);
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-gold);
+        }
+
+        .header h1 {
+            color: var(--primary-green);
+            font-size: 2.2em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            color: var(--secondary-green);
+            font-size: 1.2em;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: var(--primary-green);
+            color: var(--white);
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary-green);
+        }
+
+        .nav-btn:hover {
+            background: var(--white);
+            color: var(--primary-green);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .nav-btn.secondary {
+            background: transparent;
+            color: var(--primary-green);
+            border-color: var(--primary-green);
+        }
+
+        .nav-btn.secondary:hover {
+            background: var(--primary-green);
+            color: var(--white);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        @media (min-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--primary-green);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 15px;
+        }
+
+        .card-title i {
+            color: var(--accent-gold);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-text);
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            font-size: 1em;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            background: var(--light-bg);
+        }
+
+        input:focus {
+            border-color: var(--accent-gold);
+            outline: none;
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(242, 201, 76, 0.2);
+        }
+
+        .btn {
+            background: var(--accent-gold);
+            color: var(--dark-text);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background: #E8B731;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(242, 201, 76, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--secondary-green);
+            color: var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: #257A4D;
+        }
+
+        /* Alert Styles */
+        .alert {
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: none;
+            border-left: 4px solid;
+        }
+
+        .alert-error {
+            background: #FED7D7;
+            color: var(--error-red);
+            border-left-color: var(--error-red);
+        }
+
+        .alert-success {
+            background: #C6F6D5;
+            color: var(--success-green);
+            border-left-color: var(--success-green);
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            color: var(--white);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .info-box h3 {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-list {
+            list-style: none;
+        }
+
+        .info-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-list li i {
+            color: var(--accent-gold);
+        }
+
+        /* Dashboard Styles */
+        .dashboard {
+            display: none;
+        }
+
+        .participant-info {
+            background: var(--light-bg);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--accent-gold);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .info-item {
+            margin-bottom: 15px;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--secondary-green);
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-weight: 700;
+            color: var(--dark-text);
+            font-size: 1.1em;
+        }
+
+        /* Scores Table */
+        .scores-section {
+            margin-top: 30px;
+        }
+
+        .scores-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .scores-table th {
+            background: var(--primary-green);
+            color: var(--white);
+            padding: 15px 20px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .scores-table td {
+            padding: 12px 20px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .scores-table tr:hover {
+            background: var(--light-bg);
+        }
+
+        .scores-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .total-score {
+            background: var(--accent-gold);
+            font-weight: 700;
+            color: var(--dark-text);
+        }
+
+        /* LCP Members */
+        .lcp-members {
+            background: #E3F2FD;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #2196F3;
+        }
+
+        .member-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #BBDEFB;
+        }
+
+        .member-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Loader */
+        .loader {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--light-bg);
+            border-top: 4px solid var(--accent-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--white);
+            font-size: 0.9em;
+        }
+
+        .footer a {
+            color: var(--accent-gold);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 25px;
+            right: 25px;
+            background-color: #25D366;
+            color: var(--white);
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+            text-decoration: none;
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+            }
+            
+            .nav-btn {
+                justify-content: center;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .scores-table {
+                font-size: 0.9em;
+            }
+            
+            .scores-table th,
+            .scores-table td {
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <img src="https://i.imghippo.com/files/ZnpG6770LpA.png" alt="Logo KKG PAI Bantul" class="logo" onerror="this.style.display='none'">
+            <h1><i class="fas fa-chart-bar"></i> Cek Nilai MTQ 2025</h1>
+            <p class="subtitle">MTQ Pelajar SD Tingkat Kabupaten Bantul</p>
+            
+            <div class="nav-buttons">
+                <a href="index.html" class="nav-btn">
+                    <i class="fas fa-home"></i> Beranda Utama
+                </a>
+                <a href="https://kkgpaibantul.github.io/mtq-sd-bantul-2025/" class="nav-btn secondary">
+                    <i class="fas fa-info-circle"></i> Info MTQ
+                </a>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Left Column -->
+            <div>
+                <!-- Search Form -->
+                <div class="card" id="search-form">
+                    <h2 class="card-title"><i class="fas fa-search"></i> Cari Nilai Peserta</h2>
+                    
+                    <div class="alert alert-error" id="error-alert">
+                        <i class="fas fa-exclamation-circle"></i> <span id="error-message"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="participant-id">Nomor Peserta</label>
+                        <div class="input-group">
+                            <input type="text" id="participant-id" placeholder="Masukkan nomor peserta (contoh: MTQ-1, LCP-1, MPS-1)" required>
+                        </div>
+                        <small style="color: var(--gray-text); font-size: 0.85rem; margin-top: 5px; display: block;">
+                            Contoh format: MTQ-1, Tartil-1, MHQ-1, Azan-1, Puitisasi-1, Pidato-1, LCP-1, Melukis-1
+                        </small>
+                    </div>
+                    
+                    <button class="btn" id="search-btn">
+                        <i class="fas fa-search"></i> Cari Nilai
+                    </button>
+                </div>
+
+                <!-- Information Box -->
+                <div class="info-box">
+                    <h3><i class="fas fa-info-circle"></i> Informasi Penting</h3>
+                    <ul class="info-list">
+                        <li><i class="fas fa-check"></i> Data diambil langsung dari Google Sheets panitia</li>
+                        <li><i class="fas fa-check"></i> Nilai akan terupdate otomatis</li>
+                        <li><i class="fas fa-check"></i> Support 8 cabang lomba</li>
+                        <li><i class="fas fa-check"></i> Bisa digunakan di mobile & desktop</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div>
+                <!-- Results Dashboard -->
+                <div class="loader" id="loader">
+                    <div class="spinner"></div>
+                    <p>Mencari data peserta...</p>
+                </div>
+
+                <div class="card dashboard" id="dashboard">
+                    <h2 class="card-title"><i class="fas fa-user-graduate"></i> Informasi Peserta</h2>
+                    
+                    <div class="participant-info">
+                        <div class="info-grid" id="participant-info">
+                            <!-- Informasi peserta akan dimuat di sini -->
+                        </div>
+                    </div>
+
+                    <!-- LCP Members Section -->
+                    <div class="lcp-members" id="lcp-members" style="display: none;">
+                        <h3 class="card-title"><i class="fas fa-users"></i> Detail Anggota Tim</h3>
+                        <div id="lcp-members-list">
+                            <!-- Daftar anggota LCP akan dimuat di sini -->
+                        </div>
+                    </div>
+                    
+                    <div class="scores-section">
+                        <h3 class="card-title"><i class="fas fa-chart-line"></i> Nilai Juri</h3>
+                        
+                        <div class="table-container">
+                            <table class="scores-table" id="scores-table">
+                                <thead>
+                                    <tr>
+                                        <th>Aspek Penilaian</th>
+                                        <th>Nilai</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="scores-body">
+                                    <!-- Data nilai akan dimuat di sini -->
+                                </tbody>
+                                <tfoot>
+                                    <tr class="total-score">
+                                        <td><strong>Total Nilai Akhir</strong></td>
+                                        <td id="total-score"><strong>0</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-secondary" id="back-btn" style="margin-top: 20px;">
+                        <i class="fas fa-arrow-left"></i> Cari Peserta Lain
+                    </button>
+                </div>
+
+                <!-- Quick Guide -->
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-question-circle"></i> Cara Menggunakan</h2>
+                    <ol style="padding-left: 20px; color: var(--gray-text);">
+                        <li style="margin-bottom: 10px;">Masukkan nomor peserta sesuai kartu peserta</li>
+                        <li style="margin-bottom: 10px;">Klik tombol "Cari Nilai"</li>
+                        <li style="margin-bottom: 10px;">Tunggu sistem memproses data</li>
+                        <li>Lihat hasil nilai yang ditampilkan</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2025 KKG PAI Bantul. All rights reserved.</p>
+            <p>Powered by Google Sheets API | 
+               <a href="https://kkgpaibantul.github.io/mtq-sd-bantul-2025/">Website Resmi MTQ Bantul 2025</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/6285643238821?text=Halo%20panitia%20MTQ%20Bantul%202025,%20saya%20ingin%20bertanya%20tentang%20nilai..." class="whatsapp-float" target="_blank" aria-label="Hubungi via WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        class ScoreChecker {
+            constructor() {
+                this.WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwjbwwbJM7w0ZngsF5-Rx_5_uXyJhZPWo-UPDPFq5zROY572wf0PXUOYmNe3zwnDjE4oA/exec';
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                console.log('✅ Cek Nilai MTQ - KKG PAI Bantul initialized');
+            }
+
+            setupEventListeners() {
+                document.getElementById('search-btn').addEventListener('click', () => this.searchParticipant());
+                document.getElementById('participant-id').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.searchParticipant();
+                    }
+                });
+                document.getElementById('back-btn').addEventListener('click', () => this.showSearchForm());
+            }
+
+            async searchParticipant() {
+                const participantId = document.getElementById('participant-id').value.trim();
+                console.log('🔍 Searching for:', participantId);
+                
+                if (!participantId) {
+                    this.showError('Harap masukkan nomor peserta');
+                    return;
+                }
+
+                // Validasi format
+                const validFormats = ['MTQ-', 'MTtQ-', 'MHQ-', 'MAz-', 'MPS-', 'LPP-', 'LCP-', 'LMI-'];
+                const isValidFormat = validFormats.some(format => participantId.startsWith(format));
+                
+                if (!isValidFormat) {
+                    this.showError('Format nomor peserta tidak valid. Gunakan: MTQ-1, LCP-1, dll');
+                    return;
+                }
+
+                this.showLoader();
+                this.hideError();
+
+                try {
+                    console.log('📡 Fetching data...');
+                    const data = await this.fetchParticipantData(participantId);
+                    console.log('📦 Response:', data);
+                    
+                    if (data && data.success) {
+                        this.displayParticipantData(data);
+                        this.showDashboard();
+                    } else if (data && data.error) {
+                        this.showError(data.error);
+                    } else {
+                        this.showError('Format response tidak dikenali');
+                    }
+                } catch (error) {
+                    console.error('💥 Error:', error);
+                    this.showError('Gagal mengambil data. Silakan coba lagi.');
+                } finally {
+                    this.hideLoader();
+                }
+            }
+
+            async fetchParticipantData(participantId) {
+                const url = `${this.WEB_APP_URL}?id=${encodeURIComponent(participantId)}`;
+                
+                try {
+                    // Coba fetch biasa dulu
+                    const response = await fetch(url);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    return data;
+                } catch (error) {
+                    // Fallback ke JSONP
+                    console.log('🔄 Trying JSONP fallback...');
+                    return await this.fetchWithJsonp(participantId);
+                }
+            }
+
+            fetchWithJsonp(participantId) {
+                return new Promise((resolve, reject) => {
+                    const callbackName = 'jsonp_callback_' + Date.now();
+                    const url = `${this.WEB_APP_URL}?id=${encodeURIComponent(participantId)}&callback=${callbackName}`;
+                    
+                    window[callbackName] = function(data) {
+                        delete window[callbackName];
+                        if (script.parentNode) {
+                            document.body.removeChild(script);
+                        }
+                        resolve(data);
+                    };
+                    
+                    const script = document.createElement('script');
+                    script.src = url;
+                    
+                    script.onerror = () => {
+                        delete window[callbackName];
+                        if (script.parentNode) {
+                            document.body.removeChild(script);
+                        }
+                        reject(new Error('JSONP request failed'));
+                    };
+                    
+                    // Timeout
+                    setTimeout(() => {
+                        if (window[callbackName]) {
+                            delete window[callbackName];
+                            if (script.parentNode) {
+                                document.body.removeChild(script);
+                            }
+                            reject(new Error('Request timeout'));
+                        }
+                    }, 10000);
+                    
+                    document.body.appendChild(script);
+                });
+            }
+
+            displayParticipantData(data) {
+                const participant = data.participant;
+                const scores = data.scores;
+                
+                // Tampilkan informasi peserta
+                const infoContainer = document.getElementById('participant-info');
+                
+                const displayFields = [
+                    { key: 'No Peserta', label: 'Nomor Peserta' },
+                    { key: 'Nama', label: 'Nama' },
+                    { key: 'Jenis Kelamin', label: 'Jenis Kelamin' },
+                    { key: 'Asal Sekolah', label: 'Asal Sekolah' },
+                    { key: 'Kapanewon', label: 'Kapanewon' },
+                    { key: 'Cabang Lomba', label: 'Cabang Lomba' },
+                    { key: 'Jumlah Anggota', label: 'Jumlah Anggota' },
+                    { key: 'Anggota', label: 'Posisi' }
+                ];
+                
+                let infoHTML = '';
+                
+                displayFields.forEach(field => {
+                    if (participant[field.key]) {
+                        infoHTML += `
+                            <div class="info-item">
+                                <div class="info-label">${field.label}</div>
+                                <div class="info-value">${participant[field.key]}</div>
+                            </div>
+                        `;
+                    }
+                });
+
+                infoContainer.innerHTML = infoHTML;
+
+                // Tampilkan detail anggota untuk LCP
+                if (participant['Detail Anggota'] && participant['Cabang Lomba'] === 'Lomba Cerdas Cermat PAI') {
+                    const lcpContainer = document.getElementById('lcp-members');
+                    const lcpList = document.getElementById('lcp-members-list');
+                    
+                    let membersHTML = '';
+                    participant['Detail Anggota'].forEach((member, index) => {
+                        membersHTML += `
+                            <div class="member-item">
+                                <strong>${member.Anggota || 'Anggota ' + (index + 1)}</strong><br>
+                                <span style="color: var(--gray-text);">Nama: ${member.Nama || '-'}</span><br>
+                                <span style="color: var(--gray-text);">Asal: ${member['Asal Sekolah'] || '-'}</span>
+                            </div>
+                        `;
+                    });
+                    
+                    lcpList.innerHTML = membersHTML;
+                    lcpContainer.style.display = 'block';
+                } else {
+                    document.getElementById('lcp-members').style.display = 'none';
+                }
+
+                // Tampilkan nilai
+                const scoresBody = document.getElementById('scores-body');
+                let totalScore = 0;
+                
+                // Cek apakah ada scores dan bukan placeholder
+                const hasScores = scores && scores.length > 0;
+                const isPlaceholder = hasScores && 
+                    scores[0].aspek === 'Informasi' && 
+                    typeof scores[0].nilai === 'string' && 
+                    scores[0].nilai.includes('Belum ada');
+                
+                if (hasScores && !isPlaceholder) {
+                    scoresBody.innerHTML = scores.map(score => {
+                        // Cari nilai akhir untuk ditampilkan di footer
+                        if (score.aspek === 'Nilai Akhir' || (score.aspek && score.aspek.includes('Nilai Akhir'))) {
+                            totalScore = parseFloat(score.nilai) || 0;
+                        }
+                        
+                        // Format nilai dengan aman
+                        let nilaiDisplay;
+                        if (typeof score.nilai === 'number') {
+                            nilaiDisplay = score.nilai.toFixed(2);
+                        } else if (typeof score.nilai === 'string') {
+                            nilaiDisplay = score.nilai;
+                        } else {
+                            nilaiDisplay = '0';
+                        }
+                        
+                        return `
+                            <tr>
+                                <td>${score.aspek}</td>
+                                <td><strong>${nilaiDisplay}</strong></td>
+                            </tr>
+                        `;
+                    }).join('');
+                } else {
+                    scoresBody.innerHTML = `
+                        <tr>
+                            <td colspan="2" style="text-align: center; color: var(--gray-text); font-style: italic; padding: 30px;">
+                                <i class="fas fa-info-circle" style="font-size: 2em; margin-bottom: 10px; display: block; color: var(--accent-gold);"></i>
+                                Belum ada nilai yang diinput oleh panitia
+                            </td>
+                        </tr>
+                    `;
+                }
+
+                // Tampilkan total nilai akhir
+                document.getElementById('total-score').innerHTML = `<strong>${totalScore.toFixed(2)}</strong>`;
+            }
+
+            showSearchForm() {
+                document.getElementById('search-form').style.display = 'block';
+                document.getElementById('dashboard').style.display = 'none';
+                document.getElementById('participant-id').value = '';
+                this.hideError();
+            }
+
+            showDashboard() {
+                document.getElementById('search-form').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                // Scroll ke hasil
+                document.getElementById('dashboard').scrollIntoView({ behavior: 'smooth' });
+            }
+
+            showLoader() {
+                document.getElementById('loader').style.display = 'flex';
+            }
+
+            hideLoader() {
+                document.getElementById('loader').style.display = 'none';
+            }
+
+            showError(message) {
+                const errorAlert = document.getElementById('error-alert');
+                document.getElementById('error-message').textContent = message;
+                errorAlert.style.display = 'block';
+                // Scroll ke error
+                errorAlert.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            hideError() {
+                document.getElementById('error-alert').style.display = 'none';
+            }
+        }
+
+        // Inisialisasi aplikasi
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Cek Nilai MTQ - KKG PAI Bantul 2025 Loaded');
+            new ScoreChecker();
+        });
+    </script>
+</body>
+</html>
