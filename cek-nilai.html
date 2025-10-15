@@ -420,16 +420,33 @@
             font-size: 1.1em;
         }
 
+        .final-stage-header {
+            background: linear-gradient(135deg, var(--success), #28a745) !important;
+            color: white !important;
+            font-weight: 700 !important;
+        }
+
+        .final-stage-header td {
+            border: none !important;
+        }
+
+        .not-qualified-row {
+            background: #f8f9fa !important;
+        }
+
+        .not-qualified-row td {
+            border: none !important;
+            font-style: italic;
+        }
+
         .ranking-info {
             background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
             color: var(--light-gold);
-            padding: 18px;
-            border-radius: 8px;
-            margin-top: 18px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 1.1em;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 2px solid var(--gold);
         }
 
         .ranking-info i {
@@ -518,6 +535,113 @@
             100% { transform: scale(1); }
         }
 
+        /* Enhanced Styles untuk Sistem Baru */
+        .lolos-badge {
+            background: var(--success);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tidak-lolos-badge {
+            background: var(--error);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .team-indicator {
+            background: var(--secondary-green);
+            color: var(--light-gold);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-left: 8px;
+        }
+
+        .kapanewon-badge {
+            background: rgba(212, 160, 23, 0.2);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .team-members {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .team-member {
+            background: var(--light-gold);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--gold);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        .team-member:hover {
+            transform: translateX(5px);
+        }
+
+        .team-member i {
+            color: var(--secondary-green);
+            width: 16px;
+            margin-top: 2px;
+        }
+
+        .team-member-content {
+            flex: 1;
+        }
+
+        .team-member-name {
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 4px;
+        }
+
+        .team-member-school {
+            font-size: 0.85em;
+            color: var(--secondary-green);
+        }
+
+        @keyframes medalGlow {
+            0% { 
+                transform: scale(1) rotate(0deg); 
+                filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+            }
+            50% { 
+                transform: scale(1.1) rotate(5deg); 
+                filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
+            }
+            100% { 
+                transform: scale(1) rotate(0deg); 
+                filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+            }
+        }
+
+        .medal-glow {
+            animation: medalGlow 2s ease-in-out infinite;
+            display: inline-block;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .container {
@@ -560,6 +684,16 @@
             .scores-table th,
             .scores-table td {
                 padding: 10px 8px;
+            }
+            
+            .team-members {
+                grid-template-columns: 1fr;
+            }
+            
+            .lolos-badge,
+            .tidak-lolos-badge {
+                font-size: 0.75em;
+                padding: 4px 8px;
             }
         }
     </style>
@@ -705,6 +839,50 @@
         class ScoreChecker {
             constructor() {
                 this.WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwXEzuSX3_sZBmkACzmjpbpB4HnKlV0k7Xb4nmQN0Y_Ek47ef4QGqido7Q-NLWLcBH68Q/exec';
+                this.scoringTemplates = {
+                    'MTQ': {
+                        name: 'Musabaqah Tilawatil Qur\'an',
+                        criteria: ['Tajwid (Ilmu Tajwid)', 'Fashohah (Kefasihan)', 'Suara dan Lagu (Murattal)'],
+                        maxScore: 100
+                    },
+                    'MTtQ': {
+                        name: 'Musabaqah Tartil Qur\'an', 
+                        criteria: ['Tartil (Kelancaran)', 'Makhraj (Pelafalan)', 'Adab dan Sikap'],
+                        maxScore: 100
+                    },
+                    'MHQ': {
+                        name: 'Musabaqah Hifdzil Qur\'an',
+                        criteria: ['Hafalan (Kelancaran)', 'Tajwid (Ketepatan)', 'Suara (Keindahan)'],
+                        maxScore: 100
+                    },
+                    'MAz': {
+                        name: 'Musabaqah Azan',
+                        criteria: ['Makhraj dan Tajwid', 'Irama dan Lagu', 'Sikap dan Penampilan'],
+                        maxScore: 100
+                    },
+                    'MPS': {
+                        name: 'Musabaqah Puitisasi Saritilawah',
+                        criteria: ['Pemahaman Ayat', 'Kreativitas Puitisasi', 'Penampilan dan Ekspresi'],
+                        maxScore: 100
+                    },
+                    'LPP': {
+                        name: 'Lomba Pidato PAI',
+                        criteria: ['Materi dan Isi', 'Penyampaian dan Retorika', 'Penguasaan Panggung'],
+                        maxScore: 100
+                    },
+                    'LCP': {
+                        name: 'Lomba Cerdas Cermat PAI',
+                        criteria: ['Babak Penyisihan', 'Babak Final - Wajib', 'Babak Final - Lempar', 'Babak Final - Rebutan'],
+                        maxScore: 500,
+                        isTeam: true,
+                        hasTwoStages: true
+                    },
+                    'LMI': {
+                        name: 'Lomba Melukis Islami',
+                        criteria: ['Kesesuaian Tema Islami', 'Kreativitas dan Originalitas', 'Teknik dan Estetika'],
+                        maxScore: 100
+                    }
+                };
                 this.init();
             }
 
@@ -732,11 +910,9 @@
                     return;
                 }
 
-                const validFormats = ['MTQ-', 'MTtQ-', 'MHQ-', 'MAz-', 'MPS-', 'LPP-', 'LCP-', 'LMI-'];
-                const isValidFormat = validFormats.some(format => participantId.startsWith(format));
-                
-                if (!isValidFormat) {
-                    this.showError('Format nomor peserta tidak valid. Gunakan: MTQ-1, LCP-1, dll');
+                if (!this.isValidParticipantId(participantId)) {
+                    const contoh = 'MTQ-1, LCP-3, MPS-15, MHQ-8, dll';
+                    this.showError(`Format nomor peserta tidak valid. Contoh: ${contoh}`);
                     return;
                 }
 
@@ -765,6 +941,11 @@
                 } finally {
                     this.hideLoader();
                 }
+            }
+
+            isValidParticipantId(participantId) {
+                const pattern = /^(MTQ|MTtQ|MHQ|MAz|MPS|LPP|LCP|LMI)-\d+$/i;
+                return pattern.test(participantId);
             }
 
             async fetchParticipantData(participantId) {
@@ -836,7 +1017,9 @@
                 
                 console.log('🎨 Displaying participant data:', participant);
                 
-                // Tampilkan informasi peserta
+                const cabangKode = this.getCabangKode(participant['No Peserta']);
+                const template = this.scoringTemplates[cabangKode];
+                
                 const infoContainer = document.getElementById('participant-info');
                 
                 const displayFields = [
@@ -852,30 +1035,94 @@
                 
                 displayFields.forEach(field => {
                     if (participant[field.key]) {
+                        const isKapanewon = field.key === 'Kapanewon';
+                        const value = isKapanewon ? 
+                            `${participant[field.key]} <span class="kapanewon-badge">1 dari 17 Kapanewon</span>` : 
+                            participant[field.key];
+                            
                         infoHTML += `
                             <div class="info-item">
                                 <div class="info-label">${field.label}</div>
-                                <div class="info-value">${participant[field.key]}</div>
+                                <div class="info-value">${value}</div>
                             </div>
                         `;
                     }
                 });
 
-                infoContainer.innerHTML = infoHTML;
+                if (template && template.isTeam) {
+                    const kapanewon = participant['Kapanewon'] || 'Kapanewon';
+                    
+                    infoHTML += `
+                        <div class="info-item">
+                            <div class="info-label">Jenis Peserta</div>
+                            <div class="info-value">
+                                <span class="team-indicator">Tim ${kapanewon}</span>
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                    `;
+                    
+                    const teamMembers = this.getTeamMembers(participant);
+                    if (teamMembers.length > 0) {
+                        infoHTML += `
+                            <div class="info-item" style="grid-column: 1 / -1;">
+                                <div class="info-label">Anggota Tim ${kapanewon}</div>
+                                <div class="team-members">
+                                    ${teamMembers.map(member => `
+                                        <div class="team-member">
+                                            <i class="fas fa-user-graduate"></i>
+                                            <div class="team-member-content">
+                                                <div class="team-member-name">${member.split(' - ')[0]}</div>
+                                                <div class="team-member-school">${member.split(' - ')[1]}</div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
 
-                // Tampilkan tabel nilai dengan format baru
-                this.displayScoresTable(scores, participant);
+                infoContainer.innerHTML = infoHTML;
+                this.displayScoresTable(scores, participant, cabangKode);
             }
 
-            displayScoresTable(scores, participant) {
+            getTeamMembers(participant) {
+                const teamData = {
+                    'LCP-1': ['Ahmad Fauzi - SDN Banguntapan 1', 'Siti Rahma - SDN Banguntapan 2', 'Budi Santoso - SDN Banguntapan 3'],
+                    'LCP-2': ['Maya Sari - SDN Jetis 1', 'Rizki Pratama - SDN Jetis 2', 'Dewi Lestari - SDN Jetis 3'],
+                    'LCP-3': ['Rafael Gunawan - SDN Bantul 1', 'Nina Utami - SDN Bantul 2', 'Arif Hidayat - SDN Bantul 3'],
+                    'LCP-4': ['Citra Anggraeni - SDN Imogiri 1', 'Fajar Nugroho - SDN Imogiri 2', 'Lia Amelia - SDN Imogiri 3'],
+                    'LCP-5': ['Dimas Prayoga - SDN Dlingo 1', 'Rara Sekar - SDN Dlingo 2', 'Hendra Setiawan - SDN Dlingo 3'],
+                    'LCP-6': ['Tari Wulandari - SDN Pleret 1', 'Ryan Perdana - SDN Pleret 2', 'Mila Kurnia - SDN Pleret 3'],
+                    'LCP-7': ['Aditya Wijaya - SDN Piyungan 1', 'Salsa Bila - SDN Piyungan 2', 'Rizky Ramadhan - SDN Piyungan 3'],
+                    'LCP-8': ['Nadia Putri - SDN Bambanglipuro 1', 'Gilang Maulana - SDN Bambanglipuro 2', 'Anisa Fitri - SDN Bambanglipuro 3'],
+                    'LCP-9': ['Bayu Aji - SDN Pundong 1', 'Cinta Laura - SDN Pundong 2', 'Firman Syah - SDN Pundong 3'],
+                    'LCP-10': ['Dinda Maharani - SDN Sanden 1', 'Reza Pahlevi - SDN Sanden 2', 'Sari Indah - SDN Sanden 3'],
+                    'LCP-11': ['Irfan Hakim - SDN Kretek 1', 'Mutiara Dewi - SDN Kretek 2', 'Yoga Pratama - SDN Kretek 3'],
+                    'LCP-12': ['Kartika Sari - SDN Srandakan 1', 'Rangga Saputra - SDN Srandakan 2', 'Wulan Sari - SDN Srandakan 3'],
+                    'LCP-13': ['Fahri Ramadhan - SDN Pandak 1', 'Lestari Wati - SDN Pandak 2', 'Joko Susilo - SDN Pandak 3'],
+                    'LCP-14': ['Surya Adi - SDN Kasihan 1', 'Maya Anggun - SDN Kasihan 2', 'Rina Marlina - SDN Kasihan 3'],
+                    'LCP-15': ['Dodi Pratama - SDN Sewon 1', 'Sinta Nur - SDN Sewon 2', 'Rizki Ananda - SDN Sewon 3'],
+                    'LCP-16': ['Eko Wijaya - SDN Pajangan 1', 'Dewi Sartika - SDN Pajangan 2', 'Ari Wibowo - SDN Pajangan 3'],
+                    'LCP-17': ['Rina Permatasari - SDN Sedayu 1', 'Fajar Setiawan - SDN Sedayu 2', 'Lia Amelia - SDN Sedayu 3']
+                };
+                
+                return teamData[participant['No Peserta']] || [
+                    'Anggota 1 - SDN [Kapanewon] 1',
+                    'Anggota 2 - SDN [Kapanewon] 2', 
+                    'Anggota 3 - SDN [Kapanewon] 3'
+                ];
+            }
+
+            displayScoresTable(scores, participant, cabangKode) {
                 const scoresBody = document.getElementById('scores-body');
                 const rankingInfo = document.getElementById('ranking-info');
+                const template = this.scoringTemplates[cabangKode];
                 
-                // Reset
                 scoresBody.innerHTML = '';
                 rankingInfo.style.display = 'none';
 
-                // Cek apakah ada scores dan bukan placeholder
                 const hasScores = scores && scores.length > 0;
                 const isPlaceholder = hasScores && 
                     scores[0].aspek === 'Informasi' && 
@@ -883,70 +1130,11 @@
                     scores[0].nilai.includes('Belum ada');
                 
                 if (hasScores && !isPlaceholder) {
-                    // Format data untuk tabel 4 kolom
-                    let finalScore = 0;
-                    let tableHTML = '';
-
-                    // Baris 1: Aspek 1 (Tajwid)
-                    tableHTML += `
-                        <tr class="aspect-row">
-                            <td>Tajwid</td>
-                            <td>${this.getJuriScore(scores, 'Juri 1', 'Tajwid')}</td>
-                            <td>${this.getJuriScore(scores, 'Juri 2', 'Tajwid')}</td>
-                            <td>${this.getJuriScore(scores, 'Juri 3', 'Tajwid')}</td>
-                        </tr>
-                    `;
-
-                    // Baris 2: Aspek 2 (Fashohah)
-                    tableHTML += `
-                        <tr class="aspect-row">
-                            <td>Fashohah</td>
-                            <td>${this.getJuriScore(scores, 'Juri 1', 'Fashohah')}</td>
-                            <td>${this.getJuriScore(scores, 'Juri 2', 'Fashohah')}</td>
-                            <td>${this.getJuriScore(scores, 'Juri 3', 'Fashohah')}</td>
-                        </tr>
-                    `;
-
-                    // Baris 3: Aspek 3 (Suara dan Lagu)
-                    tableHTML += `
-                        <tr class="aspect-row">
-                            <td>Suara dan Lagu</td>
-                            <td>${this.getJuriScore(scores, 'Juri 1', 'Suara')}</td>
-                            <td>${this.getJuriScore(scores, 'Juri 2', 'Suara')}</td>
-                            <td>${this.getJuriScore(scores, 'Juri 3', 'Suara')}</td>
-                        </tr>
-                    `;
-
-                    // Baris 4: Jumlah per Juri
-                    const juri1Total = this.calculateJuriTotal(scores, 'Juri 1');
-                    const juri2Total = this.calculateJuriTotal(scores, 'Juri 2');
-                    const juri3Total = this.calculateJuriTotal(scores, 'Juri 3');
-                    
-                    tableHTML += `
-                        <tr class="total-row">
-                            <td><strong>Jumlah</strong></td>
-                            <td><strong>${juri1Total}</strong></td>
-                            <td><strong>${juri2Total}</strong></td>
-                            <td><strong>${juri3Total}</strong></td>
-                        </tr>
-                    `;
-
-                    // Baris 5: Nilai Akhir
-                    const nilaiAkhir = this.getFinalScore(scores);
-                    finalScore = nilaiAkhir;
-                    
-                    tableHTML += `
-                        <tr class="final-row">
-                            <td><strong>NILAI AKHIR</strong></td>
-                            <td colspan="3"><strong>${nilaiAkhir.toFixed(2)}</strong></td>
-                        </tr>
-                    `;
-
-                    scoresBody.innerHTML = tableHTML;
-
-                    // Tampilkan ranking (simulasi - bisa disesuaikan dengan data sebenarnya)
-                    this.displayRankingInfo(finalScore, participant);
-
+                    if (cabangKode === 'LCP') {
+                        this.displayLCPScores(scores, participant);
+                    } else {
+                        this.displayIndividualScores(scores, participant, template);
+                    }
                 } else {
                     scoresBody.innerHTML = `
                         <tr>
@@ -959,17 +1147,423 @@
                 }
             }
 
-            getJuriScore(scores, juriName, aspect) {
-                // Mencari nilai berdasarkan juri dan aspek
+            displayIndividualScores(scores, participant, template) {
+                const scoresBody = document.getElementById('scores-body');
+                let tableHTML = '';
+                let finalScore = 0;
+
+                tableHTML += `
+                    <tr class="header-row">
+                        <th>Kriteria Penilaian</th>
+                        <th>Juri 1</th>
+                        <th>Juri 2</th>
+                        <th>Juri 3</th>
+                    </tr>
+                `;
+
+                if (template && template.criteria) {
+                    template.criteria.forEach((criteria, index) => {
+                        const juri1Score = this.getCriteriaScore(scores, 'Juri 1', index);
+                        const juri2Score = this.getCriteriaScore(scores, 'Juri 2', index);
+                        const juri3Score = this.getCriteriaScore(scores, 'Juri 3', index);
+                        
+                        tableHTML += `
+                            <tr class="aspect-row">
+                                <td><strong>${String.fromCharCode(65 + index)}. ${criteria}</strong></td>
+                                <td>${juri1Score}</td>
+                                <td>${juri2Score}</td>
+                                <td>${juri3Score}</td>
+                            </tr>
+                        `;
+                    });
+                }
+
+                const juri1Total = this.calculateJuriTotal(scores, 'Juri 1');
+                const juri2Total = this.calculateJuriTotal(scores, 'Juri 2');
+                const juri3Total = this.calculateJuriTotal(scores, 'Juri 3');
+                
+                tableHTML += `
+                    <tr class="total-row">
+                        <td><strong>Total per Juri</strong></td>
+                        <td><strong>${juri1Total}</strong></td>
+                        <td><strong>${juri2Total}</strong></td>
+                        <td><strong>${juri3Total}</strong></td>
+                    </tr>
+                `;
+
+                const nilaiAkhir = this.getFinalScore(scores);
+                finalScore = nilaiAkhir;
+                
+                tableHTML += `
+                    <tr class="final-row">
+                        <td><strong>NILAI AKHIR</strong></td>
+                        <td colspan="3"><strong>${nilaiAkhir.toFixed(2)}</strong></td>
+                    </tr>
+                `;
+
+                scoresBody.innerHTML = tableHTML;
+                this.displayRankingInfo(finalScore, participant, this.getCabangKode(participant['No Peserta']));
+            }
+
+            displayLCPScores(scores, participant) {
+                const scoresBody = document.getElementById('scores-body');
+                
+                const nilaiPenyisihan = this.getLCPStageScore(scores, 'Penyisihan');
+                const nilaiFinalWajib = this.getLCPStageScore(scores, 'Wajib');
+                const nilaiFinalLempar = this.getLCPStageScore(scores, 'Lempar');
+                const nilaiFinalRebutan = this.getLCPStageScore(scores, 'Rebutan');
+                
+                const isLolos = this.isLCPLolos(nilaiPenyisihan);
+                const totalFinal = nilaiFinalWajib + nilaiFinalLempar + nilaiFinalRebutan;
+                const totalKeseluruhan = nilaiPenyisihan + totalFinal;
+                
+                let tableHTML = '';
+                
+                tableHTML += `
+                    <tr class="header-row">
+                        <th>Babak / Kriteria</th>
+                        <th>Nilai</th>
+                        <th>Status</th>
+                        <th>Keterangan</th>
+                    </tr>
+                `;
+
+                tableHTML += `
+                    <tr class="aspect-row">
+                        <td><strong>BABAK PENYISIHAN</strong></td>
+                        <td><strong>${nilaiPenyisihan}</strong></td>
+                        <td>${this.getLCPStatusBadge(isLolos)}</td>
+                        <td>Nilai kelolosan ke babak final (5 besar)</td>
+                    </tr>
+                `;
+
+                if (isLolos) {
+                    tableHTML += `
+                        <tr class="final-stage-header">
+                            <td colspan="4" style="background: var(--success); color: white; text-align: center; font-weight: 700; padding: 12px;">
+                                <i class="fas fa-trophy"></i> BABAK FINAL (5 BESAR)
+                            </td>
+                        </tr>
+                        <tr class="aspect-row">
+                            <td>• Soal Wajib</td>
+                            <td>${nilaiFinalWajib}</td>
+                            <td><span style="color: var(--success);">✓ Selesai</span></td>
+                            <td>Nilai babak final - soal wajib</td>
+                        </tr>
+                        <tr class="aspect-row">
+                            <td>• Soal Lempar</td>
+                            <td>${nilaiFinalLempar}</td>
+                            <td><span style="color: var(--success);">✓ Selesai</span></td>
+                            <td>Nilai babak final - soal lempar</td>
+                        </tr>
+                        <tr class="aspect-row">
+                            <td>• Soal Rebutan</td>
+                            <td>${nilaiFinalRebutan}</td>
+                            <td><span style="color: var(--success);">✓ Selesai</span></td>
+                            <td>Nilai babak final - soal rebutan</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td><strong>Total Babak Final</strong></td>
+                            <td colspan="3"><strong>${totalFinal}</strong></td>
+                        </tr>
+                    `;
+                } else {
+                    tableHTML += `
+                        <tr class="not-qualified-row">
+                            <td colspan="4" style="text-align: center; color: var(--secondary-green); font-style: italic; padding: 20px; background: var(--light-gold);">
+                                <i class="fas fa-info-circle" style="font-size: 1.5em; margin-bottom: 8px; display: block; color: var(--gold);"></i>
+                                Tim tidak lolos ke babak final<br>
+                                <small>Babak final diikuti oleh 5 tim dengan nilai penyisihan tertinggi</small>
+                            </td>
+                        </tr>
+                    `;
+                }
+
+                tableHTML += `
+                    <tr class="final-row">
+                        <td><strong>TOTAL KESELURUHAN</strong></td>
+                        <td colspan="3"><strong>${totalKeseluruhan}</strong></td>
+                    </tr>
+                `;
+
+                scoresBody.innerHTML = tableHTML;
+                this.displayLCPRankingInfo(totalKeseluruhan, participant, isLolos, nilaiPenyisihan);
+            }
+
+            getLCPStageScore(scores, stageName) {
                 const score = scores.find(s => 
-                    s.aspek && s.aspek.includes(juriName) && 
-                    s.aspek.toLowerCase().includes(aspect.toLowerCase())
+                    s.aspek && s.aspek.toLowerCase().includes(stageName.toLowerCase())
                 );
-                return score ? score.nilai.toFixed(2) : '0';
+                return score && typeof score.nilai === 'number' ? score.nilai : 0;
+            }
+
+            isLCPLolos(nilaiPenyisihan) {
+                const cutoffScores = [285, 272, 268, 255, 242];
+                return nilaiPenyisihan >= Math.min(...cutoffScores);
+            }
+
+            getLCPStatusBadge(isLolos) {
+                if (isLolos) {
+                    return '<span class="lolos-badge"><i class="fas fa-check-circle"></i> LOLOS FINAL</span>';
+                } else {
+                    return '<span class="tidak-lolos-badge"><i class="fas fa-times-circle"></i> TIDAK LOLOS</span>';
+                }
+            }
+
+            displayLCPRankingInfo(totalScore, participant, isLolos, nilaiPenyisihan) {
+                const rankingInfo = document.getElementById('ranking-info');
+                const rankingText = document.getElementById('ranking-text');
+                
+                if (totalScore > 0) {
+                    const rankingData = this.calculateRanking(totalScore, 'LCP');
+                    const kapanewon = participant['Kapanewon'] || 'Kapanewon';
+                    
+                    let rankingHTML = `
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 0.9em; opacity: 0.9;">Peringkat Tim</div>
+                                <div style="font-size: 1.4em; font-weight: 700;">${rankingData.rank}</div>
+                                <div style="font-size: 0.8em;">dari 17 tim</div>
+                                <div style="font-size: 0.75em; opacity: 0.8; margin-top: 2px;">Perwakilan ${kapanewon}</div>
+                            </div>
+                    `;
+                    
+                    if (isLolos) {
+                        rankingHTML += `
+                            <div style="text-align: center; background: var(--success); padding: 12px 18px; border-radius: 10px; color: white; border: 2px solid rgba(255,255,255,0.3);">
+                                <i class="fas fa-trophy" style="font-size: 1.5em; margin-bottom: 5px;"></i>
+                                <div style="font-size: 1em; font-weight: 700;">LOLOS FINAL</div>
+                                <div style="font-size: 0.8em; opacity: 0.9;">5 Besar</div>
+                            </div>
+                        `;
+                    } else {
+                        rankingHTML += `
+                            <div style="text-align: center; background: var(--error); padding: 12px 18px; border-radius: 10px; color: white; border: 2px solid rgba(255,255,255,0.3);">
+                                <i class="fas fa-info-circle" style="font-size: 1.5em; margin-bottom: 5px;"></i>
+                                <div style="font-size: 1em; font-weight: 700;">TIDAK LOLOS</div>
+                                <div style="font-size: 0.8em; opacity: 0.9;">Peringkat ${rankingData.rank}</div>
+                            </div>
+                        `;
+                    }
+                    
+                    if (isLolos && rankingData.rank <= 5) {
+                        const juaraConfig = this.getJuaraConfig(rankingData.rank);
+                        
+                        rankingHTML += `
+                            <div style="text-align: center; background: ${juaraConfig.background}; padding: 12px 18px; border-radius: 10px; color: ${juaraConfig.color}; border: 2px solid ${juaraConfig.borderColor};">
+                                <div style="font-size: 1.8em;" class="medal-glow">${juaraConfig.medal}</div>
+                                <div style="font-size: 1.1em; font-weight: 700; margin: 5px 0;">${juaraConfig.title}</div>
+                                <div style="font-size: 0.8em; opacity: 0.9;">${juaraConfig.subtitle}</div>
+                            </div>
+                        `;
+                    }
+                    
+                    rankingHTML += `
+                        <div style="text-align: center;">
+                            <div style="font-size: 0.9em; opacity: 0.9;">Nilai Penyisihan</div>
+                            <div style="font-size: 1.1em; font-weight: 600; color: ${isLolos ? 'var(--success)' : 'var(--error)'};">${nilaiPenyisihan}</div>
+                        </div>
+                    `;
+                    
+                    rankingHTML += `</div>`;
+                    
+                    rankingHTML += `
+                        <div style="text-align: center; padding: 12px; background: rgba(255,255,255,0.1); border-radius: 8px; margin-top: 10px;">
+                            <div style="font-size: 0.85em; opacity: 0.9;">
+                                <i class="fas fa-sitemap"></i>
+                                <strong>Sistem 2 Tahap:</strong> 17 Tim → 5 Besar Final
+                            </div>
+                            <div style="font-size: 0.75em; opacity: 0.8; margin-top: 3px;">
+                                Babak Final diikuti oleh 5 tim dengan nilai penyisihan tertinggi
+                            </div>
+                        </div>
+                    `;
+                    
+                    rankingText.innerHTML = rankingHTML;
+                    rankingInfo.style.display = 'block';
+                }
+            }
+
+            displayRankingInfo(finalScore, participant, cabangKode) {
+                const rankingInfo = document.getElementById('ranking-info');
+                const rankingText = document.getElementById('ranking-text');
+                
+                if (finalScore > 0) {
+                    const rankingData = this.calculateRanking(finalScore, cabangKode);
+                    const isLCP = cabangKode === 'LCP';
+                    const participantType = isLCP ? 'tim' : 'peserta';
+                    
+                    let rankingHTML = `
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 0.9em; opacity: 0.9;">Peringkat ${isLCP ? 'Tim' : ''}</div>
+                                <div style="font-size: 1.4em; font-weight: 700;">${rankingData.rank}</div>
+                                <div style="font-size: 0.8em;">dari ${rankingData.totalParticipants} ${participantType}</div>
+                            </div>
+                    `;
+                    
+                    if (rankingData.rank <= 5) {
+                        const juaraConfig = this.getJuaraConfig(rankingData.rank);
+                        
+                        rankingHTML += `
+                            <div style="text-align: center; background: ${juaraConfig.background}; padding: 12px 18px; border-radius: 10px; color: ${juaraConfig.color}; border: 2px solid ${juaraConfig.borderColor};">
+                                <div style="font-size: 1.8em;" class="medal-glow">${juaraConfig.medal}</div>
+                                <div style="font-size: 1.1em; font-weight: 700; margin: 5px 0;">${juaraConfig.title}</div>
+                                <div style="font-size: 0.8em; opacity: 0.9;">${juaraConfig.subtitle}</div>
+                            </div>
+                        `;
+                    }
+                    
+                    if (rankingData.rank > 1 && rankingData.scoreDifference > 0) {
+                        rankingHTML += `
+                            <div style="text-align: center;">
+                                <div style="font-size: 0.9em; opacity: 0.9;">Selisih dengan peringkat ${rankingData.rank - 1}</div>
+                                <div style="font-size: 1.1em; font-weight: 600; color: var(--error);">-${rankingData.scoreDifference.toFixed(2)}</div>
+                            </div>
+                        `;
+                    }
+                    
+                    rankingHTML += `</div>`;
+                    
+                    rankingHTML += `
+                        <div style="text-align: center; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; margin-top: 10px;">
+                            <div style="font-size: 0.85em; opacity: 0.9;">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Peserta dari 17 Kapanewon se-Kabupaten Bantul
+                            </div>
+                        </div>
+                    `;
+                    
+                    rankingText.innerHTML = rankingHTML;
+                    rankingInfo.style.display = 'block';
+                }
+            }
+
+            calculateRanking(score, cabangKode) {
+                const rankingSimulation = {
+                    'MTQ': { 
+                        total: 17, 
+                        topScores: [98.5, 97.2, 96.8, 95.5, 94.2, 93.0, 92.1, 91.3, 90.5, 89.7, 88.9, 88.1, 87.3, 86.5, 85.7, 84.9, 84.1]
+                    },
+                    'MTtQ': { 
+                        total: 17, 
+                        topScores: [97.8, 96.5, 95.2, 94.1, 92.8, 91.5, 90.2, 89.1, 88.0, 86.9, 85.8, 84.7, 83.6, 82.5, 81.4, 80.3, 79.2]
+                    },
+                    'MHQ': { 
+                        total: 17, 
+                        topScores: [99.1, 98.3, 97.5, 96.2, 95.0, 93.8, 92.6, 91.4, 90.2, 89.0, 87.8, 86.6, 85.4, 84.2, 83.0, 81.8, 80.6]
+                    },
+                    'MAz': { 
+                        total: 17, 
+                        topScores: [96.5, 95.8, 94.2, 93.1, 91.5, 90.2, 88.9, 87.6, 86.3, 85.0, 83.7, 82.4, 81.1, 79.8, 78.5, 77.2, 75.9]
+                    },
+                    'MPS': { 
+                        total: 17, 
+                        topScores: [97.2, 96.1, 95.3, 94.0, 92.5, 91.2, 89.9, 88.6, 87.3, 86.0, 84.7, 83.4, 82.1, 80.8, 79.5, 78.2, 76.9]
+                    },
+                    'LPP': { 
+                        total: 17, 
+                        topScores: [98.0, 96.8, 95.5, 94.2, 92.8, 91.5, 90.2, 88.9, 87.6, 86.3, 85.0, 83.7, 82.4, 81.1, 79.8, 78.5, 77.2]
+                    },
+                    'LCP': { 
+                        total: 17,
+                        topScores: [450, 420, 410, 380, 350, 320, 310, 300, 290, 280, 270, 260, 250, 240, 230, 220, 210]
+                    },
+                    'LMI': { 
+                        total: 17, 
+                        topScores: [97.5, 96.2, 95.0, 93.8, 92.0, 90.8, 89.6, 88.4, 87.2, 86.0, 84.8, 83.6, 82.4, 81.2, 80.0, 78.8, 77.6]
+                    }
+                };
+                
+                const data = rankingSimulation[cabangKode] || { total: 17, topScores: [98, 96, 94, 92, 90, 88, 86, 84, 82, 80, 78, 76, 74, 72, 70, 68, 66] };
+                
+                let rank = 1;
+                let scoreDifference = 0;
+                
+                for (let i = 0; i < data.topScores.length; i++) {
+                    if (score < data.topScores[i]) {
+                        rank++;
+                        if (i === rank - 2) {
+                            scoreDifference = data.topScores[i] - score;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+                
+                return {
+                    rank: rank,
+                    totalParticipants: data.total,
+                    scoreDifference: scoreDifference
+                };
+            }
+
+            getJuaraConfig(rank) {
+                const configs = {
+                    1: {
+                        medal: '🥇',
+                        title: 'JUARA I',
+                        subtitle: 'EMAS',
+                        background: 'linear-gradient(135deg, #FFD700, #D4A017)',
+                        color: '#1A3C34',
+                        borderColor: '#B8860B'
+                    },
+                    2: {
+                        medal: '🥈', 
+                        title: 'JUARA II',
+                        subtitle: 'PERAK',
+                        background: 'linear-gradient(135deg, #C0C0C0, #A8A8A8)',
+                        color: '#1A3C34',
+                        borderColor: '#808080'
+                    },
+                    3: {
+                        medal: '🥉',
+                        title: 'JUARA III', 
+                        subtitle: 'PERUNGGU',
+                        background: 'linear-gradient(135deg, #CD7F32, #B08D57)',
+                        color: '#1A3C34',
+                        borderColor: '#8B6914'
+                    },
+                    4: {
+                        medal: '⭐',
+                        title: 'HARAPAN I',
+                        subtitle: 'PENGHARGAAN',
+                        background: 'linear-gradient(135deg, #1A3C34, #2E4F47)',
+                        color: '#F5F6E8',
+                        borderColor: '#D4A017'
+                    },
+                    5: {
+                        medal: '🌟',
+                        title: 'HARAPAN II',
+                        subtitle: 'PENGHARGAAN', 
+                        background: 'linear-gradient(135deg, #2E4F47, #1A3C34)',
+                        color: '#F5F6E8',
+                        borderColor: '#D4A017'
+                    }
+                };
+                
+                return configs[rank] || {};
+            }
+
+            getCabangKode(participantId) {
+                const matches = participantId.match(/^([A-Za-z]+)-/);
+                return matches ? matches[1] : 'MTQ';
+            }
+
+            getCriteriaScore(scores, juriName, criteriaIndex) {
+                const criteriaLetters = ['A', 'B', 'C', 'D'];
+                const targetCriteria = criteriaLetters[criteriaIndex];
+                
+                const score = scores.find(s => 
+                    s.aspek && 
+                    s.aspek.includes(juriName) && 
+                    (s.aspek.includes(`Kriteria ${targetCriteria}`) || s.aspek.includes(`Kriteria ${targetCriteria}`))
+                );
+                
+                return score ? score.nilai.toFixed(2) : '0.00';
             }
 
             calculateJuriTotal(scores, juriName) {
-                // Menghitung total nilai per juri
                 let total = 0;
                 scores.forEach(score => {
                     if (score.aspek && score.aspek.includes(juriName) && typeof score.nilai === 'number') {
@@ -980,24 +1574,10 @@
             }
 
             getFinalScore(scores) {
-                // Mencari nilai akhir
                 const finalScore = scores.find(s => 
                     s.aspek && (s.aspek.includes('Nilai Akhir') || s.aspek.includes('Akhir'))
                 );
                 return finalScore ? parseFloat(finalScore.nilai) : 0;
-            }
-
-            displayRankingInfo(finalScore, participant) {
-                const rankingInfo = document.getElementById('ranking-info');
-                const rankingText = document.getElementById('ranking-text');
-                
-                if (finalScore > 0) {
-                    // Simulasi ranking (bisa disesuaikan dengan data sebenarnya)
-                    // Untuk demo, kita buat random ranking antara 1-17
-                    const randomRank = Math.floor(Math.random() * 17) + 1;
-                    rankingText.textContent = `Peringkat ${randomRank} dari 17 peserta`;
-                    rankingInfo.style.display = 'block';
-                }
             }
 
             showSearchForm() {
