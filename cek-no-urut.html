@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cek Data Peserta MTQ Bantul 2025</title>
+    <title>Cek Data Peserta - MTQ Bantul 2025</title>
     <style>
+        :root {
+            --primary-green: #1A3C34;
+            --secondary-green: #2E4F47;
+            --gold: #D4A017;
+            --light-gold: #F5F6E8;
+            --white: #ffffff;
+            --dark-text: #1A3C34;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,36 +21,66 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--primary-green), var(--gold));
+            background-image: url('https://i.ibb.co.com/Cpwy9Lv5/images-7.jpg');
+            background-blend-mode: overlay;
+            background-attachment: fixed;
+            color: var(--white);
             min-height: 100vh;
             padding: 20px;
         }
 
         .container {
-            max-width: 650px;
+            max-width: 800px;
             margin: 0 auto;
-            background: white;
+            background: var(--white);
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             overflow: hidden;
         }
 
         .header {
-            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
-            color: white;
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+            color: var(--light-gold);
             padding: 25px 20px;
             text-align: center;
+            position: relative;
         }
 
         .header h1 {
             font-size: 1.8em;
             margin-bottom: 5px;
+            font-weight: 700;
         }
 
         .header p {
             opacity: 0.9;
             font-size: 1em;
+            font-weight: 600;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--gold);
+            color: var(--dark-text);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--light-gold);
+            transform: translateY(-50%) scale(1.05);
         }
 
         .search-section {
@@ -61,27 +100,32 @@
             border: 2px solid #ddd;
             border-radius: 8px;
             font-size: 16px;
+            font-family: 'Poppins', sans-serif;
             transition: border-color 0.3s;
         }
 
         #participantId:focus {
             outline: none;
-            border-color: #3498db;
+            border-color: var(--secondary-green);
         }
 
         #searchBtn {
             padding: 12px 20px;
-            background: #27ae60;
-            color: white;
+            background: var(--gold);
+            color: var(--dark-text);
             border: none;
             border-radius: 8px;
             font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
             transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         #searchBtn:hover {
-            background: #219a52;
+            background: var(--light-gold);
         }
 
         #searchBtn:disabled {
@@ -91,8 +135,9 @@
 
         .examples {
             text-align: center;
-            color: #7f8c8d;
+            color: var(--secondary-green);
             font-size: 0.85em;
+            font-weight: 600;
         }
 
         .result-section {
@@ -104,7 +149,8 @@
             background: white;
             border-radius: 10px;
             padding: 20px;
-            border: 2px solid #e9ecef;
+            border: 2px solid var(--light-gold);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .data-table {
@@ -123,7 +169,7 @@
 
         .data-label {
             font-weight: 600;
-            color: #2c3e50;
+            color: var(--dark-text);
             padding: 12px 15px 12px 0;
             width: 160px;
             vertical-align: top;
@@ -134,27 +180,30 @@
             padding: 12px 5px;
             width: 10px;
             text-align: center;
-            color: #7f8c8d;
+            color: var(--secondary-green);
             vertical-align: top;
+            font-weight: 600;
         }
 
         .data-value {
-            color: #34495e;
+            color: var(--dark-text);
             padding: 12px 0;
             vertical-align: top;
+            font-weight: 500;
         }
 
         .team-section {
             margin-top: 20px;
             padding-top: 20px;
-            border-top: 2px solid #ecf0f1;
+            border-top: 2px solid var(--light-gold);
         }
 
         .team-section h4 {
-            color: #2c3e50;
+            color: var(--dark-text);
             margin-bottom: 15px;
             font-size: 1.1em;
             text-align: center;
+            font-weight: 700;
         }
 
         .team-table {
@@ -163,11 +212,12 @@
             background: #f8f9fa;
             border-radius: 8px;
             overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .team-table th {
-            background: #3498db;
-            color: white;
+            background: var(--secondary-green);
+            color: var(--light-gold);
             padding: 12px 15px;
             text-align: left;
             font-weight: 600;
@@ -177,6 +227,7 @@
             padding: 12px 15px;
             border-bottom: 1px solid #e9ecef;
             text-align: left;
+            color: var(--dark-text);
         }
 
         .team-table tr:last-child td {
@@ -189,8 +240,17 @@
 
         .loading {
             text-align: center;
-            padding: 20px;
-            color: #3498db;
+            padding: 30px;
+            color: var(--secondary-green);
+        }
+
+        .loading h3 {
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .loading p {
+            font-weight: 600;
         }
 
         .error {
@@ -200,17 +260,48 @@
             border-radius: 8px;
             text-align: center;
             margin: 15px 0;
+            font-weight: 600;
         }
 
         .success-badge {
-            background: #27ae60;
-            color: white;
-            padding: 8px 15px;
+            background: var(--gold);
+            color: var(--dark-text);
+            padding: 10px 15px;
             border-radius: 20px;
-            font-size: 0.9em;
+            font-size: 1em;
             display: block;
             text-align: center;
             margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        footer {
+            background: var(--primary-green);
+            color: var(--light-gold);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--light-gold);
+            border-top-color: var(--primary-green);
+            border-bottom-color: var(--primary-green);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         @media (max-width: 600px) {
@@ -220,6 +311,26 @@
             
             .header h1 {
                 font-size: 1.5em;
+            }
+            
+            .back-btn {
+                position: relative;
+                left: 0;
+                top: 0;
+                transform: none;
+                margin-bottom: 10px;
+                align-self: flex-start;
+            }
+            
+            .header {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .header-text {
+                width: 100%;
+                text-align: center;
             }
             
             .data-label {
@@ -242,12 +353,21 @@
             }
         }
     </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🔍 Cek Data Peserta MTQ</h1>
-            <p>MTQ Bantul 2025 - Sistem Informasi Peserta</p>
+            <button class="back-btn" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i> Kembali
+            </button>
+            <div class="header-text">
+                <h1><i class="fas fa-search"></i> Cek Data Peserta MTQ</h1>
+                <p>MTQ Bantul 2025 - Sistem Informasi Peserta</p>
+            </div>
         </div>
 
         <div class="search-section">
@@ -258,7 +378,9 @@
                     placeholder="Masukkan nomor peserta (contoh: MTQ-1, MTtQ-5, LCP-3)"
                     autocomplete="off"
                 >
-                <button id="searchBtn" onclick="searchParticipant()">Cari Data</button>
+                <button id="searchBtn" onclick="searchParticipant()">
+                    <i class="fas fa-search"></i> Cari Data
+                </button>
             </div>
             <div class="examples">
                 Contoh: MTQ-1, MTtQ-5, MHQ-3, LCP-1, LPP-2
@@ -269,6 +391,10 @@
             <!-- Hasil akan ditampilkan di sini -->
         </div>
     </div>
+
+    <footer>
+        MTQ Pelajar SD Tingkat Kabupaten Bantul Tahun 2025 - Sistem Pencarian Peserta
+    </footer>
 
     <script>
         const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbw271vdfj1B5P5OOcQF_LNEUdtB6wKxeP525W_Toim1YtV1yISSTSkbcJpD3rb6YUrRpA/exec';
@@ -285,11 +411,12 @@
 
             // Tampilkan loading
             searchBtn.disabled = true;
-            searchBtn.textContent = 'Mencari...';
+            searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mencari...';
             resultSection.style.display = 'block';
             resultSection.innerHTML = `
                 <div class="loading">
-                    <h3>🔍 Mencari Data Peserta...</h3>
+                    <div class="spinner"></div>
+                    <h3>Mencari Data Peserta...</h3>
                     <p>Sedang mencari data untuk <strong>${participantId}</strong></p>
                 </div>
             `;
@@ -309,7 +436,7 @@
                 })
                 .finally(() => {
                     searchBtn.disabled = false;
-                    searchBtn.textContent = 'Cari Data';
+                    searchBtn.innerHTML = '<i class="fas fa-search"></i> Cari Data';
                 });
         }
 
@@ -318,7 +445,9 @@
             const lomba = data.lomba;
             
             let html = `
-                <div class="success-badge">✅ DATA DITEMUKAN</div>
+                <div class="success-badge">
+                    <i class="fas fa-check-circle"></i> DATA PESERTA DITEMUKAN
+                </div>
                 <div class="participant-card">
                     <table class="data-table">
             `;
@@ -384,7 +513,7 @@
             if (lomba.isTeam && data.teamMembers && data.teamMembers.length > 0) {
                 html += `
                     <div class="team-section">
-                        <h4>👥 ANGGOTA TIM</h4>
+                        <h4><i class="fas fa-users"></i> ANGGOTA TIM</h4>
                         <table class="team-table">
                             <thead>
                                 <tr>
@@ -420,6 +549,16 @@
             
             if (type === 'error') {
                 resultSection.innerHTML = `<div class="error">${message}</div>`;
+            }
+        }
+
+        function goBack() {
+            // Kembali ke halaman sebelumnya atau ke dashboard utama
+            if (document.referrer && document.referrer.includes(window.location.host)) {
+                window.history.back();
+            } else {
+                // Redirect ke dashboard utama jika tidak ada referrer
+                window.location.href = 'index.html'; // Ganti dengan URL dashboard utama
             }
         }
 
