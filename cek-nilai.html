@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cek Nilai MTQ Bantul 2025</title>
+    <title>Cek Nilai - MTQ Bantul 2025</title>
     <style>
+        :root {
+            --primary-green: #1A3C34;
+            --secondary-green: #2E4F47;
+            --gold: #D4A017;
+            --light-gold: #F5F6E8;
+            --white: #ffffff;
+            --dark-text: #1A3C34;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,8 +21,12 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--primary-green), var(--gold));
+            background-image: url('https://i.ibb.co.com/Cpwy9Lv5/images-7.jpg');
+            background-blend-mode: overlay;
+            background-attachment: fixed;
+            color: var(--white);
             min-height: 100vh;
             padding: 20px;
         }
@@ -21,28 +34,53 @@
         .container {
             max-width: 1000px;
             margin: 0 auto;
-            background: white;
+            background: var(--white);
             border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
             overflow: hidden;
         }
 
         .header {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: white;
-            padding: 30px;
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+            color: var(--light-gold);
+            padding: 25px 20px;
             text-align: center;
+            position: relative;
         }
 
         .header h1 {
-            font-size: 2.2em;
-            margin-bottom: 10px;
-            font-weight: 300;
+            font-size: 2em;
+            margin-bottom: 5px;
+            font-weight: 700;
         }
 
         .header p {
             opacity: 0.9;
             font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--gold);
+            color: var(--dark-text);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--light-gold);
+            transform: translateY(-50%) scale(1.05);
         }
 
         .search-section {
@@ -63,31 +101,36 @@
             border: 2px solid #e9ecef;
             border-radius: 8px;
             font-size: 16px;
+            font-family: 'Poppins', sans-serif;
             transition: border-color 0.3s;
         }
 
         .input-group input:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: var(--secondary-green);
         }
 
         .input-group button {
             padding: 15px 25px;
-            background: #667eea;
-            color: white;
+            background: var(--gold);
+            color: var(--dark-text);
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
+            font-weight: 600;
             transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .input-group button:hover {
-            background: #5a6fd8;
+            background: var(--light-gold);
         }
 
         .input-group button:disabled {
-            background: #ccc;
+            background: #95a5a6;
             cursor: not-allowed;
         }
 
@@ -96,22 +139,25 @@
             flex-wrap: wrap;
             gap: 10px;
             margin-top: 15px;
+            justify-content: center;
         }
 
         .example-chip {
-            background: white;
-            border: 1px solid #667eea;
-            color: #667eea;
+            background: var(--white);
+            border: 2px solid var(--gold);
+            color: var(--dark-text);
             padding: 8px 15px;
             border-radius: 20px;
             font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
         }
 
         .example-chip:hover {
-            background: #667eea;
-            color: white;
+            background: var(--gold);
+            color: var(--dark-text);
+            transform: scale(1.05);
         }
 
         .result-section {
@@ -120,15 +166,19 @@
         }
 
         .participant-info {
-            background: white;
+            background: var(--white);
             padding: 25px;
             border-bottom: 1px solid #e9ecef;
         }
 
         .participant-info h3 {
-            color: #2c3e50;
+            color: var(--dark-text);
             margin-bottom: 15px;
             font-size: 1.4em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .info-grid {
@@ -144,14 +194,15 @@
 
         .info-label {
             font-weight: 600;
-            color: #6c757d;
+            color: var(--secondary-green);
             font-size: 0.9em;
             margin-bottom: 5px;
         }
 
         .info-value {
-            color: #2c3e50;
+            color: var(--dark-text);
             font-size: 1.1em;
+            font-weight: 500;
         }
 
         .team-section {
@@ -161,9 +212,13 @@
         }
 
         .team-section h3 {
-            color: #2c3e50;
+            color: var(--dark-text);
             margin-bottom: 20px;
             font-size: 1.4em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .team-grid {
@@ -173,20 +228,21 @@
         }
 
         .team-member {
-            background: white;
+            background: var(--white);
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 2px solid var(--light-gold);
         }
 
         .member-name {
             font-weight: 600;
-            color: #2c3e50;
+            color: var(--dark-text);
             margin-bottom: 10px;
         }
 
         .member-details {
-            color: #6c757d;
+            color: var(--secondary-green);
             font-size: 0.9em;
         }
 
@@ -195,24 +251,28 @@
         }
 
         .scores-section h3 {
-            color: #2c3e50;
+            color: var(--dark-text);
             margin-bottom: 20px;
             font-size: 1.4em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .score-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
-            background: white;
+            background: var(--white);
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .score-table th {
-            background: #2c3e50;
-            color: white;
+            background: var(--secondary-green);
+            color: var(--light-gold);
             padding: 15px;
             text-align: center;
             font-weight: 600;
@@ -222,6 +282,7 @@
             padding: 15px;
             text-align: center;
             border-bottom: 1px solid #e9ecef;
+            color: var(--dark-text);
         }
 
         .score-table tr:last-child td {
@@ -232,10 +293,12 @@
             text-align: left;
             font-weight: 600;
             background: #f8f9fa;
+            color: var(--dark-text);
         }
 
         .score-table .juri-col {
             background: #f8f9fa;
+            color: var(--dark-text);
         }
 
         .score-table .total-row {
@@ -244,7 +307,7 @@
         }
 
         .score-table .final-row {
-            background: #d4edda;
+            background: var(--light-gold);
             font-weight: 700;
             font-size: 1.1em;
         }
@@ -263,12 +326,12 @@
             background: #f8f9fa;
             padding: 20px;
             border-radius: 10px;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid var(--gold);
         }
 
         .score-category.penyisihan {
             background: #e3f2fd;
-            border-left-color: #2196f3;
+            border-left-color: var(--secondary-green);
         }
 
         .score-category.final {
@@ -278,7 +341,7 @@
 
         .score-category.rekap {
             background: #fff3cd;
-            border-left-color: #ffc107;
+            border-left-color: var(--gold);
         }
 
         .score-category.not-qualified {
@@ -288,9 +351,12 @@
 
         .category-title {
             font-weight: 600;
-            color: #2c3e50;
+            color: var(--dark-text);
             margin-bottom: 15px;
             font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .scores-list {
@@ -311,17 +377,18 @@
         }
 
         .score-aspek {
-            color: #495057;
+            color: var(--secondary-green);
+            font-weight: 500;
         }
 
         .score-nilai {
             font-weight: 600;
-            color: #2c3e50;
+            color: var(--dark-text);
             font-size: 1.1em;
         }
 
         .score-nilai.highlight {
-            color: #28a745;
+            color: var(--primary-green);
             font-size: 1.2em;
         }
 
@@ -335,6 +402,10 @@
             margin: 15px 0;
             font-size: 1.1em;
             border-left: 4px solid #28a745;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .status-tidak-lolos {
@@ -347,17 +418,21 @@
             margin: 15px 0;
             font-size: 1.1em;
             border-left: 4px solid #dc3545;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .loading {
             text-align: center;
             padding: 40px;
-            color: #6c757d;
+            color: var(--secondary-green);
         }
 
         .loading-spinner {
             border: 3px solid #f3f3f3;
-            border-top: 3px solid #667eea;
+            border-top: 3px solid var(--secondary-green);
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -377,33 +452,39 @@
             border-radius: 8px;
             margin: 20px 0;
             border-left: 4px solid #dc3545;
+            text-align: center;
         }
 
         .metadata {
             background: #f8f9fa;
             padding: 15px;
             text-align: center;
-            color: #6c757d;
+            color: var(--secondary-green);
             font-size: 0.9em;
             border-top: 1px solid #e9ecef;
+            font-weight: 500;
         }
 
         .notes-section {
             padding: 20px;
             background: #fff3cd;
-            border-left: 4px solid #ffc107;
+            border-left: 4px solid var(--gold);
             margin: 15px 0;
             border-radius: 8px;
         }
 
         .notes-section h4 {
-            color: #856404;
+            color: var(--dark-text);
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .notes-section p {
-            color: #856404;
+            color: var(--dark-text);
             line-height: 1.5;
+            font-weight: 500;
         }
 
         .action-buttons {
@@ -411,36 +492,43 @@
             gap: 10px;
             margin-top: 20px;
             flex-wrap: wrap;
+            padding: 0 25px 25px;
         }
 
         .action-btn {
-            padding: 10px 20px;
+            padding: 12px 20px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-size: 14px;
+            font-weight: 600;
             transition: all 0.3s;
             display: flex;
             align-items: center;
             gap: 8px;
+            flex: 1;
+            min-width: 150px;
+            justify-content: center;
         }
 
         .action-btn.print {
-            background: #28a745;
-            color: white;
+            background: var(--gold);
+            color: var(--dark-text);
         }
 
         .action-btn.print:hover {
-            background: #218838;
+            background: var(--light-gold);
+            transform: scale(1.05);
         }
 
         .action-btn.share {
-            background: #17a2b8;
-            color: white;
+            background: var(--secondary-green);
+            color: var(--light-gold);
         }
 
         .action-btn.share:hover {
-            background: #138496;
+            background: var(--primary-green);
+            transform: scale(1.05);
         }
 
         .action-btn.new-search {
@@ -450,6 +538,21 @@
 
         .action-btn.new-search:hover {
             background: #5a6268;
+            transform: scale(1.05);
+        }
+
+        footer {
+            background: var(--primary-green);
+            color: var(--light-gold);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         @media (max-width: 768px) {
@@ -458,7 +561,27 @@
             }
             
             .header h1 {
-                font-size: 1.8em;
+                font-size: 1.6em;
+            }
+            
+            .back-btn {
+                position: relative;
+                left: 0;
+                top: 0;
+                transform: none;
+                margin-bottom: 10px;
+                align-self: flex-start;
+            }
+            
+            .header {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .header-text {
+                width: 100%;
+                text-align: center;
             }
             
             .info-grid {
@@ -481,15 +604,28 @@
             .action-btn {
                 justify-content: center;
             }
+            
+            .examples {
+                justify-content: center;
+            }
         }
     </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <h1>🏆 Cek Nilai MTQ Bantul 2025</h1>
-            <p>Sistem Penilaian Musabaqah Tilawatil Qur'an Kabupaten Bantul</p>
+            <button class="back-btn" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i> Kembali
+            </button>
+            <div class="header-text">
+                <h1><i class="fas fa-trophy"></i> Cek Nilai MTQ Bantul 2025</h1>
+                <p>Sistem Penilaian Musabaqah Tilawatil Qur'an Kabupaten Bantul</p>
+            </div>
         </div>
 
         <!-- Search Section -->
@@ -502,7 +638,7 @@
                     onkeypress="handleKeyPress(event)"
                 >
                 <button onclick="searchParticipant()" id="searchBtn">
-                    🔍 Cek Nilai
+                    <i class="fas fa-search"></i> Cek Nilai
                 </button>
             </div>
             
@@ -547,13 +683,13 @@
             <!-- Action Buttons -->
             <div class="action-buttons" id="actionButtons" style="display: none;">
                 <button class="action-btn print" onclick="printResults()">
-                    🖨️ Cetak Hasil
+                    <i class="fas fa-print"></i> Cetak Hasil
                 </button>
                 <button class="action-btn share" onclick="shareResults()">
-                    📤 Bagikan
+                    <i class="fas fa-share-alt"></i> Bagikan
                 </button>
                 <button class="action-btn new-search" onclick="newSearch()">
-                    🔍 Pencarian Baru
+                    <i class="fas fa-search"></i> Pencarian Baru
                 </button>
             </div>
 
@@ -563,6 +699,10 @@
             </div>
         </div>
     </div>
+
+    <footer>
+        MTQ Pelajar SD Tingkat Kabupaten Bantul Tahun 2025 - Sistem Cek Nilai
+    </footer>
 
     <script>
         const API_URL = 'https://script.google.com/macros/s/AKfycbw271vdfj1B5P5OOcQF_LNEUdtB6wKxeP525W_Toim1YtV1yISSTSkbcJpD3rb6YUrRpA/exec';
@@ -595,7 +735,7 @@
             loading.style.display = 'block';
             resultSection.style.display = 'none';
             searchBtn.disabled = true;
-            searchBtn.textContent = 'Mencari...';
+            searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mencari...';
 
             try {
                 const response = await fetch(`${API_URL}?id=${encodeURIComponent(participantId)}`);
@@ -612,7 +752,7 @@
             } finally {
                 loading.style.display = 'none';
                 searchBtn.disabled = false;
-                searchBtn.textContent = '🔍 Cek Nilai';
+                searchBtn.innerHTML = '<i class="fas fa-search"></i> Cek Nilai';
             }
         }
 
@@ -637,7 +777,7 @@
             // Untuk LCP, tampilkan info minimal (tanpa Nama Tim dan Kategori)
             if (lomba.isTeam) {
                 container.innerHTML = `
-                    <h3>📋 Data Tim</h3>
+                    <h3><i class="fas fa-users"></i> Data Tim</h3>
                     <div class="info-grid">
                         <div class="info-item">
                             <span class="info-label">Nomor Peserta</span>
@@ -656,7 +796,7 @@
             } else {
                 // Untuk lomba individu, tampilkan info tanpa Kategori
                 container.innerHTML = `
-                    <h3>📋 Data Peserta</h3>
+                    <h3><i class="fas fa-user"></i> Data Peserta</h3>
                     <div class="info-grid">
                         <div class="info-item">
                             <span class="info-label">Nomor Peserta</span>
@@ -690,7 +830,7 @@
         function displayScores(scores, lombaKode) {
             const container = document.getElementById('scoresSection');
             
-            let html = '<h3>📊 Detail Penilaian</h3>';
+            let html = '<h3><i class="fas fa-chart-bar"></i> Detail Penilaian</h3>';
 
             // Untuk LCP, tampilkan secara terpisah: Penyisihan → Status → Final (jika lolos)
             if (lombaKode === 'LCP') {
@@ -702,7 +842,7 @@
                 if (nilaiPenyisihan) {
                     html += `
                         <div class="score-category penyisihan">
-                            <div class="category-title">Babak Penyisihan</div>
+                            <div class="category-title"><i class="fas fa-list-ol"></i> Babak Penyisihan</div>
                             <div class="scores-list">
                                 <div class="score-item">
                                     <span class="score-aspek">Nilai Penyisihan</span>
@@ -718,13 +858,13 @@
                     if (isLolos) {
                         html += `
                             <div class="status-lolos">
-                                ✅ LULUS ke Babak Final
+                                <i class="fas fa-check-circle"></i> LULUS ke Babak Final
                             </div>
                         `;
                     } else {
                         html += `
                             <div class="status-tidak-lolos">
-                                ❌ TIDAK LULUS ke Babak Final
+                                <i class="fas fa-times-circle"></i> TIDAK LULUS ke Babak Final
                             </div>
                         `;
                     }
@@ -742,7 +882,7 @@
                     if (rekapScores.length > 0) {
                         html += `
                             <div class="score-category final">
-                                <div class="category-title">Rekapitulasi Nilai Final</div>
+                                <div class="category-title"><i class="fas fa-trophy"></i> Rekapitulasi Nilai Final</div>
                                 <div class="scores-list">
                                     ${rekapScores.map(score => {
                                         const displayName = score.aspek.replace('Rekap - ', '');
@@ -871,7 +1011,7 @@
                     // Fallback jika tidak ada data tabel
                     html += `
                         <div class="score-category">
-                            <div class="category-title">Rekap Nilai</div>
+                            <div class="category-title"><i class="fas fa-chart-line"></i> Rekap Nilai</div>
                             <div class="scores-list">
                                 ${scores.filter(score => 
                                     !score.aspek.includes('Juri') && 
@@ -896,7 +1036,7 @@
             const container = document.getElementById('teamSection');
             
             container.innerHTML = `
-                <h3>👥 Anggota Tim</h3>
+                <h3><i class="fas fa-users"></i> Anggota Tim</h3>
                 <div class="team-grid">
                     ${teamMembers.map(member => `
                         <div class="team-member">
@@ -919,7 +1059,7 @@
             
             if (notes.length > 0) {
                 container.innerHTML = `
-                    <h4>📝 Catatan Penting</h4>
+                    <h4><i class="fas fa-sticky-note"></i> Catatan Penting</h4>
                     ${notes.map(note => `<p>• ${note.note}</p>`).join('')}
                 `;
                 container.style.display = 'block';
@@ -932,9 +1072,9 @@
             const container = document.getElementById('metadata');
             
             container.innerHTML = `
-                Data diambil pada: ${new Date(metadata.timestamp).toLocaleString('id-ID')} • 
-                Processing time: ${metadata.processingTime} • 
-                Sumber: ${metadata.dataSource}
+                <i class="fas fa-clock"></i> Data diambil pada: ${new Date(metadata.timestamp).toLocaleString('id-ID')} • 
+                <i class="fas fa-sync-alt"></i> Processing time: ${metadata.processingTime} • 
+                <i class="fas fa-database"></i> Sumber: ${metadata.dataSource}
             `;
         }
 
@@ -970,10 +1110,10 @@
             const resultSection = document.getElementById('resultSection');
             resultSection.innerHTML = `
                 <div class="error">
-                    <strong>❌ Error</strong>
+                    <strong><i class="fas fa-exclamation-triangle"></i> Error</strong>
                     <p>${message}</p>
-                    <button onclick="newSearch()" style="margin-top: 10px; padding: 10px 15px; background: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                        🔍 Coba Lagi
+                    <button onclick="newSearch()" style="margin-top: 10px; padding: 10px 15px; background: var(--gold); color: var(--dark-text); border: none; border-radius: 5px; cursor: pointer; font-weight: 600;">
+                        <i class="fas fa-search"></i> Coba Lagi
                     </button>
                 </div>
             `;
@@ -988,6 +1128,16 @@
             document.getElementById('notesSection').innerHTML = '';
             document.getElementById('notesSection').style.display = 'none';
             document.getElementById('metadata').innerHTML = '';
+        }
+
+        function goBack() {
+            // Kembali ke halaman sebelumnya atau ke dashboard utama
+            if (document.referrer && document.referrer.includes(window.location.host)) {
+                window.history.back();
+            } else {
+                // Redirect ke dashboard utama jika tidak ada referrer
+                window.location.href = 'index.html'; // Ganti dengan URL dashboard utama
+            }
         }
 
         // Auto focus pada input field
