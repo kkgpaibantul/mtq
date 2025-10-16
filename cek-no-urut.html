@@ -45,6 +45,60 @@
             overflow: hidden;
         }
 
+        /* Navbar Styles */
+        .navbar {
+            background: var(--primary-green);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--light-gold);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+
+        .nav-brand:hover {
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--light-gold);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9em;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: var(--gold);
+            color: var(--dark-text);
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background: var(--gold);
+            color: var(--dark-text);
+        }
+
         /* Top Bar Styles */
         .top-bar {
             display: flex;
@@ -54,7 +108,7 @@
             gap: 15px;
             padding: 10px 20px;
             margin: 0;
-            background: var(--primary-green);
+            background: var(--secondary-green);
             font-size: 14px;
         }
 
@@ -118,30 +172,6 @@
             font-size: 1em;
             font-weight: 600;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .nav-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.2);
-            color: var(--light-gold);
-            border: 2px solid var(--light-gold);
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            font-size: 0.9em;
-            margin-top: 15px;
-        }
-
-        .nav-button:hover {
-            background: var(--light-gold);
-            color: var(--dark-text);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
         .search-section {
@@ -473,6 +503,17 @@
                 border-radius: 12px;
             }
             
+            .navbar {
+                flex-direction: column;
+                gap: 10px;
+                padding: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
             .top-bar {
                 flex-direction: column;
                 gap: 10px;
@@ -554,9 +595,9 @@
                 padding: 10px 15px;
             }
 
-            .nav-button {
+            .nav-link {
                 font-size: 0.8em;
-                padding: 8px 15px;
+                padding: 6px 12px;
             }
 
             .clock {
@@ -571,6 +612,24 @@
 </head>
 <body>
     <div class="container">
+       <!-- Navbar -->
+<nav class="navbar">
+    <div class="nav-links">
+        <a href="index.html" class="nav-link">
+            <i class="fas fa-home"></i>
+            Dashboard
+        </a>
+        <a href="cek-nilai.html" class="nav-link">
+            <i class="fas fa-chart-line"></i>
+            Cek Nilai
+        </a>
+        <a href="cek-nomor-urut.html" class="nav-link active">
+            <i class="fas fa-search"></i>
+            Cek Nomor Urut
+        </a>
+    </div>
+</nav>
+
         <!-- Top Bar -->
         <div class="top-bar">
             <div class="date-container">
@@ -586,10 +645,6 @@
         <div class="header">
             <h1><i class="fas fa-search"></i> Cek Data Peserta MTQ</h1>
             <p>MTQ Pelajar SD Tingkat Kabupaten Bantul Tahun 2025</p>
-            
-            <a href="index.html" class="nav-button">
-                <i class="fas fa-home"></i> Dashboard Utama
-            </a>
         </div>
 
         <div class="search-section">
@@ -629,7 +684,7 @@
     <script>
         const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbw271vdfj1B5P5OOcQF_LNEUdtB6wKxeP525W_Toim1YtV1yISSTSkbcJpD3rb6YUrRpA/exec';
 
-        // Hijri Date System (sama seperti di website utama)
+        // Hijri Date System
         class HijriDateSystem {
             constructor() {
                 this.cache = { data: null, lastFetch: null, cacheDuration: 864e5 };
