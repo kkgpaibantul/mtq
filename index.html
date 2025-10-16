@@ -30,6 +30,103 @@
             --dark-text: #1A3C34;
         }
 
+        /* NAVBAR STYLES */
+        .mtq-navbar {
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            padding: 12px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--light-gold);
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .navbar-logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .navbar-link {
+            background: var(--gold);
+            color: var(--dark-text);
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-link:hover {
+            background: var(--light-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar-mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light-gold);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Responsive Navbar */
+        @media (max-width: 768px) {
+            .navbar-container {
+                flex-wrap: wrap;
+            }
+            
+            .navbar-mobile-toggle {
+                display: block;
+            }
+            
+            .navbar-links {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 15px;
+            }
+            
+            .navbar-links.active {
+                display: flex;
+            }
+            
+            .navbar-link {
+                justify-content: center;
+                text-align: center;
+            }
+        }
+
+        /* Existing body styles */
         body {
             margin: 0;
             font-family: 'Poppins', 'Segoe UI', sans-serif;
@@ -966,6 +1063,29 @@
     </style>
 </head>
 <body>
+    <!-- NAVBAR BARU -->
+    <nav class="mtq-navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-logo">
+                <img src="https://i.imghippo.com/files/ZnpG6770LpA.png" alt="Logo MTQ Bantul">
+                MTQ Bantul 2025
+            </a>
+            
+            <button class="navbar-mobile-toggle" id="mobile-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="navbar-links" id="navbar-links">
+                <a href="#" class="navbar-link" id="cek-nilai-btn">
+                    <i class="fas fa-chart-line"></i> Cek Nilai
+                </a>
+                <a href="#" class="navbar-link" id="cek-nomor-btn">
+                    <i class="fas fa-list-ol"></i> Cek Nomor Urut
+                </a>
+            </div>
+        </div>
+    </nav>
+
     <div class="container">
         <header>
             <div class="header-text">
@@ -1085,6 +1205,23 @@
     <script>
         const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdpzadRtH-72k6Yjk9o_IEXd4aMui5oz9SjhLCBH2-KK5M7mw/viewform?embedded=true';
         const TARGET_DATE_STRING = '2025-10-29T08:00:00+07:00';
+
+        // Navbar Mobile Toggle
+        document.getElementById('mobile-toggle').addEventListener('click', function() {
+            document.getElementById('navbar-links').classList.toggle('active');
+        });
+
+        // Fungsi untuk Cek Nilai
+        document.getElementById('cek-nilai-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Fitur Cek Nilai akan segera tersedia. Silakan hubungi panitia untuk informasi lebih lanjut.');
+        });
+
+        // Fungsi untuk Cek Nomor Urut
+        document.getElementById('cek-nomor-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Fitur Cek Nomor Urut akan segera tersedia. Silakan hubungi panitia untuk informasi lebih lanjut.');
+        });
 
         class StatsManager {
             constructor(webAppUrl) {
