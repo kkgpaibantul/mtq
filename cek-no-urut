@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cek Data Peserta MTQ Bantul 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1em;
+        }
+
+        .search-section {
+            padding: 25px;
+            background: #f8f9fa;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        #participantId {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        #participantId:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        #searchBtn {
+            padding: 12px 20px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        #searchBtn:hover {
+            background: #219a52;
+        }
+
+        #searchBtn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        .examples {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.85em;
+        }
+
+        .result-section {
+            padding: 0 25px 25px;
+            display: none;
+        }
+
+        .participant-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px solid #e9ecef;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 5px;
+        }
+
+        .data-table tr {
+            border-bottom: 1px solid #f1f3f4;
+        }
+
+        .data-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .data-label {
+            font-weight: 600;
+            color: #2c3e50;
+            padding: 12px 15px 12px 0;
+            width: 160px;
+            vertical-align: top;
+            text-align: left;
+        }
+
+        .data-separator {
+            padding: 12px 5px;
+            width: 10px;
+            text-align: center;
+            color: #7f8c8d;
+            vertical-align: top;
+        }
+
+        .data-value {
+            color: #34495e;
+            padding: 12px 0;
+            vertical-align: top;
+        }
+
+        .team-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .team-section h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            text-align: center;
+        }
+
+        .team-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #f8f9fa;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .team-table th {
+            background: #3498db;
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .team-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+            text-align: left;
+        }
+
+        .team-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .team-table tr:nth-child(even) {
+            background: #f1f3f4;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #3498db;
+        }
+
+        .error {
+            background: #ffeaa7;
+            color: #d63031;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .success-badge {
+            background: #27ae60;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .header h1 {
+                font-size: 1.5em;
+            }
+            
+            .data-label {
+                width: 130px;
+                font-size: 0.9em;
+                padding: 12px 10px 12px 0;
+            }
+            
+            .data-separator {
+                padding: 12px 3px;
+            }
+            
+            .team-table {
+                font-size: 0.85em;
+            }
+            
+            .team-table th,
+            .team-table td {
+                padding: 10px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Cek Data Peserta MTQ</h1>
+            <p>MTQ Bantul 2025 - Sistem Informasi Peserta</p>
+        </div>
+
+        <div class="search-section">
+            <div class="input-group">
+                <input 
+                    type="text" 
+                    id="participantId" 
+                    placeholder="Masukkan nomor peserta (contoh: MTQ-1, MTtQ-5, LCP-3)"
+                    autocomplete="off"
+                >
+                <button id="searchBtn" onclick="searchParticipant()">Cari Data</button>
+            </div>
+            <div class="examples">
+                Contoh: MTQ-1, MTtQ-5, MHQ-3, LCP-1, LPP-2
+            </div>
+        </div>
+
+        <div class="result-section" id="resultSection">
+            <!-- Hasil akan ditampilkan di sini -->
+        </div>
+    </div>
+
+    <script>
+        const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbw271vdfj1B5P5OOcQF_LNEUdtB6wKxeP525W_Toim1YtV1yISSTSkbcJpD3rb6YUrRpA/exec';
+
+        function searchParticipant() {
+            const participantId = document.getElementById('participantId').value.trim();
+            const searchBtn = document.getElementById('searchBtn');
+            const resultSection = document.getElementById('resultSection');
+
+            if (!participantId) {
+                showResult('error', '⚠️ Masukkan nomor peserta terlebih dahulu');
+                return;
+            }
+
+            // Tampilkan loading
+            searchBtn.disabled = true;
+            searchBtn.textContent = 'Mencari...';
+            resultSection.style.display = 'block';
+            resultSection.innerHTML = `
+                <div class="loading">
+                    <h3>🔍 Mencari Data Peserta...</h3>
+                    <p>Sedang mencari data untuk <strong>${participantId}</strong></p>
+                </div>
+            `;
+
+            fetch(`${BACKEND_URL}?id=${encodeURIComponent(participantId)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        displayParticipantData(data);
+                    } else {
+                        showResult('error', `❌ ${data.error || 'Peserta tidak ditemukan'}`);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showResult('error', '❌ Gagal terhubung ke server. Periksa koneksi internet Anda.');
+                })
+                .finally(() => {
+                    searchBtn.disabled = false;
+                    searchBtn.textContent = 'Cari Data';
+                });
+        }
+
+        function displayParticipantData(data) {
+            const participant = data.participant;
+            const lomba = data.lomba;
+            
+            let html = `
+                <div class="success-badge">✅ DATA DITEMUKAN</div>
+                <div class="participant-card">
+                    <table class="data-table">
+            `;
+
+            // Untuk LCP: Tampilkan data tim dulu, baru anggota
+            if (lomba.isTeam) {
+                html += `
+                    <tr>
+                        <td class="data-label">Nomor Peserta</td>
+                        <td class="data-separator">:</td>
+                        <td class="data-value">${participant['No Peserta']}</td>
+                    </tr>
+                    <tr>
+                        <td class="data-label">Kapanewon</td>
+                        <td class="data-separator">:</td>
+                        <td class="data-value">${participant.Kapanewon}</td>
+                    </tr>
+                    <tr>
+                        <td class="data-label">Cabang Lomba</td>
+                        <td class="data-separator">:</td>
+                        <td class="data-value">${participant['Cabang Lomba']}</td>
+                    </tr>
+                `;
+            } else {
+                // Untuk individu: Tampilkan semua data
+                html += `
+                    <tr>
+                        <td class="data-label">Nomor Peserta</td>
+                        <td class="data-separator">:</td>
+                        <td class="data-value">${participant['No Peserta']}</td>
+                    </tr>
+                    <tr>
+                        <td class="data-label">Nama</td>
+                        <td class="data-separator">:</td>
+                        <td class="data-value">${participant.Nama}</td>
+                    </tr>
+                    <tr>
+                        <td class="data-label">Jenis Kelamin</td>
+                        <td class="data-separator">:</td>
+                        <td class="data-value">${participant['Jenis Kelamin'] || '-'}</td>
+                    </tr>
+                    <tr>
+                        <td class="data-label">Asal Sekolah</td>
+                        <td class="data-separator">:</td>
+                        <td class="data-value">${participant['Asal Sekolah']}</td>
+                    </tr>
+                    <tr>
+                        <td class="data-label">Kapanewon</td>
+                        <td class="data-separator">:</td>
+                        <td class="data-value">${participant.Kapanewon}</td>
+                    </tr>
+                    <tr>
+                        <td class="data-label">Cabang Lomba</td>
+                        <td class="data-separator">:</td>
+                        <td class="data-value">${participant['Cabang Lomba']}</td>
+                    </tr>
+                `;
+            }
+
+            html += `</table>`;
+
+            // Tambahkan data anggota tim jika LCP
+            if (lomba.isTeam && data.teamMembers && data.teamMembers.length > 0) {
+                html += `
+                    <div class="team-section">
+                        <h4>👥 ANGGOTA TIM</h4>
+                        <table class="team-table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Anggota</th>
+                                    <th>Jenis Kelamin</th>
+                                    <th>Asal Sekolah</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${data.teamMembers.map((member, index) => `
+                                    <tr>
+                                        <td>${index + 1}</td>
+                                        <td>${member.Nama}</td>
+                                        <td>${member['Jenis Kelamin'] || '-'}</td>
+                                        <td>${member['Asal Sekolah']}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+
+            html += `</div>`;
+
+            document.getElementById('resultSection').innerHTML = html;
+        }
+
+        function showResult(type, message) {
+            const resultSection = document.getElementById('resultSection');
+            resultSection.style.display = 'block';
+            
+            if (type === 'error') {
+                resultSection.innerHTML = `<div class="error">${message}</div>`;
+            }
+        }
+
+        // Support Enter key
+        document.getElementById('participantId').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchParticipant();
+            }
+        });
+
+        // Auto-focus on input
+        document.getElementById('participantId').focus();
+    </script>
+</body>
+</html>
