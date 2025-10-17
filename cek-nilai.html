@@ -8,8 +8,8 @@
         :root {
             --primary-green: #1A3C34;
             --secondary-green: #2E4F47;
-            --gold: #D4A017;
-            --light-gold: #F5F6E8;
+            --gold: #FF6B35;
+            --light-gold: #FF8E53;
             --white: #ffffff;
             --dark-text: #1A3C34;
         }
@@ -23,17 +23,158 @@
         body {
             font-family: 'Poppins', 'Segoe UI', sans-serif;
             background: linear-gradient(135deg, var(--primary-green), var(--gold));
-            background-image: url('https://i.ibb.co.com/Cpwy9Lv5/images-7.jpg');
-            background-blend-mode: overlay;
             background-attachment: fixed;
             color: var(--white);
             min-height: 100vh;
-            padding: 20px;
+            padding: 0;
+        }
+
+        /* NAVBAR KOMBINASI */
+        .mtq-navbar {
+            background: rgba(26, 60, 52, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 12px 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border-bottom: 3px solid var(--gold);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* LOGO SEPERTI AWAL */
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 1.3rem;
+            text-decoration: none;
+        }
+
+        .navbar-logo img {
+            height: 40px;
+            width: auto;
+            border-radius: 6px;
+        }
+
+        /* MENU SEPERTI BARU */
+        .navbar-menu {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            list-style: none;
+        }
+
+        .nav-divider {
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: 300;
+            margin: 0 5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.95rem;
+            background: transparent;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 107, 53, 0.15);
+            color: var(--light-gold);
+            transform: translateY(-2px);
+        }
+
+        .nav-icon {
+            font-size: 1.1rem;
+        }
+
+        .navbar-mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 6px;
+            transition: background 0.3s ease;
+        }
+
+        .navbar-mobile-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Navbar */
+        @media (max-width: 768px) {
+            .navbar-container {
+                flex-wrap: wrap;
+            }
+            
+            .navbar-mobile-toggle {
+                display: block;
+            }
+            
+            .navbar-menu {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                gap: 8px;
+                margin-top: 15px;
+                padding: 15px;
+                background: rgba(26, 60, 52, 0.98);
+                border-radius: 10px;
+                border: 1px solid rgba(255, 107, 53, 0.2);
+            }
+            
+            .navbar-menu.active {
+                display: flex;
+            }
+            
+            .nav-divider {
+                display: none;
+            }
+            
+            .nav-link {
+                justify-content: center;
+                padding: 12px 20px;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar-logo {
+                font-size: 1.1rem;
+            }
+            
+            .navbar-logo img {
+                height: 35px;
+            }
+            
+            .nav-link {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
         }
 
         .container {
             max-width: 1000px;
-            margin: 0 auto;
+            margin: 20px auto;
             background: var(--white);
             border-radius: 15px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
@@ -45,7 +186,6 @@
             color: var(--light-gold);
             padding: 25px 20px;
             text-align: center;
-            position: relative;
         }
 
         .header h1 {
@@ -58,29 +198,6 @@
             opacity: 0.9;
             font-size: 1.1em;
             font-weight: 600;
-        }
-
-        .back-btn {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--gold);
-            color: var(--dark-text);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .back-btn:hover {
-            background: var(--light-gold);
-            transform: translateY(-50%) scale(1.05);
         }
 
         .search-section {
@@ -344,11 +461,6 @@
             border-left-color: var(--gold);
         }
 
-        .score-category.not-qualified {
-            background: #f8d7da;
-            border-left-color: #dc3545;
-        }
-
         .category-title {
             font-weight: 600;
             color: var(--dark-text);
@@ -409,15 +521,15 @@
         }
 
         .status-tidak-lolos {
-            background: #f8d7da;
-            color: #721c24;
+            background: #fff3cd;
+            color: #856404;
             padding: 15px;
             border-radius: 8px;
             font-weight: 600;
             text-align: center;
             margin: 15px 0;
             font-size: 1.1em;
-            border-left: 4px solid #dc3545;
+            border-left: 4px solid #ffc107;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -462,28 +574,6 @@
             color: var(--secondary-green);
             font-size: 0.9em;
             border-top: 1px solid #e9ecef;
-            font-weight: 500;
-        }
-
-        .notes-section {
-            padding: 20px;
-            background: #fff3cd;
-            border-left: 4px solid var(--gold);
-            margin: 15px 0;
-            border-radius: 8px;
-        }
-
-        .notes-section h4 {
-            color: var(--dark-text);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .notes-section p {
-            color: var(--dark-text);
-            line-height: 1.5;
             font-weight: 500;
         }
 
@@ -555,6 +645,39 @@
             margin-right: auto;
         }
 
+        .search-helper {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--secondary-green);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .error-suggestion {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 8px;
+            border-left: 4px solid var(--gold);
+            color: var(--dark-text);
+        }
+
+        .error-suggestion h4 {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .error-suggestion ul {
+            padding-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .error-suggestion li {
+            margin-bottom: 5px;
+        }
+
         @media (max-width: 768px) {
             .input-group {
                 flex-direction: column;
@@ -562,26 +685,6 @@
             
             .header h1 {
                 font-size: 1.6em;
-            }
-            
-            .back-btn {
-                position: relative;
-                left: 0;
-                top: 0;
-                transform: none;
-                margin-bottom: 10px;
-                align-self: flex-start;
-            }
-            
-            .header {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .header-text {
-                width: 100%;
-                text-align: center;
             }
             
             .info-grid {
@@ -616,12 +719,50 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <!-- NAVBAR KOMBINASI -->
+    <nav class="mtq-navbar">
+        <div class="navbar-container">
+            <!-- Logo seperti awal -->
+            <a href="index.html" class="navbar-logo">
+                <img src="https://i.imghippo.com/files/ZnpG6770LpA.png" alt="Logo MTQ Bantul">
+                MTQ Bantul 2025
+            </a>
+
+            <!-- Mobile Toggle -->
+            <button class="navbar-mobile-toggle" id="mobile-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Menu seperti baru -->
+            <ul class="navbar-menu" id="navbar-menu">
+                <li class="nav-divider">•</li>
+                <li class="nav-item">
+                    <a href="cek-nilai.html" class="nav-link">
+                        <i class="fas fa-chart-line nav-icon"></i>
+                        <span>Nilai</span>
+                    </a>
+                </li>
+                <li class="nav-divider">•</li>
+                <li class="nav-item">
+                    <a href="cek-no-urut.html" class="nav-link">
+                        <i class="fas fa-list-ol nav-icon"></i>
+                        <span>No. Urut</span>
+                    </a>
+                </li>
+                <li class="nav-divider">•</li>
+                <li class="nav-item">
+                    <a href="login.html" class="nav-link">
+                        <i class="fas fa-user-shield nav-icon"></i>
+                        <span>Admin</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <button class="back-btn" onclick="goBack()">
-                <i class="fas fa-arrow-left"></i> Kembali
-            </button>
             <div class="header-text">
                 <h1><i class="fas fa-trophy"></i> Cek Nilai MTQ Bantul 2025</h1>
                 <p>Sistem Penilaian Musabaqah Tilawatil Qur'an Kabupaten Bantul</p>
@@ -642,13 +783,19 @@
                 </button>
             </div>
             
+            <div class="search-helper">
+                <p>Gunakan contoh di bawah untuk mencoba sistem</p>
+            </div>
+            
             <div class="examples">
                 <div class="example-chip" onclick="setExample('MTQ-1')">MTQ-1</div>
                 <div class="example-chip" onclick="setExample('MTtQ-1')">MTtQ-1</div>
                 <div class="example-chip" onclick="setExample('MHQ-1')">MHQ-1</div>
                 <div class="example-chip" onclick="setExample('LCP-1')">LCP-1</div>
                 <div class="example-chip" onclick="setExample('LPP-1')">LPP-1</div>
-                <div class="example-chip" onclick="setExample('PHQ-1')">PHQ-1</div>
+                <div class="example-chip" onclick="setExample('LMI-1')">LMI-1</div>
+                <div class="example-chip" onclick="setExample('MPS-1')">MPS-1</div>
+                <div class="example-chip" onclick="setExample('MAz-1')">MAz-1</div>
             </div>
         </div>
 
@@ -667,11 +814,6 @@
 
             <!-- Team Members (untuk LCP) -->
             <div class="team-section" id="teamSection" style="display: none;">
-                <!-- Diisi oleh JavaScript -->
-            </div>
-
-            <!-- Notes Section -->
-            <div class="notes-section" id="notesSection" style="display: none;">
                 <!-- Diisi oleh JavaScript -->
             </div>
 
@@ -707,6 +849,13 @@
     <script>
         const API_URL = 'https://script.google.com/macros/s/AKfycbyrd0liX9KCummtHEnbfxt7yHrtEXPhKjWplU5fZgbAzC1_eww-pdPxpkdKUgkiuYgd0g/exec';
         let currentParticipantData = null;
+        let lastSearchId = '';
+        let searchTimeout = null;
+
+        // Navbar Mobile Toggle
+        document.getElementById('mobile-toggle').addEventListener('click', function() {
+            document.getElementById('navbar-menu').classList.toggle('active');
+        });
 
         function setExample(participantId) {
             document.getElementById('participantId').value = participantId;
@@ -719,14 +868,32 @@
             }
         }
 
+        function validateParticipantId(participantId) {
+            // Valid formats from the JSON response
+            const validPrefixes = ['MTQ-', 'MTtQ-', 'MHQ-', 'MAz-', 'MPS-', 'LPP-', 'LCP-', 'LMI-'];
+            return validPrefixes.some(prefix => participantId.startsWith(prefix)) && 
+                   participantId.match(/^[A-Za-z]+-\d+$/);
+        }
+
         async function searchParticipant() {
             const participantId = document.getElementById('participantId').value.trim();
             const searchBtn = document.getElementById('searchBtn');
             const loading = document.getElementById('loading');
             const resultSection = document.getElementById('resultSection');
 
+            // Input validation
             if (!participantId) {
                 showError('Masukkan nomor peserta terlebih dahulu');
+                return;
+            }
+
+            if (!validateParticipantId(participantId)) {
+                showError('Format nomor peserta tidak valid. Contoh: MTQ-1, LCP-1, dll.', participantId);
+                return;
+            }
+
+            // Prevent duplicate searches
+            if (participantId === lastSearchId && currentParticipantData) {
                 return;
             }
 
@@ -737,19 +904,54 @@
             searchBtn.disabled = true;
             searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mencari...';
 
+            // Set timeout for slow requests
+            const timeoutPromise = new Promise((_, reject) => {
+                searchTimeout = setTimeout(() => {
+                    reject(new Error('Permintaan terlalu lama, silakan coba lagi'));
+                }, 10000); // 10 seconds timeout
+            });
+
             try {
-                const response = await fetch(`${API_URL}?id=${encodeURIComponent(participantId)}`);
+                const response = await Promise.race([
+                    fetch(`${API_URL}?id=${encodeURIComponent(participantId)}`),
+                    timeoutPromise
+                ]);
+
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status} ${response.statusText}`);
+                }
+
                 const data = await response.json();
 
                 if (data.success) {
                     currentParticipantData = data;
+                    lastSearchId = participantId;
                     displayParticipantData(data);
                 } else {
-                    showError(data.error || 'Peserta tidak ditemukan');
+                    // Handle specific API errors
+                    switch (data.error) {
+                        case 'Parameter id diperlukan':
+                            showError('Nomor peserta tidak boleh kosong', participantId);
+                            break;
+                        default:
+                            showError(data.error || 'Peserta tidak ditemukan', participantId);
+                    }
                 }
             } catch (error) {
-                showError('Terjadi kesalahan: ' + error.message);
+                console.error('Search error:', error, { participantId });
+                let errorMessage;
+                if (error.message.includes('Failed to fetch')) {
+                    errorMessage = 'Tidak dapat terhubung ke server. Periksa koneksi internet Anda.';
+                } else if (error.message.includes('JSON')) {
+                    errorMessage = 'Data dari server tidak valid. Silakan coba lagi nanti.';
+                } else if (error.message.includes('Permintaan terlalu lama')) {
+                    errorMessage = error.message;
+                } else {
+                    errorMessage = `Terjadi kesalahan: ${error.message}`;
+                }
+                showError(errorMessage, participantId);
             } finally {
+                clearTimeout(searchTimeout);
                 loading.style.display = 'none';
                 searchBtn.disabled = false;
                 searchBtn.innerHTML = '<i class="fas fa-search"></i> Cek Nilai';
@@ -763,18 +965,23 @@
                 displayTeamMembers(data.teamMembers);
             }
             
-            displayNotes(data.scores, data.lomba.kode);
             displayScores(data.scores, data.lomba.kode);
             displayMetadata(data.metadata);
             
             document.getElementById('resultSection').style.display = 'block';
             document.getElementById('actionButtons').style.display = 'flex';
+            
+            // Auto-scroll ke hasil
+            document.getElementById('resultSection').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
         }
 
         function displayParticipantInfo(participant, lomba) {
             const container = document.getElementById('participantInfo');
             
-            // Untuk LCP, tampilkan info minimal (tanpa Nama Tim dan Kategori)
+            // Untuk LCP, tampilkan info minimal
             if (lomba.isTeam) {
                 container.innerHTML = `
                     <h3><i class="fas fa-users"></i> Data Tim</h3>
@@ -794,7 +1001,7 @@
                     </div>
                 `;
             } else {
-                // Untuk lomba individu, tampilkan info tanpa Kategori
+                // Untuk lomba individu
                 container.innerHTML = `
                     <h3><i class="fas fa-user"></i> Data Peserta</h3>
                     <div class="info-grid">
@@ -858,21 +1065,20 @@
                     if (isLolos) {
                         html += `
                             <div class="status-lolos">
-                                <i class="fas fa-check-circle"></i> LULUS ke Babak Final
+                                <i class="fas fa-check-circle"></i> SELAMAT! Tim Anda LULUS ke Babak Final
                             </div>
                         `;
                     } else {
                         html += `
                             <div class="status-tidak-lolos">
-                                <i class="fas fa-times-circle"></i> TIDAK LULUS ke Babak Final
+                                <i class="fas fa-info-circle"></i> Terima kasih atas partisipasinya. Tim Anda belum berhasil melanjutkan ke babak final.
                             </div>
                         `;
                     }
                 }
 
-                // 3. Jika lolos, tampilkan Rekap Nilai Final (TANPA nilai penyisihan)
+                // 3. Jika lolos, tampilkan Rekap Nilai Final
                 if (isLolos) {
-                    // Filter hanya nilai-nilai final saja (tidak termasuk penyisihan)
                     const rekapScores = scores.filter(score => 
                         score.isRekap && 
                         !score.aspek.includes('Penyisihan') &&
@@ -899,7 +1105,7 @@
                     }
                 }
             } else {
-                // Untuk lomba individu (MTQ, MTtQ, dll) - TAMPILKAN TABEL
+                // Untuk lomba individu - TAMPILKAN TABEL sesuai Juklak
                 const juriScores = scores.filter(score => 
                     score.aspek.includes('Juri') && 
                     !score.aspek.includes('Jumlah') &&
@@ -914,7 +1120,7 @@
                 const nilaiAkhir = scores.find(score => score.aspek === 'Nilai Akhir');
                 const peringkat = scores.find(score => score.aspek === 'Peringkat');
 
-                // Group by kriteria dengan cara yang lebih akurat
+                // Group by kriteria sesuai Juklak
                 const kriteriaMap = {};
                 
                 juriScores.forEach(score => {
@@ -970,7 +1176,7 @@
                         <table class="score-table">
                             <thead>
                                 <tr>
-                                    <th>Kriteria</th>
+                                    <th>Kriteria Penilaian</th>
                                     <th>Juri 1</th>
                                     <th>Juri 2</th>
                                     <th>Juri 3</th>
@@ -1053,21 +1259,6 @@
             container.style.display = 'block';
         }
 
-        function displayNotes(scores, lombaKode) {
-            const container = document.getElementById('notesSection');
-            const notes = scores.filter(score => score.note && score.note !== 'Lolos');
-            
-            if (notes.length > 0) {
-                container.innerHTML = `
-                    <h4><i class="fas fa-sticky-note"></i> Catatan Penting</h4>
-                    ${notes.map(note => `<p>• ${note.note}</p>`).join('')}
-                `;
-                container.style.display = 'block';
-            } else {
-                container.style.display = 'none';
-            }
-        }
-
         function displayMetadata(metadata) {
             const container = document.getElementById('metadata');
             
@@ -1104,19 +1295,46 @@
             document.getElementById('resultSection').style.display = 'none';
             document.getElementById('actionButtons').style.display = 'none';
             currentParticipantData = null;
+            lastSearchId = '';
         }
 
-        function showError(message) {
+        function showError(message, participantId = '') {
             const resultSection = document.getElementById('resultSection');
-            resultSection.innerHTML = `
-                <div class="error">
+            
+            let errorHtml = `
+                <div class="error" role="alert" aria-live="assertive">
                     <strong><i class="fas fa-exclamation-triangle"></i> Error</strong>
                     <p>${message}</p>
+            `;
+            
+            // Tambahkan saran untuk kesalahan pengetikan
+            if (message.includes('tidak ditemukan') && participantId) {
+                errorHtml += `
+                    <div class="error-suggestion">
+                        <h4><i class="fas fa-lightbulb"></i> Saran Pencarian</h4>
+                        <p>Nomor peserta <strong>"${participantId}"</strong> tidak ditemukan. Coba:</p>
+                        <ul>
+                            <li>Periksa kembali penulisan nomor peserta</li>
+                            <li>Gunakan huruf kapital dan tanda hubung (-) dengan benar</li>
+                            <li>Pastikan nomor peserta sudah terdaftar</li>
+                            <li>Gunakan contoh di atas untuk mencoba sistem</li>
+                        </ul>
+                        <p><strong>Tip:</strong> Ketik ulang nomor peserta dengan benar atau klik contoh di atas.</p>
+                    </div>
+                `;
+            }
+            
+            errorHtml += `
+                    <button onclick="searchParticipant()" style="margin-top: 10px; padding: 10px 15px; background: var(--secondary-green); color: var(--light-gold); border: none; border-radius: 5px; cursor: pointer; font-weight: 600;">
+                        <i class="fas fa-redo"></i> Coba Lagi
+                    </button>
                     <button onclick="newSearch()" style="margin-top: 10px; padding: 10px 15px; background: var(--gold); color: var(--dark-text); border: none; border-radius: 5px; cursor: pointer; font-weight: 600;">
-                        <i class="fas fa-search"></i> Coba Lagi
+                        <i class="fas fa-search"></i> Pencarian Baru
                     </button>
                 </div>
             `;
+            
+            resultSection.innerHTML = errorHtml;
             resultSection.style.display = 'block';
         }
 
@@ -1125,19 +1343,7 @@
             document.getElementById('scoresSection').innerHTML = '';
             document.getElementById('teamSection').innerHTML = '';
             document.getElementById('teamSection').style.display = 'none';
-            document.getElementById('notesSection').innerHTML = '';
-            document.getElementById('notesSection').style.display = 'none';
             document.getElementById('metadata').innerHTML = '';
-        }
-
-        function goBack() {
-            // Kembali ke halaman sebelumnya atau ke dashboard utama
-            if (document.referrer && document.referrer.includes(window.location.host)) {
-                window.history.back();
-            } else {
-                // Redirect ke dashboard utama jika tidak ada referrer
-                window.location.href = 'index.html'; // Ganti dengan URL dashboard utama
-            }
         }
 
         // Auto focus pada input field
