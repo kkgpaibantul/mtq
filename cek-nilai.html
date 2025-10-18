@@ -499,6 +499,34 @@
             gap: 10px;
         }
 
+        .juara-badge {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #856404;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.2em;
+            border: 2px solid #ffc107;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .ranking-badge {
+            background: linear-gradient(135deg, #17a2b8, #20c997);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            margin: 10px 0;
+            font-size: 1.1em;
+            border: 2px solid #138496;
+        }
+
         .loading {
             text-align: center;
             padding: 40px;
@@ -786,7 +814,7 @@
     </footer>
 
     <script>
-        const API_URL = 'https://script.google.com/macros/s/AKfycbwfihl_61xqiQoy6K3lCMldRQcLMNNyv6aoxsM6Z79QAnrNEnn4y4xIjS_w7al7C9Lppg/exec';
+        const API_URL = 'https://script.google.com/macros/s/AKfycbyaXGlfvar6FnALGLN3sqVCRgLi0xm_Rgl83nj5Dbq5QscnOqdo7Z09mG6u4o3nkUc7IA/exec';
         let currentParticipantData = null;
         let lastSearchId = '';
         let searchTimeout = null;
@@ -891,6 +919,7 @@
         }
 
         function displayParticipantData(data) {
+            console.log('📊 Data received from backend:', data);
             displayParticipantInfo(data.participant, data.lomba);
             
             if (data.lomba.isTeam && data.teamMembers && data.teamMembers.length > 0) {
@@ -964,27 +993,59 @@
         }
 
         function displayScores(scores, lombaKode) {
+            console.log('🎯 Displaying scores for:', lombaKode, scores);
             const container = document.getElementById('scoresSection');
             
             let html = '<h3><i class="fas fa-chart-bar"></i> Detail Penilaian</h3>';
 
+            // Function untuk konversi ranking ke label
+            const getRankingLabel = (ranking, lombaName) => {
+                if (!ranking || ranking === 0) return '-';
+                switch(ranking) {
+                    case 1: return `Juara I (${lombaName})`;
+                    case 2: return `Juara II (${lombaName})`;
+                    case 3: return `Juara III (${lombaName})`;
+                    case 4: return `Juara Harapan I (${lombaName})`;
+                    case 5: return `Juara Harapan II (${lombaName})`;
+                    default: return `Peringkat ${ranking} (${lombaName})`;
+                }
+            };
+
             if (lombaKode === 'LCP') {
-                // Data untuk LCP
-                const nilaiPenyisihan = scores.find(score => score.aspek === 'Babak Penyisihan - Nilai');
-                const rankingFinal = scores.find(score => score.aspek === 'Ranking Final');
+                // Data untuk LCP - STRUCTURE TERBARU
+                const nilaiPenyisihan = scores.find(score => score.aspek === 'Nilai Penyisihan');
+                const status = scores.find(score => score.aspek === 'Status');
                 const rankingPenyisihan = scores.find(score => score.aspek === 'Ranking Penyisihan');
                 
                 // Data Babak Final
+                const babakWajibTiming = scores.find(score => score.aspek === 'Babak Wajib Timing');
+                const babakWajibLempar = scores.find(score => score.aspek === 'Babak Wajib Lempar');
+                const babakRebutan = scores.find(score => score.aspek === 'Babak Rebutan');
                 const nilaiFinal = scores.find(score => score.aspek === 'Nilai Final');
-                const babakWajibTiming = scores.find(score => score.aspek === 'Babak Final - Wajib');
-                const babakWajibLempar = scores.find(score => score.aspek === 'Babak Final - Lempar');
-                const babakRebutan = scores.find(score => score.aspek === 'Babak Final - Rebutan');
+                const juara = scores.find(score => score.aspek === 'Juara');
 
-                // Tentukan status lolos (5 besar)
-                const isLolos = rankingFinal && rankingFinal.nilai <= 5;
+                console.log('🔍 LCP Data Found:', {
+                    nilaiPenyisihan,
+                    status,
+                    rankingPenyisihan,
+                    babakWajibTiming,
+                    babakWajibLempar,
+                    babakRebutan,
+                    nilaiFinal,
+                    juara
+                });
+
+                // Tentukan status lolos - handle berbagai format
+                let isLolos = false;
+                if (status) {
+                    isLolos = (status.note && (status.note.toUpperCase() === 'LOLOS' || status.note.toUpperCase() === 'LULUS')) || 
+                             (status.nilai && status.nilai.toString().toUpperCase() === 'LOLOS');
+                }
+
+                console.log('🎯 Status Lolos Result:', isLolos);
 
                 // =============================================
-                // BAGIAN 1: BABAK PENYISIHAN
+                // BAGIAN 1: BABAK PENYISIHAN - SELALU TAMPILKAN
                 // =============================================
                 html += `
                     <div class="score-category penyisihan">
@@ -995,19 +1056,19 @@
                                 <span class="score-aspek">Nilai Penyisihan</span>
                                 <span class="score-nilai">${nilaiPenyisihan.nilai}</span>
                             </div>
-                            ` : ''}
+                            ` : '<div class="score-item"><span class="score-aspek">Nilai Penyisihan</span><span class="score-nilai">-</span></div>'}
+                            ${status ? `
                             <div class="score-item">
                                 <span class="score-aspek">Status</span>
-                                <span class="score-nilai ${isLolos ? 'highlight' : ''}">
-                                    ${isLolos ? 'LOLOS' : 'TIDAK LOLOS'}
-                                </span>
+                                <span class="score-nilai ${isLolos ? 'highlight' : ''}">${status.note || status.nilai || '-'}</span>
                             </div>
+                            ` : '<div class="score-item"><span class="score-aspek">Status</span><span class="score-nilai">-</span></div>'}
                             ${rankingPenyisihan ? `
                             <div class="score-item">
                                 <span class="score-aspek">Ranking</span>
-                                <span class="score-nilai">${rankingPenyisihan.nilai}</span>
+                                <span class="score-nilai">${getRankingLabel(rankingPenyisihan.nilai, 'Lomba Cerdas Cermat PAI')}</span>
                             </div>
-                            ` : ''}
+                            ` : '<div class="score-item"><span class="score-aspek">Ranking</span><span class="score-nilai">-</span></div>'}
                         </div>
                     </div>
                 `;
@@ -1023,7 +1084,7 @@
                     `;
 
                     // =============================================
-                    // BAGIAN 3: BABAK FINAL (jika lolos)
+                    // BAGIAN 3: BABAK FINAL (hanya jika LOLOS)
                     // =============================================
                     html += `
                         <div class="score-category final">
@@ -1044,10 +1105,10 @@
                                     ` : '<tr><td class="criteria-col">Babak Wajib Timing</td><td>-</td></tr>'}
                                     ${babakWajibLempar ? `
                                     <tr>
-                                        <td class="criteria-col">Babak Wajib Lempar Rebut</td>
+                                        <td class="criteria-col">Babak Wajib Lempar</td>
                                         <td>${babakWajibLempar.nilai}</td>
                                     </tr>
-                                    ` : '<tr><td class="criteria-col">Babak Wajib Lempar Rebut</td><td>-</td></tr>'}
+                                    ` : '<tr><td class="criteria-col">Babak Wajib Lempar</td><td>-</td></tr>'}
                                     ${babakRebutan ? `
                                     <tr>
                                         <td class="criteria-col">Babak Rebutan</td>
@@ -1064,6 +1125,17 @@
                             </table>
                         </div>
                     `;
+
+                    // =============================================
+                    // BAGIAN 4: JUARA (hanya jika LOLOS dan ada data juara)
+                    // =============================================
+                    if (juara && juara.nilai > 0) {
+                        html += `
+                            <div class="juara-badge">
+                                <i class="fas fa-trophy"></i> ${getRankingLabel(juara.nilai, 'Lomba Cerdas Cermat PAI')}
+                            </div>
+                        `;
+                    }
                 } else {
                     html += `
                         <div class="status-tidak-lolos">
@@ -1087,6 +1159,8 @@
                 
                 const nilaiAkhir = scores.find(score => score.aspek === 'Nilai Akhir');
                 const peringkat = scores.find(score => score.aspek === 'Peringkat');
+
+                const lombaName = getLombaName(lombaKode);
 
                 const kriteriaMap = {};
                 
@@ -1169,7 +1243,7 @@
                                 ${peringkat ? `
                                     <tr class="ranking-row">
                                         <td class="criteria-col"><strong>Peringkat</strong></td>
-                                        <td colspan="3"><strong>${peringkat.nilai}</strong></td>
+                                        <td colspan="3"><strong>${getRankingLabel(peringkat.nilai, lombaName)}</strong></td>
                                     </tr>
                                 ` : ''}
                             </tbody>
@@ -1197,6 +1271,20 @@
             }
 
             container.innerHTML = html;
+        }
+
+        function getLombaName(lombaKey) {
+            const names = {
+                'MTQ': 'Musabaqah Tilawatil Qur\'an',
+                'MTtQ': 'Musabaqah Tartil Qur\'an',
+                'MHQ': 'Musabaqah Hifdzil Qur\'an',
+                'MAz': 'Musabaqah Azan',
+                'MPS': 'Musabaqah Puitisasi Saritilawah',
+                'LPP': 'Lomba Pidato PAI',
+                'LCP': 'Lomba Cerdas Cermat PAI',
+                'LMI': 'Lomba Melukis Islami'
+            };
+            return names[lombaKey] || lombaKey;
         }
 
         function displayTeamMembers(teamMembers) {
