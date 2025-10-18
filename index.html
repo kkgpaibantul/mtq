@@ -26,78 +26,101 @@
         :root {
             --primary-green: #1A3C34;
             --secondary-green: #2E4F47;
-            --gold: #D4A017;
-            --light-gold: #F5F6E8;
+            --gold: #FF6B35;
+            --light-gold: #FF8E53;
             --white: #ffffff;
             --dark-text: #1A3C34;
         }
 
-        /* NAVBAR STYLES */
+        /* NAVBAR STYLES DARI KODE PERTAMA */
         .mtq-navbar {
-            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
-            padding: 12px 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            background: rgba(26, 60, 52, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 12px 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border-bottom: 3px solid var(--gold);
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 3px solid var(--gold);
         }
 
         .navbar-container {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
         }
 
+        /* LOGO SEPERTI AWAL */
         .navbar-logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            color: var(--light-gold);
+            gap: 12px;
+            color: var(--white);
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             text-decoration: none;
         }
 
         .navbar-logo img {
             height: 40px;
             width: auto;
+            border-radius: 6px;
         }
 
-        .navbar-links {
+        /* MENU SEPERTI BARU */
+        .navbar-menu {
             display: flex;
-            gap: 15px;
+            align-items: center;
+            gap: 5px;
+            list-style: none;
         }
 
-        .navbar-link {
-            background: var(--gold);
-            color: var(--dark-text);
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
+        .nav-divider {
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: 300;
+            margin: 0 5px;
+        }
+
+        .nav-link {
             display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            padding: 10px 20px;
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.95rem;
+            background: transparent;
         }
 
-        .navbar-link:hover {
-            background: var(--light-gold);
+        .nav-link:hover {
+            background: rgba(255, 107, 53, 0.15);
+            color: var(--light-gold);
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-icon {
+            font-size: 1.1rem;
         }
 
         .navbar-mobile-toggle {
             display: none;
             background: none;
             border: none;
-            color: var(--light-gold);
-            font-size: 1.5rem;
+            color: var(--white);
+            font-size: 1.4rem;
             cursor: pointer;
+            padding: 8px;
+            border-radius: 6px;
+            transition: background 0.3s ease;
+        }
+
+        .navbar-mobile-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         /* Responsive Navbar */
@@ -110,25 +133,49 @@
                 display: block;
             }
             
-            .navbar-links {
+            .navbar-menu {
                 display: none;
                 width: 100%;
                 flex-direction: column;
-                gap: 10px;
+                gap: 8px;
                 margin-top: 15px;
+                padding: 15px;
+                background: rgba(26, 60, 52, 0.98);
+                border-radius: 10px;
+                border: 1px solid rgba(255, 107, 53, 0.2);
             }
             
-            .navbar-links.active {
+            .navbar-menu.active {
                 display: flex;
             }
             
-            .navbar-link {
+            .nav-divider {
+                display: none;
+            }
+            
+            .nav-link {
                 justify-content: center;
-                text-align: center;
+                padding: 12px 20px;
+                width: 100%;
             }
         }
 
-        /* Existing body styles */
+        @media (max-width: 480px) {
+            .navbar-logo {
+                font-size: 1.1rem;
+            }
+            
+            .navbar-logo img {
+                height: 35px;
+            }
+            
+            .nav-link {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Existing body styles - TIDAK BERUBAH */
         body {
             margin: 0;
             font-family: 'Poppins', 'Segoe UI', sans-serif;
@@ -1065,30 +1112,44 @@
     </style>
 </head>
 <body>
-    <!-- NAVBAR BARU -->
+    <!-- NAVBAR BARU DENGAN VISUALISASI DARI KODE PERTAMA -->
     <nav class="mtq-navbar">
         <div class="navbar-container">
+            <!-- Logo seperti awal -->
             <a href="#" class="navbar-logo">
                 <img src="https://i.imghippo.com/files/ZnpG6770LpA.png" alt="Logo MTQ Bantul">
                 MTQ Bantul 2025
             </a>
-            
+
+            <!-- Mobile Toggle -->
             <button class="navbar-mobile-toggle" id="mobile-toggle">
                 <i class="fas fa-bars"></i>
             </button>
-            
-            <div class="navbar-links" id="navbar-links">
-                <a href="#" class="navbar-link" id="cek-nilai-btn">
-                    <i class="fas fa-chart-line"></i> Cek Nilai
-                </a>
-                <a href="#" class="navbar-link" id="cek-nomor-btn">
-                    <i class="fas fa-list-ol"></i> Cek Nomor Urut
-                </a>
-                <!-- TOMBOL ADMIN PANEL BARU -->
-                <a href="login.html" class="navbar-link" id="admin-panel-btn">
-                    <i class="fas fa-user-shield"></i> Admin Panel
-                </a>
-            </div>
+
+            <!-- Menu seperti baru -->
+            <ul class="navbar-menu" id="navbar-menu">
+                <li class="nav-divider">•</li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" id="cek-nilai-btn">
+                        <i class="fas fa-chart-line nav-icon"></i>
+                        <span>Nilai</span>
+                    </a>
+                </li>
+                <li class="nav-divider">•</li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" id="cek-nomor-btn">
+                        <i class="fas fa-list-ol nav-icon"></i>
+                        <span>No. Urut</span>
+                    </a>
+                </li>
+                <li class="nav-divider">•</li>
+                <li class="nav-item">
+                    <a href="login.html" class="nav-link">
+                        <i class="fas fa-user-shield nav-icon"></i>
+                        <span>Admin</span>
+                    </a>
+                </li>
+            </ul>
         </div>
     </nav>
 
@@ -1215,12 +1276,12 @@
         const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdpzadRtH-72k6Yjk9o_IEXd4aMui5oz9SjhLCBH2-KK5M7mw/viewform?embedded=true';
         const TARGET_DATE_STRING = '2025-10-29T08:00:00+07:00';
 
-        // Navbar Mobile Toggle
+        // Navbar Mobile Toggle - DARI KODE PERTAMA
         document.getElementById('mobile-toggle').addEventListener('click', function() {
-            document.getElementById('navbar-links').classList.toggle('active');
+            document.getElementById('navbar-menu').classList.toggle('active');
         });
 
-        // Fungsi untuk Cek Nilai dengan SweetAlert
+        // Fungsi untuk Cek Nilai dengan SweetAlert - TIDAK BERUBAH
         document.getElementById('cek-nilai-btn').addEventListener('click', function(e) {
             e.preventDefault();
             
@@ -1256,7 +1317,7 @@
             });
         });
 
-        // FUNGSI CEK NOMOR URUT YANG DIPERBAIKI
+        // FUNGSI CEK NOMOR URUT YANG DIPERBAIKI - TIDAK BERUBAH
         document.getElementById('cek-nomor-btn').addEventListener('click', function(e) {
             e.preventDefault();
             
@@ -1295,6 +1356,7 @@
             });
         });
 
+        // SISA SCRIPT TIDAK BERUBAH
         class StatsManager {
             constructor(webAppUrl) {
                 this.webAppUrl = webAppUrl;
