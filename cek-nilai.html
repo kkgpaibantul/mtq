@@ -29,7 +29,6 @@
             padding: 0;
         }
 
-        /* NAVBAR KOMBINASI */
         .mtq-navbar {
             background: rgba(26, 60, 52, 0.95);
             backdrop-filter: blur(10px);
@@ -49,7 +48,6 @@
             justify-content: space-between;
         }
 
-        /* LOGO SEPERTI AWAL */
         .navbar-logo {
             display: flex;
             align-items: center;
@@ -66,7 +64,6 @@
             border-radius: 6px;
         }
 
-        /* MENU SEPERTI BARU */
         .navbar-menu {
             display: flex;
             align-items: center;
@@ -100,10 +97,6 @@
             transform: translateY(-2px);
         }
 
-        .nav-icon {
-            font-size: 1.1rem;
-        }
-
         .navbar-mobile-toggle {
             display: none;
             background: none;
@@ -120,7 +113,6 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
-        /* Responsive Navbar */
         @media (max-width: 768px) {
             .navbar-container {
                 flex-wrap: wrap;
@@ -154,21 +146,6 @@
                 justify-content: center;
                 padding: 12px 20px;
                 width: 100%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .navbar-logo {
-                font-size: 1.1rem;
-            }
-            
-            .navbar-logo img {
-                height: 35px;
-            }
-            
-            .nav-link {
-                padding: 10px 15px;
-                font-size: 0.9rem;
             }
         }
 
@@ -413,11 +390,6 @@
             color: var(--dark-text);
         }
 
-        .score-table .juri-col {
-            background: #f8f9fa;
-            color: var(--dark-text);
-        }
-
         .score-table .total-row {
             background: #e8f5e8;
             font-weight: 600;
@@ -434,16 +406,12 @@
             font-weight: 600;
         }
 
-        .lcp-scores {
-            display: grid;
-            gap: 15px;
-        }
-
         .score-category {
             background: #f8f9fa;
             padding: 20px;
             border-radius: 10px;
             border-left: 4px solid var(--gold);
+            margin-bottom: 20px;
         }
 
         .score-category.penyisihan {
@@ -454,11 +422,6 @@
         .score-category.final {
             background: #e8f5e8;
             border-left-color: #28a745;
-        }
-
-        .score-category.rekap {
-            background: #fff3cd;
-            border-left-color: var(--gold);
         }
 
         .category-title {
@@ -722,18 +685,15 @@
     <!-- NAVBAR KOMBINASI -->
     <nav class="mtq-navbar">
         <div class="navbar-container">
-            <!-- Logo seperti awal -->
             <a href="index.html" class="navbar-logo">
                 <img src="https://i.imghippo.com/files/ZnpG6770LpA.png" alt="Logo MTQ Bantul">
                 MTQ Bantul 2025
             </a>
 
-            <!-- Mobile Toggle -->
             <button class="navbar-mobile-toggle" id="mobile-toggle">
                 <i class="fas fa-bars"></i>
             </button>
 
-            <!-- Menu seperti baru -->
             <ul class="navbar-menu" id="navbar-menu">
                 <li class="nav-divider">•</li>
                 <li class="nav-item">
@@ -761,7 +721,6 @@
     </nav>
 
     <div class="container">
-        <!-- Header -->
         <div class="header">
             <div class="header-text">
                 <h1><i class="fas fa-trophy"></i> Cek Nilai MTQ Bantul 2025</h1>
@@ -769,7 +728,6 @@
             </div>
         </div>
 
-        <!-- Search Section -->
         <div class="search-section">
             <div class="input-group">
                 <input 
@@ -799,30 +757,15 @@
             </div>
         </div>
 
-        <!-- Loading -->
         <div class="loading" id="loading" style="display: none;">
             <div class="loading-spinner"></div>
             <p>Mencari data peserta...</p>
         </div>
 
-        <!-- Result Section -->
         <div class="result-section" id="resultSection">
-            <!-- Participant Info -->
-            <div class="participant-info" id="participantInfo">
-                <!-- Diisi oleh JavaScript -->
-            </div>
-
-            <!-- Team Members (untuk LCP) -->
-            <div class="team-section" id="teamSection" style="display: none;">
-                <!-- Diisi oleh JavaScript -->
-            </div>
-
-            <!-- Scores -->
-            <div class="scores-section" id="scoresSection">
-                <!-- Diisi oleh JavaScript -->
-            </div>
-
-            <!-- Action Buttons -->
+            <div class="participant-info" id="participantInfo"></div>
+            <div class="team-section" id="teamSection" style="display: none;"></div>
+            <div class="scores-section" id="scoresSection"></div>
             <div class="action-buttons" id="actionButtons" style="display: none;">
                 <button class="action-btn print" onclick="printResults()">
                     <i class="fas fa-print"></i> Cetak Hasil
@@ -834,11 +777,7 @@
                     <i class="fas fa-search"></i> Pencarian Baru
                 </button>
             </div>
-
-            <!-- Metadata -->
-            <div class="metadata" id="metadata">
-                <!-- Diisi oleh JavaScript -->
-            </div>
+            <div class="metadata" id="metadata"></div>
         </div>
     </div>
 
@@ -847,12 +786,11 @@
     </footer>
 
     <script>
-        const API_URL = 'https://script.google.com/macros/s/AKfycbya9wIVcdrNqeMoccsrMYKiLj-3ykZd_NAeWPL_3_Wx19OxpIUofGl54gqGaqriNDjCpw/exec';
+        const API_URL = 'https://script.google.com/macros/s/AKfycbyUTtN7D2GUYjz0Rdq2DAzWoZS-ArSEk0zlQYWnvG-u1lZEa6lOketmYQ-4BGbba1oBWQ/exec';
         let currentParticipantData = null;
         let lastSearchId = '';
         let searchTimeout = null;
 
-        // Navbar Mobile Toggle
         document.getElementById('mobile-toggle').addEventListener('click', function() {
             document.getElementById('navbar-menu').classList.toggle('active');
         });
@@ -869,7 +807,6 @@
         }
 
         function validateParticipantId(participantId) {
-            // Valid formats from the JSON response
             const validPrefixes = ['MTQ-', 'MTtQ-', 'MHQ-', 'MAz-', 'MPS-', 'LPP-', 'LCP-', 'LMI-'];
             return validPrefixes.some(prefix => participantId.startsWith(prefix)) && 
                    participantId.match(/^[A-Za-z]+-\d+$/);
@@ -881,7 +818,6 @@
             const loading = document.getElementById('loading');
             const resultSection = document.getElementById('resultSection');
 
-            // Input validation
             if (!participantId) {
                 showError('Masukkan nomor peserta terlebih dahulu');
                 return;
@@ -892,23 +828,20 @@
                 return;
             }
 
-            // Prevent duplicate searches
             if (participantId === lastSearchId && currentParticipantData) {
                 return;
             }
 
-            // Reset state
             hideAllSections();
             loading.style.display = 'block';
             resultSection.style.display = 'none';
             searchBtn.disabled = true;
             searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mencari...';
 
-            // Set timeout for slow requests
             const timeoutPromise = new Promise((_, reject) => {
                 searchTimeout = setTimeout(() => {
                     reject(new Error('Permintaan terlalu lama, silakan coba lagi'));
-                }, 10000); // 10 seconds timeout
+                }, 10000);
             });
 
             try {
@@ -928,7 +861,6 @@
                     lastSearchId = participantId;
                     displayParticipantData(data);
                 } else {
-                    // Handle specific API errors
                     switch (data.error) {
                         case 'Parameter id diperlukan':
                             showError('Nomor peserta tidak boleh kosong', participantId);
@@ -971,7 +903,6 @@
             document.getElementById('resultSection').style.display = 'block';
             document.getElementById('actionButtons').style.display = 'flex';
             
-            // Auto-scroll ke hasil
             document.getElementById('resultSection').scrollIntoView({ 
                 behavior: 'smooth', 
                 block: 'start' 
@@ -981,7 +912,6 @@
         function displayParticipantInfo(participant, lomba) {
             const container = document.getElementById('participantInfo');
             
-            // Untuk LCP, tampilkan info minimal
             if (lomba.isTeam) {
                 container.innerHTML = `
                     <h3><i class="fas fa-users"></i> Data Tim</h3>
@@ -1001,7 +931,6 @@
                     </div>
                 `;
             } else {
-                // Untuk lomba individu
                 container.innerHTML = `
                     <h3><i class="fas fa-user"></i> Data Peserta</h3>
                     <div class="info-grid">
@@ -1039,73 +968,112 @@
             
             let html = '<h3><i class="fas fa-chart-bar"></i> Detail Penilaian</h3>';
 
-            // Untuk LCP, tampilkan secara terpisah: Penyisihan → Status → Final (jika lolos)
             if (lombaKode === 'LCP') {
+                // Data untuk LCP
                 const nilaiPenyisihan = scores.find(score => score.aspek === 'Babak Penyisihan - Nilai');
-                const statusPenyisihan = scores.find(score => score.aspek === 'Babak Penyisihan - Status');
-                const isLolos = statusPenyisihan && statusPenyisihan.note === 'Lolos';
+                const rankingFinal = scores.find(score => score.aspek === 'Ranking Final');
+                const rankingPenyisihan = scores.find(score => score.aspek === 'Ranking Penyisihan');
+                
+                // Data Babak Final
+                const nilaiFinal = scores.find(score => score.aspek === 'Nilai Final');
+                const babakWajibTiming = scores.find(score => score.aspek === 'Babak Final - Wajib');
+                const babakWajibLempar = scores.find(score => score.aspek === 'Babak Final - Lempar');
+                const babakRebutan = scores.find(score => score.aspek === 'Babak Final - Rebutan');
 
-                // 1. Tampilkan Nilai Penyisihan
-                if (nilaiPenyisihan) {
-                    html += `
-                        <div class="score-category penyisihan">
-                            <div class="category-title"><i class="fas fa-list-ol"></i> Babak Penyisihan</div>
-                            <div class="scores-list">
-                                <div class="score-item">
-                                    <span class="score-aspek">Nilai Penyisihan</span>
-                                    <span class="score-nilai">${nilaiPenyisihan.nilai}</span>
-                                </div>
+                // Tentukan status lolos (5 besar)
+                const isLolos = rankingFinal && rankingFinal.nilai <= 5;
+
+                // =============================================
+                // BAGIAN 1: BABAK PENYISIHAN
+                // =============================================
+                html += `
+                    <div class="score-category penyisihan">
+                        <div class="category-title"><i class="fas fa-list-ol"></i> Babak Penyisihan</div>
+                        <div class="scores-list">
+                            ${nilaiPenyisihan ? `
+                            <div class="score-item">
+                                <span class="score-aspek">Nilai Penyisihan</span>
+                                <span class="score-nilai">${nilaiPenyisihan.nilai}</span>
                             </div>
+                            ` : ''}
+                            <div class="score-item">
+                                <span class="score-aspek">Status</span>
+                                <span class="score-nilai ${isLolos ? 'highlight' : ''}">
+                                    ${isLolos ? 'LOLOS' : 'TIDAK LOLOS'}
+                                </span>
+                            </div>
+                            ${rankingPenyisihan ? `
+                            <div class="score-item">
+                                <span class="score-aspek">Ranking</span>
+                                <span class="score-nilai">${rankingPenyisihan.nilai}</span>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+
+                // =============================================
+                // BAGIAN 2: STATUS LOLOS/TIDAK LOLOS
+                // =============================================
+                if (isLolos) {
+                    html += `
+                        <div class="status-lolos">
+                            <i class="fas fa-check-circle"></i> SELAMAT! Tim Anda LULUS ke Babak Final
+                        </div>
+                    `;
+
+                    // =============================================
+                    // BAGIAN 3: BABAK FINAL (jika lolos)
+                    // =============================================
+                    html += `
+                        <div class="score-category final">
+                            <div class="category-title"><i class="fas fa-trophy"></i> Babak Final</div>
+                            <table class="score-table">
+                                <thead>
+                                    <tr>
+                                        <th>Babak</th>
+                                        <th>Nilai</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${babakWajibTiming ? `
+                                    <tr>
+                                        <td class="criteria-col">Babak Wajib Timing</td>
+                                        <td>${babakWajibTiming.nilai}</td>
+                                    </tr>
+                                    ` : '<tr><td class="criteria-col">Babak Wajib Timing</td><td>-</td></tr>'}
+                                    ${babakWajibLempar ? `
+                                    <tr>
+                                        <td class="criteria-col">Babak Wajib Lempar Rebut</td>
+                                        <td>${babakWajibLempar.nilai}</td>
+                                    </tr>
+                                    ` : '<tr><td class="criteria-col">Babak Wajib Lempar Rebut</td><td>-</td></tr>'}
+                                    ${babakRebutan ? `
+                                    <tr>
+                                        <td class="criteria-col">Babak Rebutan</td>
+                                        <td>${babakRebutan.nilai}</td>
+                                    </tr>
+                                    ` : '<tr><td class="criteria-col">Babak Rebutan</td><td>-</td></tr>'}
+                                    ${nilaiFinal ? `
+                                    <tr class="final-row">
+                                        <td class="criteria-col"><strong>Nilai Final</strong></td>
+                                        <td><strong>${nilaiFinal.nilai}</strong></td>
+                                    </tr>
+                                    ` : '<tr class="final-row"><td class="criteria-col"><strong>Nilai Final</strong></td><td><strong>-</strong></td></tr>'}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                } else {
+                    html += `
+                        <div class="status-tidak-lolos">
+                            <i class="fas fa-info-circle"></i> Terima kasih atas partisipasinya. Tim Anda belum berhasil melanjutkan ke babak final.
                         </div>
                     `;
                 }
 
-                // 2. Tampilkan Status Lolos/Tidak
-                if (statusPenyisihan) {
-                    if (isLolos) {
-                        html += `
-                            <div class="status-lolos">
-                                <i class="fas fa-check-circle"></i> SELAMAT! Tim Anda LULUS ke Babak Final
-                            </div>
-                        `;
-                    } else {
-                        html += `
-                            <div class="status-tidak-lolos">
-                                <i class="fas fa-info-circle"></i> Terima kasih atas partisipasinya. Tim Anda belum berhasil melanjutkan ke babak final.
-                            </div>
-                        `;
-                    }
-                }
-
-                // 3. Jika lolos, tampilkan Rekap Nilai Final
-                if (isLolos) {
-                    const rekapScores = scores.filter(score => 
-                        score.isRekap && 
-                        !score.aspek.includes('Penyisihan') &&
-                        !score.aspek.includes('Babak Penyisihan')
-                    );
-                    
-                    if (rekapScores.length > 0) {
-                        html += `
-                            <div class="score-category final">
-                                <div class="category-title"><i class="fas fa-trophy"></i> Rekapitulasi Nilai Final</div>
-                                <div class="scores-list">
-                                    ${rekapScores.map(score => {
-                                        const displayName = score.aspek.replace('Rekap - ', '');
-                                        return `
-                                            <div class="score-item">
-                                                <span class="score-aspek">${displayName}</span>
-                                                <span class="score-nilai ${score.aspek.includes('Nilai Akhir') ? 'highlight' : ''}">${score.nilai}</span>
-                                            </div>
-                                        `;
-                                    }).join('')}
-                                </div>
-                            </div>
-                        `;
-                    }
-                }
             } else {
-                // Untuk lomba individu - TAMPILKAN TABEL sesuai Juklak
+                // Untuk lomba individu (MTQ, MTtQ, MHQ, dll)
                 const juriScores = scores.filter(score => 
                     score.aspek.includes('Juri') && 
                     !score.aspek.includes('Jumlah') &&
@@ -1120,26 +1088,22 @@
                 const nilaiAkhir = scores.find(score => score.aspek === 'Nilai Akhir');
                 const peringkat = scores.find(score => score.aspek === 'Peringkat');
 
-                // Group by kriteria sesuai Juklak
                 const kriteriaMap = {};
                 
                 juriScores.forEach(score => {
                     let kriteria = '';
                     let juriNum = '';
                     
-                    // Handle berbagai format aspek
                     if (score.aspek.includes(' - ')) {
                         const parts = score.aspek.split(' - ');
                         const juriPart = parts[0];
                         kriteria = parts[1];
                         
-                        // Ekstrak nomor juri
                         const juriMatch = juriPart.match(/Juri\s*(\d+)/i);
                         if (juriMatch) {
                             juriNum = juriMatch[1];
                         }
                     } else {
-                        // Fallback: gunakan kode jika ada
                         kriteria = score.aspek;
                         if (score.kode) {
                             juriNum = score.kode.charAt(1);
@@ -1156,7 +1120,6 @@
 
                 const kriteriaList = Object.keys(kriteriaMap);
                 
-                // Handle jumlah scores
                 const jumlahValues = [];
                 if (jumlahScores.length >= 3) {
                     jumlahValues.push(jumlahScores[0].nilai, jumlahScores[1].nilai, jumlahScores[2].nilai);
@@ -1164,7 +1127,6 @@
                     const nilai = jumlahScores[0].nilai;
                     jumlahValues.push(nilai, nilai, nilai);
                 } else {
-                    // Hitung otomatis dari kriteriaMap
                     const totalJuri1 = Object.values(kriteriaMap).reduce((sum, k) => sum + (parseInt(k.j1) || 0), 0);
                     const totalJuri2 = Object.values(kriteriaMap).reduce((sum, k) => sum + (parseInt(k.j2) || 0), 0);
                     const totalJuri3 = Object.values(kriteriaMap).reduce((sum, k) => sum + (parseInt(k.j3) || 0), 0);
@@ -1214,7 +1176,6 @@
                         </table>
                     `;
                 } else {
-                    // Fallback jika tidak ada data tabel
                     html += `
                         <div class="score-category">
                             <div class="category-title"><i class="fas fa-chart-line"></i> Rekap Nilai</div>
@@ -1281,7 +1242,6 @@
                     url: window.location.href
                 });
             } else {
-                // Fallback untuk browser yang tidak support Web Share API
                 const participantId = currentParticipantData.participant['No Peserta'];
                 navigator.clipboard.writeText(`${window.location.href}?id=${participantId}`);
                 alert('Link hasil telah disalin ke clipboard!');
@@ -1307,7 +1267,6 @@
                     <p>${message}</p>
             `;
             
-            // Tambahkan saran untuk kesalahan pengetikan
             if (message.includes('tidak ditemukan') && participantId) {
                 errorHtml += `
                     <div class="error-suggestion">
@@ -1346,10 +1305,8 @@
             document.getElementById('metadata').innerHTML = '';
         }
 
-        // Auto focus pada input field
         document.getElementById('participantId').focus();
 
-        // Handle URL parameters
         window.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const participantId = urlParams.get('id');
