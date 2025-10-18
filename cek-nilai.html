@@ -11,7 +11,10 @@
             --gold: #FF6B35;
             --light-gold: #FF8E53;
             --white: #ffffff;
-            --dark-text: #1A3C34;
+            --light-bg: #f8f9fa;
+            --border-color: #e9ecef;
+            --text-dark: #1A3C34;
+            --text-light: #6c757d;
         }
 
         * {
@@ -22,13 +25,14 @@
 
         body {
             font-family: 'Poppins', 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, var(--primary-green), var(--gold));
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
             background-attachment: fixed;
-            color: var(--white);
+            color: var(--text-dark);
             min-height: 100vh;
-            padding: 0;
+            line-height: 1.6;
         }
 
+        /* NAVBAR */
         .mtq-navbar {
             background: rgba(26, 60, 52, 0.95);
             backdrop-filter: blur(10px);
@@ -88,7 +92,6 @@
             transition: all 0.3s ease;
             font-weight: 600;
             font-size: 0.95rem;
-            background: transparent;
         }
 
         .nav-link:hover {
@@ -106,49 +109,9 @@
             cursor: pointer;
             padding: 8px;
             border-radius: 6px;
-            transition: background 0.3s ease;
         }
 
-        .navbar-mobile-toggle:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        @media (max-width: 768px) {
-            .navbar-container {
-                flex-wrap: wrap;
-            }
-            
-            .navbar-mobile-toggle {
-                display: block;
-            }
-            
-            .navbar-menu {
-                display: none;
-                width: 100%;
-                flex-direction: column;
-                gap: 8px;
-                margin-top: 15px;
-                padding: 15px;
-                background: rgba(26, 60, 52, 0.98);
-                border-radius: 10px;
-                border: 1px solid rgba(255, 107, 53, 0.2);
-            }
-            
-            .navbar-menu.active {
-                display: flex;
-            }
-            
-            .nav-divider {
-                display: none;
-            }
-            
-            .nav-link {
-                justify-content: center;
-                padding: 12px 20px;
-                width: 100%;
-            }
-        }
-
+        /* MAIN CONTAINER */
         .container {
             max-width: 1000px;
             margin: 20px auto;
@@ -158,16 +121,17 @@
             overflow: hidden;
         }
 
+        /* HEADER */
         .header {
             background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
             color: var(--light-gold);
-            padding: 25px 20px;
+            padding: 30px 20px;
             text-align: center;
         }
 
         .header h1 {
             font-size: 2em;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             font-weight: 700;
         }
 
@@ -177,10 +141,11 @@
             font-weight: 600;
         }
 
+        /* SEARCH SECTION */
         .search-section {
             padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e9ecef;
+            background: var(--light-bg);
+            border-bottom: 1px solid var(--border-color);
         }
 
         .input-group {
@@ -192,7 +157,7 @@
         .input-group input {
             flex: 1;
             padding: 15px;
-            border: 2px solid #e9ecef;
+            border: 2px solid var(--border-color);
             border-radius: 8px;
             font-size: 16px;
             font-family: 'Poppins', sans-serif;
@@ -207,7 +172,7 @@
         .input-group button {
             padding: 15px 25px;
             background: var(--gold);
-            color: var(--dark-text);
+            color: var(--text-dark);
             border: none;
             border-radius: 8px;
             cursor: pointer;
@@ -239,7 +204,7 @@
         .example-chip {
             background: var(--white);
             border: 2px solid var(--gold);
-            color: var(--dark-text);
+            color: var(--text-dark);
             padding: 8px 15px;
             border-radius: 20px;
             font-size: 14px;
@@ -250,24 +215,23 @@
 
         .example-chip:hover {
             background: var(--gold);
-            color: var(--dark-text);
+            color: var(--text-dark);
             transform: scale(1.05);
         }
 
-        .result-section {
-            padding: 0;
-            display: none;
-        }
-
-        .participant-info {
-            background: var(--white);
+        /* SECTIONS COMMON */
+        .section {
             padding: 25px;
-            border-bottom: 1px solid #e9ecef;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .participant-info h3 {
-            color: var(--dark-text);
-            margin-bottom: 15px;
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            color: var(--text-dark);
+            margin-bottom: 20px;
             font-size: 1.4em;
             font-weight: 700;
             display: flex;
@@ -275,9 +239,10 @@
             gap: 10px;
         }
 
+        /* INFO GRID */
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 15px;
         }
 
@@ -294,70 +259,16 @@
         }
 
         .info-value {
-            color: var(--dark-text);
+            color: var(--text-dark);
             font-size: 1.1em;
             font-weight: 500;
         }
 
-        .team-section {
-            padding: 25px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e9ecef;
-        }
-
-        .team-section h3 {
-            color: var(--dark-text);
-            margin-bottom: 20px;
-            font-size: 1.4em;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-        }
-
-        .team-member {
-            background: var(--white);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            border: 2px solid var(--light-gold);
-        }
-
-        .member-name {
-            font-weight: 600;
-            color: var(--dark-text);
-            margin-bottom: 10px;
-        }
-
-        .member-details {
-            color: var(--secondary-green);
-            font-size: 0.9em;
-        }
-
-        .scores-section {
-            padding: 25px;
-        }
-
-        .scores-section h3 {
-            color: var(--dark-text);
-            margin-bottom: 20px;
-            font-size: 1.4em;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
+        /* TABLES */
         .score-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin: 15px 0;
             background: var(--white);
             border-radius: 10px;
             overflow: hidden;
@@ -375,76 +286,42 @@
         .score-table td {
             padding: 15px;
             text-align: center;
-            border-bottom: 1px solid #e9ecef;
-            color: var(--dark-text);
+            border-bottom: 1px solid var(--border-color);
         }
 
         .score-table tr:last-child td {
             border-bottom: none;
         }
 
-        .score-table .criteria-col {
+        .criteria-col {
             text-align: left;
             font-weight: 600;
-            background: #f8f9fa;
-            color: var(--dark-text);
+            background: var(--light-bg);
         }
 
-        .score-table .total-row {
+        .total-row {
             background: #e8f5e8;
             font-weight: 600;
         }
 
-        .score-table .final-row {
+        .final-row {
             background: var(--light-gold);
             font-weight: 700;
             font-size: 1.1em;
         }
 
-        .score-table .ranking-row {
-            background: #fff3cd;
-            font-weight: 600;
-        }
-
-        .score-category {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid var(--gold);
-            margin-bottom: 20px;
-        }
-
-        .score-category.penyisihan {
-            background: #e3f2fd;
-            border-left-color: var(--secondary-green);
-        }
-
-        .score-category.final {
-            background: #e8f5e8;
-            border-left-color: #28a745;
-        }
-
-        .category-title {
-            font-weight: 600;
-            color: var(--dark-text);
-            margin-bottom: 15px;
-            font-size: 1.1em;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
+        /* SCORE ITEMS */
         .scores-list {
             display: grid;
-            gap: 10px;
+            gap: 12px;
         }
 
         .score-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #e9ecef;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .score-item:last-child {
@@ -458,7 +335,7 @@
 
         .score-nilai {
             font-weight: 600;
-            color: var(--dark-text);
+            color: var(--text-dark);
             font-size: 1.1em;
         }
 
@@ -467,6 +344,7 @@
             font-size: 1.2em;
         }
 
+        /* STATUS & BADGES */
         .status-lolos {
             background: #d4edda;
             color: #155724;
@@ -475,7 +353,6 @@
             font-weight: 600;
             text-align: center;
             margin: 15px 0;
-            font-size: 1.1em;
             border-left: 4px solid #28a745;
             display: flex;
             align-items: center;
@@ -491,7 +368,6 @@
             font-weight: 600;
             text-align: center;
             margin: 15px 0;
-            font-size: 1.1em;
             border-left: 4px solid #ffc107;
             display: flex;
             align-items: center;
@@ -507,26 +383,10 @@
             font-weight: 700;
             text-align: center;
             margin: 15px 0;
-            font-size: 1.2em;
             border: 2px solid #ffc107;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
         }
 
-        .ranking-badge {
-            background: linear-gradient(135deg, #17a2b8, #20c997);
-            color: white;
-            padding: 10px 16px;
-            border-radius: 8px;
-            font-weight: 600;
-            text-align: center;
-            margin: 10px 0;
-            font-size: 1.1em;
-            border: 2px solid #138496;
-        }
-
+        /* LOADING & ERROR */
         .loading {
             text-align: center;
             padding: 40px;
@@ -555,19 +415,9 @@
             border-radius: 8px;
             margin: 20px 0;
             border-left: 4px solid #dc3545;
-            text-align: center;
         }
 
-        .metadata {
-            background: #f8f9fa;
-            padding: 15px;
-            text-align: center;
-            color: var(--secondary-green);
-            font-size: 0.9em;
-            border-top: 1px solid #e9ecef;
-            font-weight: 500;
-        }
-
+        /* ACTION BUTTONS */
         .action-buttons {
             display: flex;
             gap: 10px;
@@ -594,12 +444,11 @@
 
         .action-btn.print {
             background: var(--gold);
-            color: var(--dark-text);
+            color: var(--text-dark);
         }
 
         .action-btn.print:hover {
             background: var(--light-gold);
-            transform: scale(1.05);
         }
 
         .action-btn.share {
@@ -609,7 +458,6 @@
 
         .action-btn.share:hover {
             background: var(--primary-green);
-            transform: scale(1.05);
         }
 
         .action-btn.new-search {
@@ -619,57 +467,50 @@
 
         .action-btn.new-search:hover {
             background: #5a6268;
-            transform: scale(1.05);
         }
 
+        /* FOOTER */
         footer {
             background: var(--primary-green);
             color: var(--light-gold);
             padding: 15px;
-            margin-top: 20px;
+            margin: 20px auto 0;
             border-radius: 12px;
             font-size: 1rem;
             font-weight: 600;
             text-align: center;
             max-width: 1000px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
-        .search-helper {
-            margin-top: 10px;
-            font-size: 0.9rem;
-            color: var(--secondary-green);
-            text-align: center;
-            font-weight: 500;
-        }
-
-        .error-suggestion {
-            margin-top: 15px;
-            padding: 15px;
-            background: #fff3cd;
-            border-radius: 8px;
-            border-left: 4px solid var(--gold);
-            color: var(--dark-text);
-        }
-
-        .error-suggestion h4 {
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .error-suggestion ul {
-            padding-left: 20px;
-            margin-bottom: 10px;
-        }
-
-        .error-suggestion li {
-            margin-bottom: 5px;
-        }
-
+        /* RESPONSIVE */
         @media (max-width: 768px) {
+            .navbar-container {
+                flex-wrap: wrap;
+            }
+            
+            .navbar-mobile-toggle {
+                display: block;
+            }
+            
+            .navbar-menu {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                gap: 8px;
+                margin-top: 15px;
+                padding: 15px;
+                background: rgba(26, 60, 52, 0.98);
+                border-radius: 10px;
+            }
+            
+            .navbar-menu.active {
+                display: flex;
+            }
+            
+            .nav-divider {
+                display: none;
+            }
+            
             .input-group {
                 flex-direction: column;
             }
@@ -695,10 +536,6 @@
                 flex-direction: column;
             }
             
-            .action-btn {
-                justify-content: center;
-            }
-            
             .examples {
                 justify-content: center;
             }
@@ -710,7 +547,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- NAVBAR KOMBINASI -->
+    <!-- NAVBAR -->
     <nav class="mtq-navbar">
         <div class="navbar-container">
             <a href="index.html" class="navbar-logo">
@@ -726,21 +563,21 @@
                 <li class="nav-divider">•</li>
                 <li class="nav-item">
                     <a href="cek-nilai.html" class="nav-link">
-                        <i class="fas fa-chart-line nav-icon"></i>
+                        <i class="fas fa-chart-line"></i>
                         <span>Nilai</span>
                     </a>
                 </li>
                 <li class="nav-divider">•</li>
                 <li class="nav-item">
                     <a href="cek-no-urut.html" class="nav-link">
-                        <i class="fas fa-list-ol nav-icon"></i>
+                        <i class="fas fa-list-ol"></i>
                         <span>No. Urut</span>
                     </a>
                 </li>
                 <li class="nav-divider">•</li>
                 <li class="nav-item">
                     <a href="login.html" class="nav-link">
-                        <i class="fas fa-user-shield nav-icon"></i>
+                        <i class="fas fa-user-shield"></i>
                         <span>Admin</span>
                     </a>
                 </li>
@@ -748,14 +585,15 @@
         </div>
     </nav>
 
+    <!-- MAIN CONTAINER -->
     <div class="container">
+        <!-- HEADER -->
         <div class="header">
-            <div class="header-text">
-                <h1><i class="fas fa-trophy"></i> Cek Nilai MTQ Bantul 2025</h1>
-                <p>Sistem Penilaian Musabaqah Tilawatil Qur'an Kabupaten Bantul</p>
-            </div>
+            <h1><i class="fas fa-trophy"></i> Cek Nilai MTQ Bantul 2025</h1>
+            <p>Sistem Penilaian Musabaqah Tilawatil Qur'an Kabupaten Bantul</p>
         </div>
 
+        <!-- SEARCH SECTION -->
         <div class="search-section">
             <div class="input-group">
                 <input 
@@ -769,43 +607,27 @@
                 </button>
             </div>
             
-            <div class="search-helper">
-                <p>Gunakan contoh di bawah untuk mencoba sistem</p>
-            </div>
-            
             <div class="examples">
                 <div class="example-chip" onclick="setExample('MTQ-1')">MTQ-1</div>
                 <div class="example-chip" onclick="setExample('MTtQ-1')">MTtQ-1</div>
                 <div class="example-chip" onclick="setExample('MHQ-1')">MHQ-1</div>
-                <div class="example-chip" onclick="setExample('LCP-1')">LCP-1</div>
-                <div class="example-chip" onclick="setExample('LPP-1')">LPP-1</div>
-                <div class="example-chip" onclick="setExample('LMI-1')">LMI-1</div>
-                <div class="example-chip" onclick="setExample('MPS-1')">MPS-1</div>
                 <div class="example-chip" onclick="setExample('MAz-1')">MAz-1</div>
+                <div class="example-chip" onclick="setExample('MPS-1')">MPS-1</div>
+                <div class="example-chip" onclick="setExample('LPP-1')">LPP-1</div>
+                <div class="example-chip" onclick="setExample('LCP-1')">LCP-1</div>
+                <div class="example-chip" onclick="setExample('LMI-1')">LMI-1</div>
             </div>
         </div>
 
+        <!-- LOADING -->
         <div class="loading" id="loading" style="display: none;">
             <div class="loading-spinner"></div>
             <p>Mencari data peserta...</p>
         </div>
 
-        <div class="result-section" id="resultSection">
-            <div class="participant-info" id="participantInfo"></div>
-            <div class="team-section" id="teamSection" style="display: none;"></div>
-            <div class="scores-section" id="scoresSection"></div>
-            <div class="action-buttons" id="actionButtons" style="display: none;">
-                <button class="action-btn print" onclick="printResults()">
-                    <i class="fas fa-print"></i> Cetak Hasil
-                </button>
-                <button class="action-btn share" onclick="shareResults()">
-                    <i class="fas fa-share-alt"></i> Bagikan
-                </button>
-                <button class="action-btn new-search" onclick="newSearch()">
-                    <i class="fas fa-search"></i> Pencarian Baru
-                </button>
-            </div>
-            <div class="metadata" id="metadata"></div>
+        <!-- RESULTS SECTION -->
+        <div class="result-section" id="resultSection" style="display: none;">
+            <!-- Dynamic content will be inserted here -->
         </div>
     </div>
 
@@ -816,30 +638,32 @@
     <script>
         const API_URL = 'https://script.google.com/macros/s/AKfycbwJ-0hT5xFwWBvOwMvBIBJ_M-nsBpbqpm5ohXL4j_67SbGvtVVe5O7iUrVMTKOl0uMw/exec';
         let currentParticipantData = null;
-        let lastSearchId = '';
-        let searchTimeout = null;
 
+        // Mobile menu toggle
         document.getElementById('mobile-toggle').addEventListener('click', function() {
             document.getElementById('navbar-menu').classList.toggle('active');
         });
 
+        // Set example and search
         function setExample(participantId) {
             document.getElementById('participantId').value = participantId;
             searchParticipant();
         }
 
+        // Handle Enter key
         function handleKeyPress(event) {
             if (event.key === 'Enter') {
                 searchParticipant();
             }
         }
 
+        // Validate participant ID
         function validateParticipantId(participantId) {
             const validPrefixes = ['MTQ-', 'MTtQ-', 'MHQ-', 'MAz-', 'MPS-', 'LPP-', 'LCP-', 'LMI-'];
-            return validPrefixes.some(prefix => participantId.startsWith(prefix)) && 
-                   participantId.match(/^[A-Za-z]+-\d+$/);
+            return validPrefixes.some(prefix => participantId.toUpperCase().startsWith(prefix));
         }
 
+        // Main search function
         async function searchParticipant() {
             const participantId = document.getElementById('participantId').value.trim();
             const searchBtn = document.getElementById('searchBtn');
@@ -852,101 +676,96 @@
             }
 
             if (!validateParticipantId(participantId)) {
-                showError('Format nomor peserta tidak valid. Contoh: MTQ-1, LCP-1, dll.', participantId);
+                showError('Format nomor peserta tidak valid. Gunakan contoh: MTQ-1, LCP-1, dll.');
                 return;
             }
 
-            if (participantId === lastSearchId && currentParticipantData) {
-                return;
-            }
-
-            hideAllSections();
-            loading.style.display = 'block';
+            // Show loading
             resultSection.style.display = 'none';
+            loading.style.display = 'block';
             searchBtn.disabled = true;
             searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mencari...';
 
-            const timeoutPromise = new Promise((_, reject) => {
-                searchTimeout = setTimeout(() => {
-                    reject(new Error('Permintaan terlalu lama, silakan coba lagi'));
-                }, 10000);
-            });
-
             try {
-                const response = await Promise.race([
-                    fetch(`${API_URL}?id=${encodeURIComponent(participantId)}`),
-                    timeoutPromise
-                ]);
-
+                const response = await fetch(`${API_URL}?id=${encodeURIComponent(participantId)}`);
+                
                 if (!response.ok) {
-                    throw new Error(`Server error: ${response.status} ${response.statusText}`);
+                    throw new Error('Network response was not ok');
                 }
 
                 const data = await response.json();
 
                 if (data.success) {
                     currentParticipantData = data;
-                    lastSearchId = participantId;
                     displayParticipantData(data);
                 } else {
-                    switch (data.error) {
-                        case 'Parameter id diperlukan':
-                            showError('Nomor peserta tidak boleh kosong', participantId);
-                            break;
-                        default:
-                            showError(data.error || 'Peserta tidak ditemukan', participantId);
-                    }
+                    showError(data.error || 'Peserta tidak ditemukan');
                 }
             } catch (error) {
-                console.error('Search error:', error, { participantId });
-                let errorMessage;
-                if (error.message.includes('Failed to fetch')) {
-                    errorMessage = 'Tidak dapat terhubung ke server. Periksa koneksi internet Anda.';
-                } else if (error.message.includes('JSON')) {
-                    errorMessage = 'Data dari server tidak valid. Silakan coba lagi nanti.';
-                } else if (error.message.includes('Permintaan terlalu lama')) {
-                    errorMessage = error.message;
-                } else {
-                    errorMessage = `Terjadi kesalahan: ${error.message}`;
-                }
-                showError(errorMessage, participantId);
+                console.error('Error:', error);
+                showError('Terjadi kesalahan. Periksa koneksi internet dan coba lagi.');
             } finally {
-                clearTimeout(searchTimeout);
                 loading.style.display = 'none';
                 searchBtn.disabled = false;
                 searchBtn.innerHTML = '<i class="fas fa-search"></i> Cek Nilai';
             }
         }
 
+        // Display participant data
         function displayParticipantData(data) {
-            console.log('📊 Data received from backend:', data);
-            displayParticipantInfo(data.participant, data.lomba);
-            
-            if (data.lomba.isTeam && data.teamMembers && data.teamMembers.length > 0) {
-                displayTeamMembers(data.teamMembers);
+            const resultSection = document.getElementById('resultSection');
+            let html = '';
+
+            if (data.lomba.kode === 'LCP') {
+                html = generateLCPLayout(data);
+            } else {
+                html = generateIndividualLayout(data);
             }
-            
-            displayScores(data.scores, data.lomba.kode);
-            displayMetadata(data.metadata);
-            
-            document.getElementById('resultSection').style.display = 'block';
-            document.getElementById('actionButtons').style.display = 'flex';
-            
-            document.getElementById('resultSection').scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'start' 
-            });
+
+            // Add action buttons
+            html += `
+                <div class="action-buttons">
+                    <button class="action-btn print" onclick="printResults()">
+                        <i class="fas fa-print"></i> Cetak Hasil
+                    </button>
+                    <button class="action-btn share" onclick="shareResults()">
+                        <i class="fas fa-share-alt"></i> Bagikan
+                    </button>
+                    <button class="action-btn new-search" onclick="newSearch()">
+                        <i class="fas fa-search"></i> Pencarian Baru
+                    </button>
+                </div>
+            `;
+
+            resultSection.innerHTML = html;
+            resultSection.style.display = 'block';
+            resultSection.scrollIntoView({ behavior: 'smooth' });
         }
 
-        function displayParticipantInfo(participant, lomba) {
-            const container = document.getElementById('participantInfo');
+        // Generate LCP layout
+        function generateLCPLayout(data) {
+            const participant = data.participant;
+            const scores = data.scores;
+            const teamMembers = data.teamMembers || [];
+
+            // Extract scores
+            const nilaiPenyisihan = scores.find(s => s.aspek === 'Nilai Penyisihan');
+            const rankingPenyisihan = scores.find(s => s.aspek === 'Ranking Penyisihan');
+            const status = scores.find(s => s.aspek === 'Status');
+            const isLolos = status && (status.statusText === 'LOLOS' || status.statusText === 'Lolos');
             
-            if (lomba.isTeam) {
-                container.innerHTML = `
-                    <h3><i class="fas fa-users"></i> Data Tim</h3>
+            const wajibTiming = scores.find(s => s.aspek === 'Babak Wajib Timing');
+            const wajibLempar = scores.find(s => s.aspek === 'Babak Wajib Lempar');
+            const rebutan = scores.find(s => s.aspek === 'Babak Rebutan');
+            const nilaiFinal = scores.find(s => s.aspek === 'Nilai Final');
+            const juara = scores.find(s => s.aspek === 'Juara');
+
+            let html = `
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-users"></i> INFORMASI TIM</h3>
                     <div class="info-grid">
                         <div class="info-item">
-                            <span class="info-label">Nomor Peserta</span>
+                            <span class="info-label">No. Peserta</span>
                             <span class="info-value">${participant['No Peserta']}</span>
                         </div>
                         <div class="info-item">
@@ -955,16 +774,135 @@
                         </div>
                         <div class="info-item">
                             <span class="info-label">Cabang Lomba</span>
-                            <span class="info-value">${lomba.nama}</span>
+                            <span class="info-value">${data.lomba.nama}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Team members table
+            if (teamMembers.length > 0) {
+                html += `
+                    <div class="section">
+                        <h3 class="section-title"><i class="fas fa-user-friends"></i> ANGGOTA TIM</h3>
+                        <table class="score-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nama</th>
+                                    <th>Jenis Kelamin</th>
+                                    <th>Asal Sekolah</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${teamMembers.map((member, index) => `
+                                    <tr>
+                                        <td>${index + 1}</td>
+                                        <td class="criteria-col">${member.Nama}</td>
+                                        <td>${member['Jenis Kelamin']}</td>
+                                        <td>${member['Asal Sekolah']}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+
+            // Penyisihan section
+            html += `
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-list-ol"></i> BABAK PENYISIHAN</h3>
+                    <div class="scores-list">
+                        <div class="score-item">
+                            <span class="score-aspek">Nilai Penyisihan</span>
+                            <span class="score-nilai">${nilaiPenyisihan ? nilaiPenyisihan.nilai : '-'}</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="score-aspek">Ranking Penyisihan</span>
+                            <span class="score-nilai">${rankingPenyisihan ? rankingPenyisihan.nilai : '-'}</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="score-aspek">Status</span>
+                            <span class="score-nilai ${isLolos ? 'highlight' : ''}">${status ? (status.statusText || 'TIDAK LOLOS') : 'TIDAK LOLOS'}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Final section if lolos
+            if (isLolos) {
+                html += `
+                    <div class="section">
+                        <div class="status-lolos">
+                            <i class="fas fa-check-circle"></i> SELAMAT! Tim Anda LULUS ke Babak Final
+                        </div>
+                        
+                        <h3 class="section-title"><i class="fas fa-trophy"></i> BABAK FINAL</h3>
+                        <div class="scores-list">
+                            ${wajibTiming ? `
+                            <div class="score-item">
+                                <span class="score-aspek">Babak Wajib Timing</span>
+                                <span class="score-nilai">${wajibTiming.nilai}</span>
+                            </div>
+                            ` : ''}
+                            ${wajibLempar ? `
+                            <div class="score-item">
+                                <span class="score-aspek">Babak Wajib Lempar</span>
+                                <span class="score-nilai">${wajibLempar.nilai}</span>
+                            </div>
+                            ` : ''}
+                            ${rebutan ? `
+                            <div class="score-item">
+                                <span class="score-aspek">Babak Rebutan</span>
+                                <span class="score-nilai">${rebutan.nilai}</span>
+                            </div>
+                            ` : ''}
+                            ${nilaiFinal ? `
+                            <div class="score-item">
+                                <span class="score-aspek">Nilai Final</span>
+                                <span class="score-nilai highlight">${nilaiFinal.nilai}</span>
+                            </div>
+                            ` : ''}
                         </div>
                     </div>
                 `;
+
+                // Juara badge
+                if (juara && juara.nilai > 0) {
+                    const rankingLabel = getRankingLabel(juara.nilai, data.lomba.nama);
+                    html += `
+                        <div class="section">
+                            <div class="juara-badge">
+                                <i class="fas fa-trophy"></i> ${rankingLabel}
+                            </div>
+                        </div>
+                    `;
+                }
             } else {
-                container.innerHTML = `
-                    <h3><i class="fas fa-user"></i> Data Peserta</h3>
+                html += `
+                    <div class="section">
+                        <div class="status-tidak-lolos">
+                            <i class="fas fa-info-circle"></i> Terima kasih atas partisipasinya. Tim Anda belum berhasil melanjutkan ke babak final.
+                        </div>
+                    </div>
+                `;
+            }
+
+            return html;
+        }
+
+        // Generate individual competition layout
+        function generateIndividualLayout(data) {
+            const participant = data.participant;
+            const scores = data.scores;
+
+            let html = `
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-user"></i> INFORMASI PESERTA</h3>
                     <div class="info-grid">
                         <div class="info-item">
-                            <span class="info-label">Nomor Peserta</span>
+                            <span class="info-label">No. Peserta</span>
                             <span class="info-value">${participant['No Peserta']}</span>
                         </div>
                         <div class="info-item">
@@ -985,351 +923,141 @@
                         </div>
                         <div class="info-item">
                             <span class="info-label">Cabang Lomba</span>
-                            <span class="info-value">${lomba.nama}</span>
+                            <span class="info-value">${data.lomba.nama}</span>
                         </div>
                     </div>
-                `;
-            }
-        }
+                </div>
+            `;
 
-        function displayScores(scores, lombaKode) {
-            console.log('🎯 Displaying scores for:', lombaKode, scores);
-            const container = document.getElementById('scoresSection');
-            
-            let html = '<h3><i class="fas fa-chart-bar"></i> Detail Penilaian</h3>';
+            // Extract scores for table
+            const juriScores = scores.filter(s => s.aspek.includes('Juri') && !s.aspek.includes('Jumlah'));
+            const jumlahScores = scores.filter(s => s.aspek.includes('Jumlah'));
+            const nilaiAkhir = scores.find(s => s.aspek === 'Nilai Akhir');
+            const peringkat = scores.find(s => s.aspek === 'Peringkat');
 
-            // Function untuk konversi ranking ke label
-            const getRankingLabel = (ranking, lombaName) => {
-                if (!ranking || ranking === 0) return '-';
-                switch(ranking) {
-                    case 1: return `Juara I (${lombaName})`;
-                    case 2: return `Juara II (${lombaName})`;
-                    case 3: return `Juara III (${lombaName})`;
-                    case 4: return `Juara Harapan I (${lombaName})`;
-                    case 5: return `Juara Harapan II (${lombaName})`;
-                    default: return `Peringkat ${ranking} (${lombaName})`;
+            // Group by criteria
+            const criteriaMap = {};
+            juriScores.forEach(score => {
+                const match = score.aspek.match(/Juri (\d+) - (.+)/);
+                if (match) {
+                    const [, juriNum, criteria] = match;
+                    if (!criteriaMap[criteria]) {
+                        criteriaMap[criteria] = { j1: '-', j2: '-', j3: '-' };
+                    }
+                    criteriaMap[criteria][`j${juriNum}`] = score.nilai;
                 }
-            };
+            });
 
-            if (lombaKode === 'LCP') {
-                // Data untuk LCP - STRUCTURE TERBARU
-                const nilaiPenyisihan = scores.find(score => score.aspek === 'Nilai Penyisihan');
-                const status = scores.find(score => score.aspek === 'Status');
-                const rankingPenyisihan = scores.find(score => score.aspek === 'Ranking Penyisihan');
-                
-                // Data Babak Final
-                const babakWajibTiming = scores.find(score => score.aspek === 'Babak Wajib Timing');
-                const babakWajibLempar = scores.find(score => score.aspek === 'Babak Wajib Lempar');
-                const babakRebutan = scores.find(score => score.aspek === 'Babak Rebutan');
-                const nilaiFinal = scores.find(score => score.aspek === 'Nilai Final');
-                const juara = scores.find(score => score.aspek === 'Juara');
+            const criteriaList = Object.keys(criteriaMap);
 
-                console.log('🔍 LCP Data Found:', {
-                    nilaiPenyisihan,
-                    status,
-                    rankingPenyisihan,
-                    babakWajibTiming,
-                    babakWajibLempar,
-                    babakRebutan,
-                    nilaiFinal,
-                    juara
-                });
-
-                // Tentukan status lolos - handle berbagai format
-                let isLolos = false;
-                if (status) {
-                    isLolos = (status.note && (status.note.toUpperCase() === 'LOLOS' || status.note.toUpperCase() === 'LULUS')) || 
-                             (status.nilai && status.nilai.toString().toUpperCase() === 'LOLOS');
-                }
-
-                console.log('🎯 Status Lolos Result:', isLolos);
-
-                // =============================================
-                // BAGIAN 1: BABAK PENYISIHAN - SELALU TAMPILKAN
-                // =============================================
+            if (criteriaList.length > 0) {
                 html += `
-                    <div class="score-category penyisihan">
-                        <div class="category-title"><i class="fas fa-list-ol"></i> Babak Penyisihan</div>
-                        <div class="scores-list">
-                            ${nilaiPenyisihan ? `
-                            <div class="score-item">
-                                <span class="score-aspek">Nilai Penyisihan</span>
-                                <span class="score-nilai">${nilaiPenyisihan.nilai}</span>
-                            </div>
-                            ` : '<div class="score-item"><span class="score-aspek">Nilai Penyisihan</span><span class="score-nilai">-</span></div>'}
-                            ${status ? `
-                            <div class="score-item">
-                                <span class="score-aspek">Status</span>
-                                <span class="score-nilai ${isLolos ? 'highlight' : ''}">${status.note || status.nilai || '-'}</span>
-                            </div>
-                            ` : '<div class="score-item"><span class="score-aspek">Status</span><span class="score-nilai">-</span></div>'}
-                            ${rankingPenyisihan ? `
-                            <div class="score-item">
-                                <span class="score-aspek">Ranking</span>
-                                <span class="score-nilai">${getRankingLabel(rankingPenyisihan.nilai, 'Lomba Cerdas Cermat PAI')}</span>
-                            </div>
-                            ` : '<div class="score-item"><span class="score-aspek">Ranking</span><span class="score-nilai">-</span></div>'}
-                        </div>
-                    </div>
-                `;
-
-                // =============================================
-                // BAGIAN 2: STATUS LOLOS/TIDAK LOLOS
-                // =============================================
-                if (isLolos) {
-                    html += `
-                        <div class="status-lolos">
-                            <i class="fas fa-check-circle"></i> SELAMAT! Tim Anda LULUS ke Babak Final
-                        </div>
-                    `;
-
-                    // =============================================
-                    // BAGIAN 3: BABAK FINAL (hanya jika LOLOS)
-                    // =============================================
-                    html += `
-                        <div class="score-category final">
-                            <div class="category-title"><i class="fas fa-trophy"></i> Babak Final</div>
-                            <table class="score-table">
-                                <thead>
-                                    <tr>
-                                        <th>Babak</th>
-                                        <th>Nilai</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    ${babakWajibTiming ? `
-                                    <tr>
-                                        <td class="criteria-col">Babak Wajib Timing</td>
-                                        <td>${babakWajibTiming.nilai}</td>
-                                    </tr>
-                                    ` : '<tr><td class="criteria-col">Babak Wajib Timing</td><td>-</td></tr>'}
-                                    ${babakWajibLempar ? `
-                                    <tr>
-                                        <td class="criteria-col">Babak Wajib Lempar</td>
-                                        <td>${babakWajibLempar.nilai}</td>
-                                    </tr>
-                                    ` : '<tr><td class="criteria-col">Babak Wajib Lempar</td><td>-</td></tr>'}
-                                    ${babakRebutan ? `
-                                    <tr>
-                                        <td class="criteria-col">Babak Rebutan</td>
-                                        <td>${babakRebutan.nilai}</td>
-                                    </tr>
-                                    ` : '<tr><td class="criteria-col">Babak Rebutan</td><td>-</td></tr>'}
-                                    ${nilaiFinal ? `
-                                    <tr class="final-row">
-                                        <td class="criteria-col"><strong>Nilai Final</strong></td>
-                                        <td><strong>${nilaiFinal.nilai}</strong></td>
-                                    </tr>
-                                    ` : '<tr class="final-row"><td class="criteria-col"><strong>Nilai Final</strong></td><td><strong>-</strong></td></tr>'}
-                                </tbody>
-                            </table>
-                        </div>
-                    `;
-
-                    // =============================================
-                    // BAGIAN 4: JUARA (hanya jika LOLOS dan ada data juara)
-                    // =============================================
-                    if (juara && juara.nilai > 0) {
-                        html += `
-                            <div class="juara-badge">
-                                <i class="fas fa-trophy"></i> ${getRankingLabel(juara.nilai, 'Lomba Cerdas Cermat PAI')}
-                            </div>
-                        `;
-                    }
-                } else {
-                    html += `
-                        <div class="status-tidak-lolos">
-                            <i class="fas fa-info-circle"></i> Terima kasih atas partisipasinya. Tim Anda belum berhasil melanjutkan ke babak final.
-                        </div>
-                    `;
-                }
-
-            } else {
-                // Untuk lomba individu (MTQ, MTtQ, MHQ, dll)
-                const juriScores = scores.filter(score => 
-                    score.aspek.includes('Juri') && 
-                    !score.aspek.includes('Jumlah') &&
-                    !score.aspek.includes('Rata-rata')
-                );
-                
-                const jumlahScores = scores.filter(score => 
-                    score.aspek.includes('Jumlah Juri') || 
-                    score.aspek === 'Jumlah'
-                );
-                
-                const nilaiAkhir = scores.find(score => score.aspek === 'Nilai Akhir');
-                const peringkat = scores.find(score => score.aspek === 'Peringkat');
-
-                const lombaName = getLombaName(lombaKode);
-
-                const kriteriaMap = {};
-                
-                juriScores.forEach(score => {
-                    let kriteria = '';
-                    let juriNum = '';
-                    
-                    if (score.aspek.includes(' - ')) {
-                        const parts = score.aspek.split(' - ');
-                        const juriPart = parts[0];
-                        kriteria = parts[1];
-                        
-                        const juriMatch = juriPart.match(/Juri\s*(\d+)/i);
-                        if (juriMatch) {
-                            juriNum = juriMatch[1];
-                        }
-                    } else {
-                        kriteria = score.aspek;
-                        if (score.kode) {
-                            juriNum = score.kode.charAt(1);
-                        }
-                    }
-                    
-                    if (kriteria && juriNum) {
-                        if (!kriteriaMap[kriteria]) {
-                            kriteriaMap[kriteria] = { j1: '', j2: '', j3: '' };
-                        }
-                        kriteriaMap[kriteria][`j${juriNum}`] = score.nilai;
-                    }
-                });
-
-                const kriteriaList = Object.keys(kriteriaMap);
-                
-                const jumlahValues = [];
-                if (jumlahScores.length >= 3) {
-                    jumlahValues.push(jumlahScores[0].nilai, jumlahScores[1].nilai, jumlahScores[2].nilai);
-                } else if (jumlahScores.length === 1) {
-                    const nilai = jumlahScores[0].nilai;
-                    jumlahValues.push(nilai, nilai, nilai);
-                } else {
-                    const totalJuri1 = Object.values(kriteriaMap).reduce((sum, k) => sum + (parseInt(k.j1) || 0), 0);
-                    const totalJuri2 = Object.values(kriteriaMap).reduce((sum, k) => sum + (parseInt(k.j2) || 0), 0);
-                    const totalJuri3 = Object.values(kriteriaMap).reduce((sum, k) => sum + (parseInt(k.j3) || 0), 0);
-                    jumlahValues.push(totalJuri1, totalJuri2, totalJuri3);
-                }
-
-                if (kriteriaList.length > 0) {
-                    html += `
+                    <div class="section">
+                        <h3 class="section-title"><i class="fas fa-chart-bar"></i> DETAIL PENILAIAN</h3>
                         <table class="score-table">
                             <thead>
                                 <tr>
-                                    <th>Kriteria Penilaian</th>
-                                    <th>Juri 1</th>
-                                    <th>Juri 2</th>
-                                    <th>Juri 3</th>
+                                    <th>KRITERIA</th>
+                                    <th>JURI 1</th>
+                                    <th>JURI 2</th>
+                                    <th>JURI 3</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                ${kriteriaList.map((kriteria, index) => {
-                                    const rowData = kriteriaMap[kriteria];
-                                    return `
-                                        <tr>
-                                            <td class="criteria-col">${String.fromCharCode(65 + index)}. ${kriteria}</td>
-                                            <td class="juri-col">${rowData.j1 || '-'}</td>
-                                            <td class="juri-col">${rowData.j2 || '-'}</td>
-                                            <td class="juri-col">${rowData.j3 || '-'}</td>
-                                        </tr>
-                                    `;
-                                }).join('')}
-                                <tr class="total-row">
-                                    <td class="criteria-col"><strong>Jumlah</strong></td>
-                                    ${jumlahValues.map(val => `<td><strong>${val}</strong></td>`).join('')}
-                                </tr>
-                                ${nilaiAkhir ? `
-                                    <tr class="final-row">
-                                        <td class="criteria-col"><strong>Nilai Akhir</strong></td>
-                                        <td colspan="3"><strong>${nilaiAkhir.nilai}</strong></td>
+                                ${criteriaList.map((criteria, index) => `
+                                    <tr>
+                                        <td class="criteria-col">${String.fromCharCode(65 + index)}. ${criteria}</td>
+                                        <td>${criteriaMap[criteria].j1}</td>
+                                        <td>${criteriaMap[criteria].j2}</td>
+                                        <td>${criteriaMap[criteria].j3}</td>
                                     </tr>
+                                `).join('')}
+                                <tr class="total-row">
+                                    <td class="criteria-col"><strong>JUMLAH</strong></td>
+                                    <td><strong>${jumlahScores[0]?.nilai || '-'}</strong></td>
+                                    <td><strong>${jumlahScores[1]?.nilai || '-'}</strong></td>
+                                    <td><strong>${jumlahScores[2]?.nilai || '-'}</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="score-table" style="margin-top: 20px;">
+                            <tbody>
+                                ${nilaiAkhir ? `
+                                <tr class="final-row">
+                                    <td class="criteria-col" style="width: 50%;"><strong>NILAI AKHIR</strong></td>
+                                    <td style="width: 50%;"><strong>${nilaiAkhir.nilai}</strong></td>
+                                </tr>
                                 ` : ''}
                                 ${peringkat ? `
-                                    <tr class="ranking-row">
-                                        <td class="criteria-col"><strong>Peringkat</strong></td>
-                                        <td colspan="3"><strong>${getRankingLabel(peringkat.nilai, lombaName)}</strong></td>
-                                    </tr>
+                                <tr class="final-row">
+                                    <td class="criteria-col"><strong>HASIL</strong></td>
+                                    <td><strong>${getRankingLabel(peringkat.nilai, data.lomba.nama)}</strong></td>
+                                </tr>
                                 ` : ''}
                             </tbody>
                         </table>
-                    `;
-                } else {
-                    html += `
-                        <div class="score-category">
-                            <div class="category-title"><i class="fas fa-chart-line"></i> Rekap Nilai</div>
-                            <div class="scores-list">
-                                ${scores.filter(score => 
-                                    !score.aspek.includes('Juri') && 
-                                    !score.aspek.includes('Jumlah') &&
-                                    score.nilai
-                                ).map(score => `
-                                    <div class="score-item">
-                                        <span class="score-aspek">${score.aspek}</span>
-                                        <span class="score-nilai ${score.aspek.includes('Nilai Akhir') ? 'highlight' : ''}">${score.nilai}</span>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `;
-                }
+                    </div>
+                `;
             }
 
-            container.innerHTML = html;
+            return html;
         }
 
-        function getLombaName(lombaKey) {
-            const names = {
-                'MTQ': 'Musabaqah Tilawatil Qur\'an',
-                'MTtQ': 'Musabaqah Tartil Qur\'an',
-                'MHQ': 'Musabaqah Hifdzil Qur\'an',
-                'MAz': 'Musabaqah Azan',
-                'MPS': 'Musabaqah Puitisasi Saritilawah',
-                'LPP': 'Lomba Pidato PAI',
-                'LCP': 'Lomba Cerdas Cermat PAI',
-                'LMI': 'Lomba Melukis Islami'
-            };
-            return names[lombaKey] || lombaKey;
-        }
-
-        function displayTeamMembers(teamMembers) {
-            const container = document.getElementById('teamSection');
+        // Get ranking label
+        function getRankingLabel(ranking, lombaName) {
+            if (!ranking || ranking === 0) return '-';
             
-            container.innerHTML = `
-                <h3><i class="fas fa-users"></i> Anggota Tim</h3>
-                <div class="team-grid">
-                    ${teamMembers.map(member => `
-                        <div class="team-member">
-                            <div class="member-name">${member.Nama}</div>
-                            <div class="member-details">
-                                ${member['Jenis Kelamin']} • ${member['Asal Sekolah']}
-                                ${member.Kelas ? ` • Kelas ${member.Kelas}` : ''}
-                            </div>
-                        </div>
-                    `).join('')}
+            switch(parseInt(ranking)) {
+                case 1: return `JUARA I ${getMedalEmoji(1)}`;
+                case 2: return `JUARA II ${getMedalEmoji(2)}`;
+                case 3: return `JUARA III ${getMedalEmoji(3)}`;
+                case 4: return 'JUARA HARAPAN I';
+                case 5: return 'JUARA HARAPAN II';
+                default: return `PERINGKAT ${ranking}`;
+            }
+        }
+
+        // Get medal emoji
+        function getMedalEmoji(rank) {
+            switch(rank) {
+                case 1: return '🥇';
+                case 2: return '🥈';
+                case 3: return '🥉';
+                default: return '';
+            }
+        }
+
+        // Show error
+        function showError(message) {
+            const resultSection = document.getElementById('resultSection');
+            resultSection.innerHTML = `
+                <div class="section">
+                    <div class="error">
+                        <strong><i class="fas fa-exclamation-triangle"></i> Error</strong>
+                        <p>${message}</p>
+                        <button onclick="newSearch()" style="margin-top: 10px; padding: 10px 15px; background: var(--gold); color: var(--text-dark); border: none; border-radius: 5px; cursor: pointer; font-weight: 600;">
+                            <i class="fas fa-search"></i> Pencarian Baru
+                        </button>
+                    </div>
                 </div>
             `;
-            
-            container.style.display = 'block';
+            resultSection.style.display = 'block';
         }
 
-        function displayMetadata(metadata) {
-            const container = document.getElementById('metadata');
-            
-            container.innerHTML = `
-                <i class="fas fa-clock"></i> Data diambil pada: ${new Date(metadata.timestamp).toLocaleString('id-ID')} • 
-                <i class="fas fa-sync-alt"></i> Processing time: ${metadata.processingTime} • 
-                <i class="fas fa-database"></i> Sumber: ${metadata.dataSource}
-            `;
-        }
-
+        // Action functions
         function printResults() {
             window.print();
         }
 
         function shareResults() {
-            if (navigator.share) {
+            if (navigator.share && currentParticipantData) {
                 navigator.share({
                     title: `Hasil Nilai MTQ Bantul 2025 - ${currentParticipantData.participant['No Peserta']}`,
                     text: `Lihat hasil nilai ${currentParticipantData.participant.Nama || 'peserta'} di MTQ Bantul 2025`,
                     url: window.location.href
                 });
-            } else {
+            } else if (currentParticipantData) {
                 const participantId = currentParticipantData.participant['No Peserta'];
                 navigator.clipboard.writeText(`${window.location.href}?id=${participantId}`);
                 alert('Link hasil telah disalin ke clipboard!');
@@ -1339,62 +1067,14 @@
         function newSearch() {
             document.getElementById('participantId').value = '';
             document.getElementById('participantId').focus();
-            hideAllSections();
             document.getElementById('resultSection').style.display = 'none';
-            document.getElementById('actionButtons').style.display = 'none';
             currentParticipantData = null;
-            lastSearchId = '';
         }
 
-        function showError(message, participantId = '') {
-            const resultSection = document.getElementById('resultSection');
-            
-            let errorHtml = `
-                <div class="error" role="alert" aria-live="assertive">
-                    <strong><i class="fas fa-exclamation-triangle"></i> Error</strong>
-                    <p>${message}</p>
-            `;
-            
-            if (message.includes('tidak ditemukan') && participantId) {
-                errorHtml += `
-                    <div class="error-suggestion">
-                        <h4><i class="fas fa-lightbulb"></i> Saran Pencarian</h4>
-                        <p>Nomor peserta <strong>"${participantId}"</strong> tidak ditemukan. Coba:</p>
-                        <ul>
-                            <li>Periksa kembali penulisan nomor peserta</li>
-                            <li>Gunakan huruf kapital dan tanda hubung (-) dengan benar</li>
-                            <li>Pastikan nomor peserta sudah terdaftar</li>
-                            <li>Gunakan contoh di atas untuk mencoba sistem</li>
-                        </ul>
-                        <p><strong>Tip:</strong> Ketik ulang nomor peserta dengan benar atau klik contoh di atas.</p>
-                    </div>
-                `;
-            }
-            
-            errorHtml += `
-                    <button onclick="searchParticipant()" style="margin-top: 10px; padding: 10px 15px; background: var(--secondary-green); color: var(--light-gold); border: none; border-radius: 5px; cursor: pointer; font-weight: 600;">
-                        <i class="fas fa-redo"></i> Coba Lagi
-                    </button>
-                    <button onclick="newSearch()" style="margin-top: 10px; padding: 10px 15px; background: var(--gold); color: var(--dark-text); border: none; border-radius: 5px; cursor: pointer; font-weight: 600;">
-                        <i class="fas fa-search"></i> Pencarian Baru
-                    </button>
-                </div>
-            `;
-            
-            resultSection.innerHTML = errorHtml;
-            resultSection.style.display = 'block';
-        }
-
-        function hideAllSections() {
-            document.getElementById('participantInfo').innerHTML = '';
-            document.getElementById('scoresSection').innerHTML = '';
-            document.getElementById('teamSection').innerHTML = '';
-            document.getElementById('teamSection').style.display = 'none';
-            document.getElementById('metadata').innerHTML = '';
-        }
-
+        // Auto-focus on input
         document.getElementById('participantId').focus();
 
+        // Check for URL parameters
         window.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const participantId = urlParams.get('id');
