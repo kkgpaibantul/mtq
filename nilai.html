@@ -4,16 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cek Nilai - MTQ Bantul 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary-green: #1A3C34;
-            --secondary-green: #2E4F47;
-            --gold: #FF6B35;
-            --light-gold: #FF8E53;
+            --primary-green: #2D4A43;
+            --secondary-green: #3A5B52;
+            --gold: #D4A574;
+            --light-gold: #E6C9A8;
             --white: #ffffff;
             --light-bg: #f8f9fa;
             --border-color: #e9ecef;
-            --text-dark: #1A3C34;
+            --text-dark: #2D4A43;
             --text-light: #6c757d;
         }
 
@@ -34,11 +38,11 @@
 
         /* NAVBAR */
         .mtq-navbar {
-            background: rgba(26, 60, 52, 0.95);
+            background: rgba(45, 74, 67, 0.95);
             backdrop-filter: blur(10px);
             padding: 12px 25px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            border-bottom: 3px solid var(--gold);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 2px solid var(--gold);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -95,9 +99,8 @@
         }
 
         .nav-link:hover {
-            background: rgba(255, 107, 53, 0.15);
+            background: rgba(212, 165, 116, 0.15);
             color: var(--light-gold);
-            transform: translateY(-2px);
         }
 
         .navbar-mobile-toggle {
@@ -116,8 +119,8 @@
             max-width: 1000px;
             margin: 20px auto;
             background: var(--white);
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
             overflow: hidden;
         }
 
@@ -138,7 +141,7 @@
         .header p {
             opacity: 0.9;
             font-size: 1.1em;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         /* SEARCH SECTION */
@@ -162,6 +165,7 @@
             font-size: 16px;
             font-family: 'Poppins', sans-serif;
             transition: border-color 0.3s;
+            background: var(--white);
         }
 
         .input-group input:focus {
@@ -178,7 +182,7 @@
             cursor: pointer;
             font-size: 16px;
             font-weight: 600;
-            transition: background 0.3s;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -186,11 +190,13 @@
 
         .input-group button:hover {
             background: var(--light-gold);
+            transform: translateY(-1px);
         }
 
         .input-group button:disabled {
             background: #95a5a6;
             cursor: not-allowed;
+            transform: none;
         }
 
         .examples {
@@ -203,12 +209,12 @@
 
         .example-chip {
             background: var(--white);
-            border: 2px solid var(--gold);
+            border: 1px solid var(--gold);
             color: var(--text-dark);
             padding: 8px 15px;
             border-radius: 20px;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.3s;
         }
@@ -216,7 +222,6 @@
         .example-chip:hover {
             background: var(--gold);
             color: var(--text-dark);
-            transform: scale(1.05);
         }
 
         /* SECTIONS COMMON */
@@ -232,8 +237,8 @@
         .section-title {
             color: var(--text-dark);
             margin-bottom: 20px;
-            font-size: 1.4em;
-            font-weight: 700;
+            font-size: 1.3em;
+            font-weight: 600;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -270,22 +275,22 @@
             border-collapse: collapse;
             margin: 15px 0;
             background: var(--white);
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
         .score-table th {
             background: var(--secondary-green);
             color: var(--light-gold);
-            padding: 15px;
+            padding: 12px;
             text-align: center;
             font-weight: 600;
+            font-size: 0.9em;
         }
 
         .score-table td {
-            padding: 15px;
-            text-align: center;
+            padding: 12px;
             border-bottom: 1px solid var(--border-color);
         }
 
@@ -295,8 +300,12 @@
 
         .criteria-col {
             text-align: left;
-            font-weight: 600;
+            font-weight: 500;
             background: var(--light-bg);
+        }
+
+        .juri-col {
+            text-align: center;
         }
 
         .total-row {
@@ -306,8 +315,7 @@
 
         .final-row {
             background: var(--light-gold);
-            font-weight: 700;
-            font-size: 1.1em;
+            font-weight: 600;
         }
 
         /* SCORE ITEMS */
@@ -341,19 +349,18 @@
 
         .score-nilai.highlight {
             color: var(--primary-green);
-            font-size: 1.2em;
         }
 
         /* STATUS & BADGES */
         .status-lolos {
-            background: #d4edda;
-            color: #155724;
+            background: #e8f5e8;
+            color: #2d5a2d;
             padding: 15px;
             border-radius: 8px;
             font-weight: 600;
             text-align: center;
             margin: 15px 0;
-            border-left: 4px solid #28a745;
+            border-left: 4px solid #4CAF50;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -383,7 +390,7 @@
             font-weight: 700;
             text-align: center;
             margin: 15px 0;
-            border: 2px solid #ffc107;
+            border: 1px solid #ffc107;
         }
 
         /* LOADING & ERROR */
@@ -475,9 +482,9 @@
             color: var(--light-gold);
             padding: 15px;
             margin: 20px auto 0;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
             text-align: center;
             max-width: 1000px;
         }
@@ -499,8 +506,8 @@
                 gap: 8px;
                 margin-top: 15px;
                 padding: 15px;
-                background: rgba(26, 60, 52, 0.98);
-                border-radius: 10px;
+                background: rgba(45, 74, 67, 0.98);
+                border-radius: 8px;
             }
             
             .navbar-menu.active {
@@ -524,12 +531,12 @@
             }
             
             .score-table {
-                font-size: 0.9em;
+                font-size: 0.85em;
             }
             
             .score-table th,
             .score-table td {
-                padding: 10px 5px;
+                padding: 8px 4px;
             }
             
             .action-buttons {
@@ -541,13 +548,8 @@
             }
         }
     </style>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- NAVBAR -->
     <nav class="mtq-navbar">
         <div class="navbar-container">
             <a href="index.html" class="navbar-logo">
@@ -585,15 +587,12 @@
         </div>
     </nav>
 
-    <!-- MAIN CONTAINER -->
     <div class="container">
-        <!-- HEADER -->
         <div class="header">
             <h1><i class="fas fa-trophy"></i> Cek Nilai MTQ Bantul 2025</h1>
             <p>Sistem Penilaian Musabaqah Tilawatil Qur'an Kabupaten Bantul</p>
         </div>
 
-        <!-- SEARCH SECTION -->
         <div class="search-section">
             <div class="input-group">
                 <input 
@@ -619,16 +618,13 @@
             </div>
         </div>
 
-        <!-- LOADING -->
         <div class="loading" id="loading" style="display: none;">
             <div class="loading-spinner"></div>
             <p>Mencari data peserta...</p>
         </div>
 
-        <!-- RESULTS SECTION -->
         <div class="result-section" id="resultSection" style="display: none;">
-            <!-- Dynamic content will be inserted here -->
-        </div>
+            </div>
     </div>
 
     <footer>
@@ -657,13 +653,19 @@
             }
         }
 
-        // Validate participant ID
+        // FUNGSI PERBAIKAN: VALIDASI PESERTA
         function validateParticipantId(participantId) {
-            const validPrefixes = ['MTQ-', 'MTtQ-', 'MHQ-', 'MAz-', 'MPS-', 'LPP-', 'LCP-', 'LMI-'];
-            return validPrefixes.some(prefix => participantId.toUpperCase().startsWith(prefix));
+            // Definisikan semua prefix yang mungkin (case-insensitive)
+            const validPrefixes = ['MTQ-', 'MTTQ-', 'MHQ-', 'MAZ-', 'MPS-', 'LPP-', 'LCP-', 'LMI-'];
+            
+            // Konversi input ke huruf kapital untuk perbandingan case-insensitive
+            const upperCaseId = participantId.toUpperCase();
+            
+            // Periksa apakah input dimulai dengan salah satu prefix yang valid.
+            return validPrefixes.some(prefix => upperCaseId.startsWith(prefix));
         }
 
-        // Main search function
+        // FUNGSI PERBAIKAN: SEARCH DAN NORMALISASI
         async function searchParticipant() {
             const participantId = document.getElementById('participantId').value.trim();
             const searchBtn = document.getElementById('searchBtn');
@@ -675,11 +677,21 @@
                 return;
             }
 
-            if (!validateParticipantId(participantId)) {
+            // Normalisasi awal untuk validasi (ke huruf kapital)
+            let tempId = participantId.toUpperCase();
+
+            // Lakukan validasi
+            if (!validateParticipantId(tempId)) {
                 showError('Format nomor peserta tidak valid. Gunakan contoh: MTQ-1, LCP-1, dll.');
                 return;
             }
 
+            // Normalisasi final: Ganti prefix 'MTTQ-' menjadi 'MTtQ-' dan 'MAZ-' menjadi 'MAz-'
+            // yang merupakan format yang diharapkan oleh API.
+            let normalizedId = tempId
+                .replace('MTTQ-', 'MTtQ-')
+                .replace('MAZ-', 'MAz-');
+            
             // Show loading
             resultSection.style.display = 'none';
             loading.style.display = 'block';
@@ -687,7 +699,8 @@
             searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mencari...';
 
             try {
-                const response = await fetch(`${API_URL}?id=${encodeURIComponent(participantId)}`);
+                // Gunakan normalizedId untuk fetching
+                const response = await fetch(`${API_URL}?id=${encodeURIComponent(normalizedId)}`);
                 
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -699,7 +712,7 @@
                     currentParticipantData = data;
                     displayParticipantData(data);
                 } else {
-                    showError(data.error || 'Peserta tidak ditemukan');
+                    showError(data.error || 'Peserta tidak ditemukan. Pastikan nomor peserta sudah benar.');
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -711,7 +724,7 @@
             }
         }
 
-        // Display participant data
+        // Display participant data (Tidak Diubah)
         function displayParticipantData(data) {
             const resultSection = document.getElementById('resultSection');
             let html = '';
@@ -742,13 +755,12 @@
             resultSection.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Generate LCP layout
+        // Generate LCP layout (Tidak Diubah)
         function generateLCPLayout(data) {
             const participant = data.participant;
             const scores = data.scores;
             const teamMembers = data.teamMembers || [];
 
-            // Extract scores
             const nilaiPenyisihan = scores.find(s => s.aspek === 'Nilai Penyisihan');
             const rankingPenyisihan = scores.find(s => s.aspek === 'Ranking Penyisihan');
             const status = scores.find(s => s.aspek === 'Status');
@@ -780,7 +792,6 @@
                 </div>
             `;
 
-            // Team members table
             if (teamMembers.length > 0) {
                 html += `
                     <div class="section">
@@ -797,10 +808,10 @@
                             <tbody>
                                 ${teamMembers.map((member, index) => `
                                     <tr>
-                                        <td>${index + 1}</td>
+                                        <td style="text-align: center;">${index + 1}</td>
                                         <td class="criteria-col">${member.Nama}</td>
-                                        <td>${member['Jenis Kelamin']}</td>
-                                        <td>${member['Asal Sekolah']}</td>
+                                        <td style="text-align: center;">${member['Jenis Kelamin']}</td>
+                                        <td style="text-align: center;">${member['Asal Sekolah']}</td>
                                     </tr>
                                 `).join('')}
                             </tbody>
@@ -809,7 +820,6 @@
                 `;
             }
 
-            // Penyisihan section
             html += `
                 <div class="section">
                     <h3 class="section-title"><i class="fas fa-list-ol"></i> BABAK PENYISIHAN</h3>
@@ -830,7 +840,6 @@
                 </div>
             `;
 
-            // Final section if lolos
             if (isLolos) {
                 html += `
                     <div class="section">
@@ -840,59 +849,26 @@
                         
                         <h3 class="section-title"><i class="fas fa-trophy"></i> BABAK FINAL</h3>
                         <div class="scores-list">
-                            ${wajibTiming ? `
-                            <div class="score-item">
-                                <span class="score-aspek">Babak Wajib Timing</span>
-                                <span class="score-nilai">${wajibTiming.nilai}</span>
-                            </div>
-                            ` : ''}
-                            ${wajibLempar ? `
-                            <div class="score-item">
-                                <span class="score-aspek">Babak Wajib Lempar</span>
-                                <span class="score-nilai">${wajibLempar.nilai}</span>
-                            </div>
-                            ` : ''}
-                            ${rebutan ? `
-                            <div class="score-item">
-                                <span class="score-aspek">Babak Rebutan</span>
-                                <span class="score-nilai">${rebutan.nilai}</span>
-                            </div>
-                            ` : ''}
-                            ${nilaiFinal ? `
-                            <div class="score-item">
-                                <span class="score-aspek">Nilai Final</span>
-                                <span class="score-nilai highlight">${nilaiFinal.nilai}</span>
-                            </div>
-                            ` : ''}
+                            ${wajibTiming ? `<div class="score-item"><span class="score-aspek">Babak Wajib Timing</span><span class="score-nilai">${wajibTiming.nilai}</span></div>` : ''}
+                            ${wajibLempar ? `<div class="score-item"><span class="score-aspek">Babak Wajib Lempar</span><span class="score-nilai">${wajibLempar.nilai}</span></div>` : ''}
+                            ${rebutan ? `<div class="score-item"><span class="score-aspek">Babak Rebutan</span><span class="score-nilai">${rebutan.nilai}</span></div>` : ''}
+                            ${nilaiFinal ? `<div class="score-item"><span class="score-aspek">Nilai Final</span><span class="score-nilai highlight">${nilaiFinal.nilai}</span></div>` : ''}
                         </div>
                     </div>
                 `;
 
-                // Juara badge
                 if (juara && juara.nilai > 0) {
                     const rankingLabel = getRankingLabel(juara.nilai, data.lomba.nama);
-                    html += `
-                        <div class="section">
-                            <div class="juara-badge">
-                                <i class="fas fa-trophy"></i> ${rankingLabel}
-                            </div>
-                        </div>
-                    `;
+                    html += `<div class="section"><div class="juara-badge"><i class="fas fa-trophy"></i> ${rankingLabel}</div></div>`;
                 }
             } else {
-                html += `
-                    <div class="section">
-                        <div class="status-tidak-lolos">
-                            <i class="fas fa-info-circle"></i> Terima kasih atas partisipasinya. Tim Anda belum berhasil melanjutkan ke babak final.
-                        </div>
-                    </div>
-                `;
+                html += `<div class="section"><div class="status-tidak-lolos"><i class="fas fa-info-circle"></i> Terima kasih atas partisipasinya. Tim Anda belum berhasil melanjutkan ke babak final.</div></div>`;
             }
 
             return html;
         }
 
-        // Generate individual competition layout
+        // Generate individual competition layout (Tidak Diubah)
         function generateIndividualLayout(data) {
             const participant = data.participant;
             const scores = data.scores;
@@ -929,13 +905,11 @@
                 </div>
             `;
 
-            // Extract scores for table
             const juriScores = scores.filter(s => s.aspek.includes('Juri') && !s.aspek.includes('Jumlah'));
             const jumlahScores = scores.filter(s => s.aspek.includes('Jumlah'));
             const nilaiAkhir = scores.find(s => s.aspek === 'Nilai Akhir');
             const peringkat = scores.find(s => s.aspek === 'Peringkat');
 
-            // Group by criteria
             const criteriaMap = {};
             juriScores.forEach(score => {
                 const match = score.aspek.match(/Juri (\d+) - (.+)/);
@@ -967,34 +941,24 @@
                                 ${criteriaList.map((criteria, index) => `
                                     <tr>
                                         <td class="criteria-col">${String.fromCharCode(65 + index)}. ${criteria}</td>
-                                        <td>${criteriaMap[criteria].j1}</td>
-                                        <td>${criteriaMap[criteria].j2}</td>
-                                        <td>${criteriaMap[criteria].j3}</td>
+                                        <td class="juri-col">${criteriaMap[criteria].j1}</td>
+                                        <td class="juri-col">${criteriaMap[criteria].j2}</td>
+                                        <td class="juri-col">${criteriaMap[criteria].j3}</td>
                                     </tr>
                                 `).join('')}
                                 <tr class="total-row">
                                     <td class="criteria-col"><strong>JUMLAH</strong></td>
-                                    <td><strong>${jumlahScores[0]?.nilai || '-'}</strong></td>
-                                    <td><strong>${jumlahScores[1]?.nilai || '-'}</strong></td>
-                                    <td><strong>${jumlahScores[2]?.nilai || '-'}</strong></td>
+                                    <td class="juri-col"><strong>${jumlahScores[0]?.nilai || '-'}</strong></td>
+                                    <td class="juri-col"><strong>${jumlahScores[1]?.nilai || '-'}</strong></td>
+                                    <td class="juri-col"><strong>${jumlahScores[2]?.nilai || '-'}</strong></td>
                                 </tr>
                             </tbody>
                         </table>
 
                         <table class="score-table" style="margin-top: 20px;">
                             <tbody>
-                                ${nilaiAkhir ? `
-                                <tr class="final-row">
-                                    <td class="criteria-col" style="width: 50%;"><strong>NILAI AKHIR</strong></td>
-                                    <td style="width: 50%;"><strong>${nilaiAkhir.nilai}</strong></td>
-                                </tr>
-                                ` : ''}
-                                ${peringkat ? `
-                                <tr class="final-row">
-                                    <td class="criteria-col"><strong>HASIL</strong></td>
-                                    <td><strong>${getRankingLabel(peringkat.nilai, data.lomba.nama)}</strong></td>
-                                </tr>
-                                ` : ''}
+                                ${nilaiAkhir ? `<tr class="final-row"><td class="criteria-col" style="width: 50%;"><strong>NILAI AKHIR</strong></td><td class="juri-col" style="width: 50%;"><strong>${nilaiAkhir.nilai}</strong></td></tr>` : ''}
+                                ${peringkat ? `<tr class="final-row"><td class="criteria-col"><strong>HASIL</strong></td><td class="juri-col"><strong>${getRankingLabel(peringkat.nilai, data.lomba.nama)}</strong></td></tr>` : ''}
                             </tbody>
                         </table>
                     </div>
@@ -1004,7 +968,7 @@
             return html;
         }
 
-        // Get ranking label
+        // Get ranking label (Tidak Diubah)
         function getRankingLabel(ranking, lombaName) {
             if (!ranking || ranking === 0) return '-';
             
@@ -1018,7 +982,7 @@
             }
         }
 
-        // Get medal emoji
+        // Get medal emoji (Tidak Diubah)
         function getMedalEmoji(rank) {
             switch(rank) {
                 case 1: return '🥇';
@@ -1028,7 +992,7 @@
             }
         }
 
-        // Show error
+        // Show error (Tidak Diubah)
         function showError(message) {
             const resultSection = document.getElementById('resultSection');
             resultSection.innerHTML = `
@@ -1045,7 +1009,7 @@
             resultSection.style.display = 'block';
         }
 
-        // Action functions
+        // Action functions (Tidak Diubah)
         function printResults() {
             window.print();
         }
