@@ -5,326 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - MTQ Bantul 2025</title>
     <link rel="icon" type="image/png" href="https://i.imghippo.com/files/ZnpG6770LpA.png">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Mono:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-green: #1A3C34;
-            --secondary-green: #2E4F47;
-            --gold: #D4A017;
-            --light-gold: #F5F6E8;
-            --white: #ffffff;
-            --dark-text: #1A3C34;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* NAVBAR STYLES */
-        .mtq-navbar {
-            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
-            padding: 12px 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            border-bottom: 3px solid var(--gold);
-        }
-
-        .navbar-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .navbar-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--light-gold);
-            font-weight: 700;
-            font-size: 1.2rem;
-            text-decoration: none;
-        }
-
-        .navbar-logo img {
-            height: 40px;
-            width: auto;
-        }
-
-        .navbar-user {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            color: var(--light-gold);
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-        }
-
-        .logout-btn {
-            background: var(--gold);
-            color: var(--dark-text);
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .logout-btn:hover {
-            background: var(--light-gold);
-            transform: translateY(-2px);
-        }
-
-        .navbar-mobile-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--light-gold);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* DASHBOARD STYLES */
-        .dashboard-container {
-            flex: 1;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        .dashboard-header {
-            text-align: center;
-            margin-bottom: 2rem;
-            color: var(--light-gold);
-        }
-
-        .dashboard-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .dashboard-subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        /* SECTION STYLES */
-        .section {
-            background: var(--white);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .section h2 {
-            color: var(--dark-text);
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 3px solid var(--gold);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* GRID STYLES */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1rem;
-        }
-
-        .sheet-btn {
-            background: var(--white);
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .sheet-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            border-color: var(--gold);
-        }
-
-        .sheet-btn.input {
-            border-left: 5px solid #e74c3c;
-        }
-
-        .sheet-btn.lcp {
-            border-left: 5px solid #f39c12;
-        }
-
-        .sheet-btn.rekap {
-            border-left: 5px solid #27ae60;
-        }
-
-        .icon {
-            font-size: 2rem;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f8f9fa;
-            border-radius: 10px;
-        }
-
-        .btn-content {
-            flex: 1;
-        }
-
-        .btn-content h3 {
-            color: var(--dark-text);
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-
-        .btn-content p {
-            color: #7f8c8d;
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-
-        /* QUICK ACTIONS */
-        .quick-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .action-btn {
-            background: var(--gold);
-            color: var(--dark-text);
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .action-btn:hover {
-            background: var(--light-gold);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        /* ACCESS INFO */
-        .access-info {
-            background: var(--light-gold);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-top: 1rem;
-            border-left: 4px solid var(--gold);
-        }
-
-        .access-info p {
-            color: var(--dark-text);
-            font-size: 0.9rem;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .dashboard-container {
-                padding: 1rem;
-            }
-
-            .dashboard-title {
-                font-size: 2rem;
-            }
-
-            .dashboard-subtitle {
-                font-size: 1rem;
-            }
-
-            .grid {
-                grid-template-columns: 1fr;
-            }
-
-            .navbar-user {
-                flex-direction: column;
-                gap: 10px;
-                align-items: flex-end;
-            }
-
-            .navbar-mobile-toggle {
-                display: block;
-            }
-
-            .quick-actions {
-                flex-direction: column;
-            }
-
-            .action-btn {
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .dashboard-title {
-                font-size: 1.5rem;
-            }
-
-            .section {
-                padding: 1rem;
-            }
-
-            .sheet-btn {
-                padding: 1rem;
-            }
-
-            .icon {
-                font-size: 1.5rem;
-                width: 50px;
-                height: 50px;
-            }
-        }
-    </style>
-</head>
+    
+    <link rel="stylesheet" href="css/style.css"> 
+    
+    </head>
 <body>
-    <!-- NAVBAR -->
     <nav class="mtq-navbar">
         <div class="navbar-container">
             <a href="index.html" class="navbar-logo">
@@ -348,19 +38,26 @@
         </div>
     </nav>
 
-    <!-- DASHBOARD CONTENT -->
     <div class="dashboard-container">
         <div class="dashboard-header">
             <h1 class="dashboard-title">🚀 Admin Panel MTQ</h1>
             <p class="dashboard-subtitle">Portal Input Nilai untuk Pewara dan Juri</p>
         </div>
 
-        <!-- INPUT NILAI LOMBA -->
         <div class="section">
+            <h2><i class="fas fa-user-cog"></i> Informasi Sesi</h2>
+            <div class="access-info">
+                <p><i class="fas fa-user"></i> <strong>Login sebagai:</strong> <span id="display-user">Pewara</span></p>
+                <p><i class="fas fa-clock"></i> <strong>Login sejak:</strong> <span id="login-time">-</span></p>
+                <p><i class="fas fa-shield-alt"></i> <strong>Akses:</strong> Input nilai semua cabang lomba</p>
+        <p> <i class="fas fa-info-circle"></i> <strong>Petunjuk:</strong> Klik tombol untuk membuka Google Sheets. Input nilai langsung di sheet yang terbuka. </p>
+            </div>
+        </div>
+            <div class="section">
             <h2><i class="fas fa-edit"></i> Input Nilai Lomba</h2>
             <div class="grid">
                 <a href="https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=1995802078" 
-                   target="_blank" class="sheet-btn input">
+                    target="_blank" class="sheet-btn input">
                     <div class="icon">📖</div>
                     <div class="btn-content">
                         <h3>MTQ - Tilawatil Qur'an</h3>
@@ -369,7 +66,7 @@
                 </a>
 
                 <a href="https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=773675545" 
-                   target="_blank" class="sheet-btn input">
+                    target="_blank" class="sheet-btn input">
                     <div class="icon">🎵</div>
                     <div class="btn-content">
                         <h3>MTtQ - Tartil Qur'an</h3>
@@ -378,7 +75,7 @@
                 </a>
 
                 <a href="https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=1871770951" 
-                   target="_blank" class="sheet-btn input">
+                    target="_blank" class="sheet-btn input">
                     <div class="icon">💫</div>
                     <div class="btn-content">
                         <h3>MHQ - Hifdzil Qur'an</h3>
@@ -387,7 +84,7 @@
                 </a>
 
                 <a href="https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=1679419554" 
-                   target="_blank" class="sheet-btn input">
+                    target="_blank" class="sheet-btn input">
                     <div class="icon">🕌</div>
                     <div class="btn-content">
                         <h3>MAz - Musabaqah Adzan</h3>
@@ -396,7 +93,7 @@
                 </a>
 
                 <a href="https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=60621255" 
-                   target="_blank" class="sheet-btn input">
+                    target="_blank" class="sheet-btn input">
                     <div class="icon">🎤</div>
                     <div class="btn-content">
                         <h3>Lomba Pidato PAI</h3>
@@ -405,7 +102,7 @@
                 </a>
 
                 <a href="https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=187208022" 
-                   target="_blank" class="sheet-btn input">
+                    target="_blank" class="sheet-btn input">
                     <div class="icon">🎨</div>
                     <div class="btn-content">
                         <h3>Menggambar Islami</h3>
@@ -414,7 +111,7 @@
                 </a>
 
                 <a href="https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=49600397" 
-                   target="_blank" class="sheet-btn input">
+                    target="_blank" class="sheet-btn input">
                     <div class="icon">🎭</div>
                     <div class="btn-content">
                         <h3>Puitisasi Saritilawah</h3>
@@ -424,12 +121,11 @@
             </div>
         </div>
 
-        <!-- LOMBA CERDAS CERMAT -->
         <div class="section">
             <h2><i class="fas fa-trophy"></i> Lomba Cerdas Cermat PAI (LCP)</h2>
             <div class="grid">
                 <a href="https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=2137287797" 
-                   target="_blank" class="sheet-btn lcp">
+                    target="_blank" class="sheet-btn lcp">
                     <div class="icon">📝</div>
                     <div class="btn-content">
                         <h3>LCP - Babak Penyisihan</h3>
@@ -438,7 +134,7 @@
                 </a>
 
                 <a href="https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=973893297" 
-                   target="_blank" class="sheet-btn lcp">
+                    target="_blank" class="sheet-btn lcp">
                     <div class="icon">🎯</div>
                     <div class="btn-content">
                         <h3>LCP - Babak Final</h3>
@@ -447,7 +143,7 @@
                 </a>
 
                 <a href="https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=6221438" 
-                   target="_blank" class="sheet-btn lcp">
+                    target="_blank" class="sheet-btn lcp">
                     <div class="icon">📊</div>
                     <div class="btn-content">
                         <h3>Rekap Nilai LCP</h3>
@@ -457,138 +153,12 @@
             </div>
         </div>
 
-        <!-- QUICK ACTIONS -->
-        <div class="section">
-            <h2><i class="fas fa-bolt"></i> Aksi Cepat</h2>
-            <div class="quick-actions">
-                <button class="action-btn" id="openAllInput">
-                    <i class="fas fa-folder-open"></i> Buka Semua Sheet Input
-                </button>
-                <button class="action-btn" id="openAllLCP">
-                    <i class="fas fa-trophy"></i> Buka Semua Sheet LCP
-                </button>
-                <button class="action-btn" id="refreshSheets">
-                    <i class="fas fa-sync-alt"></i> Refresh Semua Sheets
-                </button>
-            </div>
-            
-            <div class="access-info">
-                <p>
-                    <i class="fas fa-info-circle"></i>
-                    <strong>Petunjuk:</strong> Klik tombol di atas untuk membuka Google Sheets. Input nilai langsung di sheet yang terbuka.
-                </p>
-            </div>
-        </div>
-
-        <!-- USER INFO -->
-        <div class="section">
-            <h2><i class="fas fa-user-cog"></i> Informasi Sesi</h2>
-            <div class="access-info">
-                <p><i class="fas fa-user"></i> <strong>Login sebagai:</strong> <span id="display-user">Pewara</span></p>
-                <p><i class="fas fa-clock"></i> <strong>Login sejak:</strong> <span id="login-time">-</span></p>
-                <p><i class="fas fa-shield-alt"></i> <strong>Akses:</strong> Input nilai semua cabang lomba</p>
-            </div>
-        </div>
     </div>
-
-    <script>
-        // Check authentication
-        function checkAuth() {
-            const isLoggedIn = localStorage.getItem('mtq_admin_logged_in');
-            const user = localStorage.getItem('mtq_admin_user');
-            const loginTime = localStorage.getItem('mtq_login_time');
-            
-            if (isLoggedIn !== 'true' || !user) {
-                window.location.href = 'login.html';
-                return;
-            }
-
-            // Update user info
-            document.getElementById('user-role').textContent = user.charAt(0).toUpperCase() + user.slice(1);
-            document.getElementById('display-user').textContent = user.charAt(0).toUpperCase() + user.slice(1);
-            
-            if (loginTime) {
-                const loginDate = new Date(loginTime);
-                document.getElementById('login-time').textContent = loginDate.toLocaleString('id-ID');
-            }
-        }
-
-        // Logout function
-        function logout() {
-            localStorage.removeItem('mtq_admin_logged_in');
-            localStorage.removeItem('mtq_admin_user');
-            localStorage.removeItem('mtq_login_time');
-            window.location.href = 'login.html';
-        }
-
-        // Quick Actions
-        function openAllInputSheets() {
-            const inputSheets = [
-                'https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=1995802078',
-                'https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=773675545',
-                'https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=1871770951',
-                'https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=1679419554',
-                'https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=60621255',
-                'https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=187208022',
-                'https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=49600397'
-            ];
-            
-            inputSheets.forEach(url => {
-                window.open(url, '_blank');
-            });
-            
-            alert('Membuka semua sheet input nilai...');
-        }
-
-        function openAllLCPSheets() {
-            const lcpSheets = [
-                'https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=2137287797',
-                'https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=973893297',
-                'https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=6221438'
-            ];
-            
-            lcpSheets.forEach(url => {
-                window.open(url, '_blank');
-            });
-            
-            alert('Membuka semua sheet LCP...');
-        }
-
-        function refreshSheets() {
-            // This would typically refresh embedded sheets, but since we're using direct links,
-            // we'll just show a message
-            alert('Untuk memperbarui data, tutup dan buka kembali tab Google Sheets.');
-        }
-
-        // Event Listeners
-        document.addEventListener('DOMContentLoaded', function() {
-            checkAuth();
-            
-            document.getElementById('logoutBtn').addEventListener('click', logout);
-            document.getElementById('openAllInput').addEventListener('click', openAllInputSheets);
-            document.getElementById('openAllLCP').addEventListener('click', openAllLCPSheets);
-            document.getElementById('refreshSheets').addEventListener('click', refreshSheets);
-            
-            // Mobile menu toggle
-            document.getElementById('mobile-toggle').addEventListener('click', function() {
-                alert('Menu mobile - Gunakan tombol di layar untuk navigasi');
-            });
-        });
-
-        // Auto logout after 12 hours for security
-        setInterval(() => {
-            const loginTime = localStorage.getItem('mtq_login_time');
-            if (loginTime) {
-                const loginDate = new Date(loginTime);
-                const now = new Date();
-                const hoursDiff = (now - loginDate) / (1000 * 60 * 60);
-                
-                if (hoursDiff > 12) {
-                    alert('Sesi telah berakhir. Silakan login kembali.');
-                    logout();
-                }
-            }
-        }, 60000); // Check every minute
-    </script>
-</body>
+    <footer>
+        MTQ Pelajar SD Tingkat Kabupaten Bantul Tahun 2025 - Sistem Penilain MTQ
+    </footer>
+    
+    <script src="js/script.js"></script>
+    
+    </body>
 </html>

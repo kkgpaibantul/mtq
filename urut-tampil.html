@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cek Nilai - MTQ Bantul 2025</title>
+    <title>Cek Data Peserta MTQ Bantul 2025</title>
     <link rel="icon" type="image/png" href="https://i.imghippo.com/files/ZnpG6770LpA.png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Mono:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <link rel="stylesheet" href="css/style.css"> 
@@ -53,24 +53,24 @@
     </nav>
 
     <div class="dashboard-container">
-        <div class="header">
-            <h1><i class="fas fa-trophy"></i> Cek Nilai MTQ Bantul 2025</h1>
-            <p>Sistem Penilaian Musabaqah Tilawatil Qur'an Kabupaten Bantul</p>
+    <div class="header">
+            <h1><i class="fas fa-search"></i> Cek Data Peserta MTQ</h1>
+            <p>MTQ Pelajar SD Tingkat Kabupaten Bantul Tahun 2025</p>
         </div>
 
-      <div class="search-section">
+        <div class="search-section">
             <div class="input-group">
                 <input 
                     type="text" 
                     id="participantId" 
-                    placeholder="Masukkan nomor peserta (Contoh: MTQ-1, LCP-1, dll)"
-                    onkeypress="handleKeyPress(event)"
+                    placeholder="Masukkan nomor peserta (Contoh: MTQ-1, MTtQ-5, LCP-3, LPP-5, LMI-1, MHQ-1, MPS-1, MAz-1)"
+                    autocomplete="off"
                 >
-                <button onclick="searchParticipant()" id="searchBtn">
-                    <i class="fas fa-search"></i> Cek Nilai
+                <button id="searchBtn" onclick="searchParticipant()">
+                    <i class="fas fa-search"></i> Cari Data
                 </button>
             </div>
-            
+  
             <div class="examples">
                 <div class="example-chip" onclick="setExample('MTQ-1')">MTQ-1</div>
                 <div class="example-chip" onclick="setExample('MTtQ-1')">MTtQ-1</div>
@@ -82,19 +82,20 @@
                 <div class="example-chip" onclick="setExample('LMI-1')">LMI-1</div>
             </div>
         </div>  
-
         <div class="loading" id="loading" style="display: none;">
             <div class="loading-spinner"></div>
             <p>Mencari data peserta...</p>
         </div>
-
-        <div class="result-section" id="resultSection" style="display: none;">
-            </div>
+            <div class="result-section" id="resultSection">
+                </div>
     </div>
-
-    <footer>
-        MTQ Pelajar SD Tingkat Kabupaten Bantul Tahun 2025 - Sistem Cek Nilai
-    </footer>
+            </div>
+        <footer class="footer">
+            <div class="copyright">
+                <p>© 2025 MTQ Pelajar SD Kabupaten Bantul. Powered by Google Sheets API</p>
+            </div>
+        </footer>
+    </div>
 
     <script src="js/script.js"></script>
     
