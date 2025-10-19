@@ -52,28 +52,45 @@
         </div>
     </nav>
 
+ <div class="dashboard-container">
         <div class="header">
-            <h1><i class="fas fa-search"></i> Cek Data Peserta MTQ</h1>
-            <p>MTQ Pelajar SD Tingkat Kabupaten Bantul Tahun 2025</p>
+            <h1><i class="fas fa-trophy"></i> Cek Nilai MTQ Bantul 2025</h1>
+            <p>Sistem Penilaian Musabaqah Tilawatil Qur'an Kabupaten Bantul</p>
         </div>
 
-        <div class="search-section">
+      <div class="search-section">
             <div class="input-group">
                 <input 
                     type="text" 
                     id="participantId" 
-                    placeholder="Masukkan nomor peserta (Contoh: MTQ-1, MTtQ-5, LCP-3, LPP-5, LMI-1, MHQ-1, MPS-1, MAz-1)"
-                    autocomplete="off"
+                    placeholder="Masukkan nomor peserta (Contoh: MTQ-1, LCP-1, dll)"
+                    onkeypress="handleKeyPress(event)"
                 >
-                <button id="searchBtn" onclick="searchParticipant()">
-                    <i class="fas fa-search"></i> Cari Data
+                <button onclick="searchParticipant()" id="searchBtn">
+                    <i class="fas fa-search"></i> Cek Nilai
                 </button>
             </div>
+            
+            <div class="examples">
+                <div class="example-chip" onclick="setExample('MTQ-1')">MTQ-1</div>
+                <div class="example-chip" onclick="setExample('MTtQ-1')">MTtQ-1</div>
+                <div class="example-chip" onclick="setExample('MHQ-1')">MHQ-1</div>
+                <div class="example-chip" onclick="setExample('MAz-1')">MAz-1</div>
+                <div class="example-chip" onclick="setExample('MPS-1')">MPS-1</div>
+                <div class="example-chip" onclick="setExample('LPP-1')">LPP-1</div>
+                <div class="example-chip" onclick="setExample('LCP-1')">LCP-1</div>
+                <div class="example-chip" onclick="setExample('LMI-1')">LMI-1</div>
+            </div>
+        </div>  
 
-            <div class="result-section" id="resultSection">
-                </div>
+        <div class="loading" id="loading" style="display: none;">
+            <div class="loading-spinner"></div>
+            <p>Mencari data peserta...</p>
         </div>
 
+        <div class="result-section" id="resultSection" style="display: none;">
+            </div>
+    </div>
         <footer class="footer">
             <div class="copyright">
                 <p>© 2025 MTQ Pelajar SD Kabupaten Bantul. Powered by Google Sheets API</p>
