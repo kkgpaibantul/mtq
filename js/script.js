@@ -1219,45 +1219,71 @@ function displayParticipantDataNoUrut(data) {
     const lomba = data.lomba;
     const resultSection = document.getElementById('resultSection');
     
+    // Cek apakah ini LCP
+    const isLCP = participant['Cabang Lomba'] === 'LCP' || lomba.name === 'LCP';
+    
     let html = `
         <div class="success-badge">
             <i class="fas fa-check-circle"></i> DATA DITEMUKAN
         </div>
             
-            <div class="participant-details">
-                <table class="data-table-simple">
-                    <tr>
-                        <td class="data-label">Nomor Peserta</td>
-                        <td class="data-separator">:</td>
-                        <td class="data-value">${participant['No Peserta']}</td>
-                    </tr>
-                    <tr>
-                        <td class="data-label">Nama</td>
-                        <td class="data-separator">:</td>
-                        <td class="data-value">${participant.Nama || '-'}</td>
-                    </tr>
-                    <tr>
-                        <td class="data-label">Jenis Kelamin</td>
-                        <td class="data-separator">:</td>
-                        <td class="data-value">${participant['Jenis Kelamin'] || '-'}</td>
-                    </tr>
-                    <tr>
-                        <td class="data-label">Asal Sekolah</td>
-                        <td class="data-separator">:</td>
-                        <td class="data-value">${participant['Asal Sekolah']}</td>
-                    </tr>
-                    <tr>
-                        <td class="data-label">Kapanewon</td>
-                        <td class="data-separator">:</td>
-                        <td class="data-value">${participant.Kapanewon}</td>
-                    </tr>
-                    <tr>
-                        <td class="data-label">Cabang Lomba</td>
-                        <td class="data-separator">:</td>
-                        <td class="data-value">${participant['Cabang Lomba']}</td>
-                    </tr>
-                </table>
-            </div>
+        <div class="participant-details">
+            <table class="data-table-simple">
+                <tr>
+                    <td class="data-label">Nomor Peserta</td>
+                    <td class="data-separator">:</td>
+                    <td class="data-value">${participant['No Peserta']}</td>
+                </tr>
+    `;
+    
+    // Tampilan khusus untuk LCP
+    if (isLCP) {
+        html += `
+                <tr>
+                    <td class="data-label">Kapanewon</td>
+                    <td class="data-separator">:</td>
+                    <td class="data-value">${participant.Kapanewon}</td>
+                </tr>
+                <tr>
+                    <td class="data-label">Cabang Lomba</td>
+                    <td class="data-separator">:</td>
+                    <td class="data-value">${participant['Cabang Lomba']}</td>
+                </tr>
+        `;
+    } 
+    // Tampilan untuk peserta selain LCP
+    else {
+        html += `
+                <tr>
+                    <td class="data-label">Nama</td>
+                    <td class="data-separator">:</td>
+                    <td class="data-value">${participant.Nama || '-'}</td>
+                </tr>
+                <tr>
+                    <td class="data-label">Jenis Kelamin</td>
+                    <td class="data-separator">:</td>
+                    <td class="data-value">${participant['Jenis Kelamin'] || '-'}</td>
+                </tr>
+                <tr>
+                    <td class="data-label">Asal Sekolah</td>
+                    <td class="data-separator">:</td>
+                    <td class="data-value">${participant['Asal Sekolah']}</td>
+                </tr>
+                <tr>
+                    <td class="data-label">Kapanewon</td>
+                    <td class="data-separator">:</td>
+                    <td class="data-value">${participant.Kapanewon}</td>
+                </tr>
+                <tr>
+                    <td class="data-label">Cabang Lomba</td>
+                    <td class="data-separator">:</td>
+                    <td class="data-value">${participant['Cabang Lomba']}</td>
+                </tr>
+        `;
+    }
+    
+    html += `
+            </table>
         </div>
         
         <div class="action-buttons">
