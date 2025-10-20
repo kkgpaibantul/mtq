@@ -1219,8 +1219,26 @@ function displayParticipantDataNoUrut(data) {
     const lomba = data.lomba;
     const resultSection = document.getElementById('resultSection');
     
-    // Cek apakah ini LCP
-    const isLCP = participant['Cabang Lomba'] === 'LCP' || lomba.name === 'LCP';
+    // DETeksi LCP yang lebih komprehensif
+    const cabangLomba = participant['Cabang Lomba'] || '';
+    const lombaName = lomba.name || '';
+    const lombaKode = lomba.kode || '';
+    
+    console.log("Debug LCP:", {
+        cabangLomba,
+        lombaName, 
+        lombaKode,
+        participant,
+        lomba
+    });
+    
+    const isLCP = cabangLomba.includes('LCP') || 
+                  lombaName.includes('LCP') || 
+                  lombaKode.includes('LCP') ||
+                  cabangLomba.includes('Cerdas Cermat') ||
+                  lombaName.includes('Cerdas Cermat');
+    
+    console.log("isLCP result:", isLCP);
     
     let html = `
         <div class="success-badge">
@@ -1238,6 +1256,7 @@ function displayParticipantDataNoUrut(data) {
     
     // Tampilan khusus untuk LCP
     if (isLCP) {
+        console.log("Menampilkan tampilan LCP");
         html += `
                 <tr>
                     <td class="data-label">Kapanewon</td>
@@ -1253,6 +1272,7 @@ function displayParticipantDataNoUrut(data) {
     } 
     // Tampilan untuk peserta selain LCP
     else {
+        console.log("Menampilkan tampilan non-LCP");
         html += `
                 <tr>
                     <td class="data-label">Nama</td>
@@ -1281,54 +1301,6 @@ function displayParticipantDataNoUrut(data) {
                 </tr>
         `;
     }
-    
-    html += `
-            </table>
-        </div>
-        
-        <div class="action-buttons">
-            <button class="action-btn new-search" onclick="newSearch()">
-                <i class="fas fa-search"></i> Cari Data Lain
-            </button>
-        </div>
-    `;
-
-    // Tambahkan info anggota tim untuk LCP
-    if (lomba.isTeam && data.teamMembers && data.teamMembers.length > 0) {
-        const teamHtml = `
-            <div class="team-section">
-                <h4><i class="fas fa-users"></i> Anggota Tim</h4>
-                <table class="team-table">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama Anggota</th>
-                            <th>Jenis Kelamin</th>
-                            <th>Asal Sekolah</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${data.teamMembers.map((member, index) => `
-                            <tr>
-                                <td>${index + 1}</td>
-                                <td>${member.Nama}</td>
-                                <td>${member['Jenis Kelamin'] || '-'}</td>
-                                <td>${member['Asal Sekolah']}</td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-            </div>
-        `;
-        
-        // Sisipkan sebelum action-buttons
-        html = html.replace('<div class="action-buttons">', teamHtml + '<div class="action-buttons">');
-    }
-
-    resultSection.innerHTML = html;
-    resultSection.style.display = 'block';
-    resultSection.scrollIntoView({ behavior: 'smooth' });
-}
 
 // ===== FUNGSI BANTUAN UNTUK TAMPILAN NILAI =====
 function generateLCPLayout(data) {
