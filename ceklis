@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ceklis Koordinasi Teknis Lomba MTQ 2025</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a237e 0%, #303f9f 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #1a237e, #c62828, #1a237e);
+        }
+
+        .header h1 {
+            color: #1a237e;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header h2 {
+            color: #c62828;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .header p {
+            color: #555;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #c62828;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .nav-tab {
+            background: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-tab:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-tab.active {
+            background: #1a237e;
+            color: white;
+        }
+
+        .content-section {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            animation: fadeIn 0.5s ease;
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-title {
+            color: #1a237e;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: #c62828;
+        }
+
+        .role-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #1a237e;
+            transition: transform 0.3s ease;
+        }
+
+        .role-card:hover {
+            transform: translateX(5px);
+        }
+
+        .role-title {
+            color: #1a237e;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .role-desc {
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .task-list {
+            list-style-type: none;
+        }
+
+        .task-list li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #e0e0e0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .task-list li:last-child {
+            border-bottom: none;
+        }
+
+        .task-list li i {
+            color: #1a237e;
+            margin-top: 5px;
+        }
+
+        .checklist-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .checklist-table th {
+            background: #1a237e;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .checklist-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .checklist-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .checklist-table tr:hover {
+            background: #e8eaf6;
+        }
+
+        .status-checkbox {
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+        }
+
+        .phase-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .phase-indicator::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #e0e0e0;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .phase {
+            background: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #1a237e;
+            border: 3px solid #e0e0e0;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .phase.active {
+            background: #1a237e;
+            color: white;
+            border-color: #1a237e;
+        }
+
+        .phase.completed {
+            background: #4caf50;
+            color: white;
+            border-color: #4caf50;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding: 20px 0;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            background: #1a237e;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            background: #303f9f;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #1a237e;
+            border: 2px solid #1a237e;
+        }
+
+        .btn-outline:hover {
+            background: #e8eaf6;
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, #1a237e, #c62828);
+            padding: 12px 30px;
+            font-size: 1.1rem;
+        }
+
+        .btn-next:hover {
+            background: linear-gradient(135deg, #303f9f, #d32f2f);
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        .btn-prev {
+            background: #5c6bc0;
+        }
+
+        .btn-prev:hover {
+            background: #3949ab;
+        }
+
+        .progress-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #1a237e;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1a237e, #c62828);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+
+        .highlight {
+            background: #fff9c4;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .priority-high {
+            color: #c62828;
+            font-weight: 600;
+        }
+
+        .committee-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .committee-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 5px solid #c62828;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .committee-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #1a237e, #c62828);
+        }
+
+        .committee-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .committee-title {
+            color: #c62828;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .subcommittee {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #e0e0e0;
+        }
+
+        .subcommittee-title {
+            color: #1a237e;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .person-in-charge {
+            display: inline-block;
+            background: #e8eaf6;
+            color: #1a237e;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+
+        .floating-nav {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .floating-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #1a237e;
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+            background: #c62828;
+        }
+
+        .completion-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .save-status {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: #4caf50;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 100;
+        }
+
+        .save-status.show {
+            opacity: 1;
+        }
+
+        .reset-btn {
+            background: #f44336;
+        }
+
+        .reset-btn:hover {
+            background: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .nav-tab {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .checklist-table {
+                font-size: 0.9rem;
+            }
+            
+            .checklist-table th, 
+            .checklist-table td {
+                padding: 10px;
+            }
+            
+            .phase {
+                width: 40px;
+                height: 40px;
+                font-size: 0.9rem;
+            }
+            
+            .committee-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-buttons {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .progress-info {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .floating-nav {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .save-status {
+                bottom: 20px;
+                left: 20px;
+                font-size: 0.8rem;
+                padding: 8px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-quran"></i> Ceklis Koordinasi Teknis Lomba</h1>
+            <h2>Musabaqah Tilawatil Qur'an (MTQ) Pelajar SD 2025</h2>
+            <p>Panduan lengkap untuk memastikan kelancaran proses penilaian dan koordinasi antara Juri, Pewara, dan Sistem</p>
+            <div class="badge">VERSI KOMPREHENSIF - STRUKTUR KEPANITIAAN LENGKAP</div>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-target="struktur-panitia">
+                <i class="fas fa-sitemap"></i> Struktur Panitia
+            </button>
+            <button class="nav-tab" data-target="pengantar">
+                <i class="fas fa-home"></i> Pengantar
+            </button>
+            <button class="nav-tab" data-target="peran-tugas">
+                <i class="fas fa-users"></i> Peran & Tugas
+            </button>
+            <button class="nav-tab" data-target="tahap-persiapan">
+                <i class="fas fa-clipboard-check"></i> Persiapan
+            </button>
+            <button class="nav-tab" data-target="tahap-pelaksanaan">
+                <i class="fas fa-play-circle"></i> Pelaksanaan
+            </button>
+            <button class="nav-tab" data-target="tahap-finalisasi">
+                <i class="fas fa-flag-checkered"></i> Finalisasi
+            </button>
+        </div>
+
+        <!-- Section: Struktur Panitia -->
+        <div id="struktur-panitia" class="content-section active">
+            <h2 class="section-title"><i class="fas fa-sitemap"></i> Struktur Kepanitiaan MTQ 2025</h2>
+            
+            <div class="committee-grid">
+                <div class="committee-card">
+                    <h3 class="committee-title"><i class="fas fa-user-tie"></i> Panitia Inti</h3>
+                    <ul class="task-list">
+                        <li><i class="fas fa-crown"></i> Ketua Pelaksana</li>
+                        <li><i class="fas fa-file-alt"></i> Sekretaris</li>
+                        <li><i class="fas fa-money-bill-wave"></i> Bendahara</li>
+                    </ul>
+                    <div class="person-in-charge">Penanggung Jawab: Pengurus KKG PAI Kabupaten Bantul</div>
+                </div>
+                
+                <div class="committee-card">
+                    <h3 class="committee-title"><i class="fas fa-tasks"></i> Seksi Acara</h3>
+                    <ul class="task-list">
+                        <li><i class="fas fa-list-ol"></i> Penyusunan Rundown Acara</li>
+                        <li><i class="fas fa-microphone"></i> Pengaturan Protokol Acara</li>
+                        <li><i class="fas fa-clock"></i> Time Keeper & Stage Manager</li>
+                    </ul>
+                    <div class="subcommittee">
+                        <div class="subcommittee-title">Fokus Khusus:</div>
+                        <ul class="task-list">
+                            <li><i class="fas fa-palette"></i> Alur peserta Lomba Menggambar</li>
+                            <li><i class="fas fa-bell"></i> Tanda mulai/berhenti MTQ & MTtQ</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="committee-card">
+                    <h3 class="committee-title"><i class="fas fa-toolbox"></i> Seksi Perlengkapan</h3>
+                    <ul class="task-list">
+                        <li><i class="fas fa-laptop"></i> Perangkat Sistem Penilaian</li>
+                        <li><i class="fas fa-projector"></i> Perangkat Multimedia</li>
+                        <li><i class="fas fa-file-signature"></i> Administrasi & ATK</li>
+                    </ul>
+                    <div class="subcommittee">
+                        <div class="subcommittee-title">Perlengkapan Khusus:</div>
+                        <ul class="task-list">
+                            <li><i class="fas fa-bell"></i> Bel LCP Babak Final</li>
+                            <li><i class="fas fa-file-alt"></i> Kertas A3 Menggambar</li>
+                            <li><i class="fas fa-id-badge"></i> Tanda Nomor Peserta</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="committee-card">
+                    <h3 class="committee-title"><i class="fas fa-trophy"></i> Seksi Perlombaan</h3>
+                    <ul class="task-list">
+                        <li><i class="fas fa-user-graduate"></i> Rekrutmen & Briefing Juri</li>
+                        <li><i class="fas fa-microphone-alt"></i> Koordinasi Pewara</li>
+                        <li><i class="fas fa-file-contract"></i> Penyiapan Materi Lomba</li>
+                    </ul>
+                    <div class="subcommittee">
+                        <div class="subcommittee-title">Tanggung Jawab:</div>
+                        <ul class="task-list">
+                            <li><i class="fas fa-book"></i> Maqro' MTQ & MTtQ</li>
+                            <li><i class="fas fa-question-circle"></i> Soal MHQ & LCP</li>
+                            <li><i class="fas fa-desktop"></i> Sistem Penilaian Digital</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="committee-card">
+                    <h3 class="committee-title"><i class="fas fa-utensils"></i> Seksi Konsumsi</h3>
+                    <ul class="task-list">
+                        <li><i class="fas fa-calculator"></i> Pendataan Kebutuhan</li>
+                        <li><i class="fas fa-truck"></i> Distribusi & Logistik</li>
+                        <li><i class="fas fa-concierge-bell"></i> Pelayanan Tamu</li>
+                    </ul>
+                    <div class="subcommittee">
+                        <div class="subcommittee-title">Prioritas:</div>
+                        <ul class="task-list">
+                            <li><i class="fas fa-user-tie"></i> Dewan Juri & Tamu Kehormatan</li>
+                            <li><i class="fas fa-users"></i> Peserta & Pendamping</li>
+                            <li><i class="fas fa-people-carry"></i> Panitia & Relawan</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="committee-card">
+                    <h3 class="committee-title"><i class="fas fa-shield-alt"></i> Seksi Logistik & Keamanan</h3>
+                    <ul class="task-list">
+                        <li><i class="fas fa-map-marked-alt"></i> Pengaturan Lokasi & Parkir</li>
+                        <li><i class="fas fa-first-aid"></i> Tim Medis & P3K</li>
+                        <li><i class="fas fa-walkie-talkie"></i> Komunikasi & Koordinasi</li>
+                    </ul>
+                    <div class="subcommittee">
+                        <div class="subcommittee-title">Fungsi Khusus:</div>
+                        <ul class="task-list">
+                            <li><i class="fas fa-info-circle"></i> Posko Informasi</li>
+                            <li><i class="fas fa-car-side"></i> Pengaturan Transportasi</li>
+                            <li><i class="fas fa-exclamation-triangle"></i> Protokol Darurat</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="role-card">
+                <h3 class="role-title"><i class="fas fa-lightbulb"></i> Koordinasi Antar Seksi</h3>
+                <ul class="task-list">
+                    <li><i class="fas fa-exchange-alt"></i> <span class="highlight">Sekretaris → Perlombaan</span>: Penyediaan dokumen lomba & formulir penilaian</li>
+                    <li><i class="fas fa-exchange-alt"></i> <span class="highlight">Perlengkapan → Perlombaan</span>: Penyediaan perangkat sistem penilaian</li>
+                    <li><i class="fas fa-exchange-alt"></i> <span class="highlight">Perlombaan → Acara</span>: Koordinasi waktu & alur setiap cabang lomba</li>
+                    <li><i class="fas fa-exchange-alt"></i> <span class="highlight">Konsumsi → Semua Seksi</span>: Distribusi konsumsi sesuai jadwal</li>
+                    <li><i class="fas fa-exchange-alt"></i> <span class="highlight">Logistik → Semua Seksi</span>: Dukungan infrastruktur & keamanan</li>
+                </ul>
+            </div>
+
+            <div class="controls">
+                <div class="nav-buttons">
+                    <button class="btn btn-prev" onclick="navigateSection('prev')" disabled>
+                        <i class="fas fa-arrow-left"></i> Sebelumnya
+                    </button>
+                </div>
+                
+                <div class="progress-info">
+                    <span>1 dari 6</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 16.66%"></div>
+                    </div>
+                    <span>16.7%</span>
+                </div>
+                
+                <div class="nav-buttons">
+                    <button class="btn btn-next" onclick="navigateSection('next')">
+                        Berikutnya <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Pengantar -->
+        <div id="pengantar" class="content-section">
+            <h2 class="section-title"><i class="fas fa-home"></i> Pengantar Koordinasi Teknis</h2>
+            
+            <div class="role-card">
+                <h3 class="role-title"><i class="fas fa-info-circle"></i> Latar Belakang</h3>
+                <p class="role-desc">Dokumen ini merupakan panduan teknis untuk memastikan koordinasi yang efektif antara Dewan Juri, Pewara, dan Sistem Penilaian dalam pelaksanaan MTQ 2025. Dengan mengikuti ceklis ini, diharapkan proses penilaian berjalan objektif, transparan, dan efisien.</p>
+            </div>
+            
+            <div class="role-card">
+                <h3 class="role-title"><i class="fas fa-bullseye"></i> Tujuan</h3>
+                <ul class="task-list">
+                    <li><i class="fas fa-check"></i> Memastikan alur kerja yang jelas antara Juri, Pewara, dan Sistem</li>
+                    <li><i class="fas fa-check"></i> Menjaga konsistensi dan objektivitas penilaian</li>
+                    <li><i class="fas fa-check"></i> Meminimalisir kesalahan input dan perhitungan nilai</li>
+                    <li><i class="fas fa-check"></i> Menyediakan protokol untuk menangani kendala teknis</li>
+                    <li><i class="fas fa-check"></i> Memastikan validasi hasil yang akurat sebelum pengumuman</li>
+                </ul>
+            </div>
+            
+            <div class="role-card">
+                <h3 class="role-title"><i class="fas fa-exclamation-triangle"></i> Poin Penting</h3>
+                <ul class="task-list">
+                    <li><i class="fas fa-check"></i> <span class="highlight">Setiap Juri wajib memiliki catatan pribadi</span> sebagai alat validasi</li>
+                    <li><i class="fas fa-check"></i> <span class="highlight">Pewara bertanggung jawab penuh atas input data</span> ke sistem</li>
+                    <li><i class="fas fa-check"></i> <span class="highlight">Validasi berkala</span> dilakukan selama proses lomba</li>
+                    <li><i class="fas fa-check"></i> <span class="highlight">Rapat Juri</span> adalah forum finalisasi yang menentukan</li>
+                    <li><i class="fas fa-check"></i> <span class="highlight">Keputusan Juri bersifat mutlak</span> dan tidak dapat diganggu gugat</li>
+                </ul>
+            </div>
+
+            <div class="controls">
+                <div class="nav-buttons">
+                    <button class="btn btn-prev" onclick="navigateSection('prev')">
+                        <i class="fas fa-arrow-left"></i> Sebelumnya
+                    </button>
+                </div>
+                
+                <div class="progress-info">
+                    <span>2 dari 6</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 33.33%"></div>
+                    </div>
+                    <span>33.3%</span>
+                </div>
+                
+                <div class="nav-buttons">
+                    <button class="btn btn-next" onclick="navigateSection('next')">
+                        Berikutnya <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Peran & Tugas -->
+        <div id="peran-tugas" class="content-section">
+            <h2 class="section-title"><i class="fas fa-users"></i> Peran dan Tugas</h2>
+            
+            <div class="role-card">
+                <h3 class="role-title"><i class="fas fa-user-tie"></i> Dewan Juri</h3>
+                <p class="role-desc">Tim ahli yang bertugas menilai penampilan peserta secara objektif, adil, dan profesional berdasarkan kriteria yang telah ditetapkan.</p>
+                
+                <h4><i class="fas fa-tasks"></i> Tugas Spesifik:</h4>
+                <ul class="task-list">
+                    <li><i class="fas fa-check"></i> Menilai peserta menggunakan <span class="highlight">lembar penilaian individual (kertas)</span></li>
+                    <li><i class="fas fa-check"></i> Membuat dan menjaga <span class="highlight">rekap nilai pribadi</span> sebagai alat validasi</li>
+                    <li><i class="fas fa-check"></i> Berpartisipasi aktif dalam <span class="highlight">validasi berkala</span> selama lomba</li>
+                    <li><i class="fas fa-check"></i> Menghadiri <span class="highlight">Rapat Dewan Juri</span> untuk finalisasi hasil</li>
+                    <li><i class="fas fa-check"></i> Memberikan <span class="highlight">koreksi nilai</span> jika ditemukan ketidaksesuaian</li>
+                    <li><i class="fas fa-check"></i> Menandatangani <span class="highlight">Berita Acara Penilaian</span> yang bersifat final</li>
+                </ul>
+            </div>
+            
+            <div class="role-card">
+                <h3 class="role-title"><i class="fas fa-microphone"></i> Pewara (MC/Operator Sistem)</h3>
+                <p class="role-desc">Pemandu acara sekaligus operator sistem yang bertugas mengatur alur lomba dan memastikan input data nilai ke sistem berjalan lancar.</p>
+                
+                <h4><i class="fas fa-tasks"></i> Tugas Spesifik:</h4>
+                <ul class="task-list">
+                    <li><i class="fas fa-check"></i> <span class="highlight">Menginput nilai</span> dari lembar Juri ke sistem digital</li>
+                    <li><i class="fas fa-check"></i> Mengatur <span class="highlight">sirkulasi lembar penilaian</span> (ambil yang sudah diisi, beri yang kosong)</li>
+                    <li><i class="fas fa-check"></i> Melakukan <span class="highlight">validasi berkala</span> dengan Juri selama lomba</li>
+                    <li><i class="fas fa-check"></i> Menyiapkan <span class="highlight">rekapitulasi sistem</span> untuk Rapat Juri</li>
+                    <li><i class="fas fa-check"></i> Melakukan <span class="highlight">koreksi nilai di sistem</span> berdasarkan keputusan rapat</li>
+                    <li><i class="fas fa-check"></i> Menjaga <span class="highlight">keamanan dan kerahasiaan data</span> nilai</li>
+                </ul>
+            </div>
+            
+            <div class="role-card">
+                <h3 class="role-title"><i class="fas fa-user-cog"></i> Koordinator Teknis</h3>
+                <p class="role-desc">Penanggung jawab teknis yang memastikan semua sistem dan perlengkapan pendukung berfungsi dengan baik.</p>
+                
+                <h4><i class="fas fa-tasks"></i> Tugas Spesifik:</h4>
+                <ul class="task-list">
+                    <li><i class="fas fa-check"></i> Memastikan <span class="highlight">sistem penilaian</span> siap digunakan</li>
+                    <li><i class="fas fa-check"></i> Menyediakan <span class="highlight">perlengkapan dan infrastruktur</span> pendukung</li>
+                    <li><i class="fas fa-check"></i> Menangani <span class="highlight">kendala teknis</span> selama pelaksanaan</li>
+                    <li><i class="fas fa-check"></i> Mengkoordinir <span class="highlight">backup system</span> jika diperlukan</li>
+                    <li><i class="fas fa-check"></i> Memastikan <span class="highlight">koneksi dan daya listrik</span> stabil</li>
+                </ul>
+            </div>
+
+            <div class="controls">
+                <div class="nav-buttons">
+                    <button class="btn btn-prev" onclick="navigateSection('prev')">
+                        <i class="fas fa-arrow-left"></i> Sebelumnya
+                    </button>
+                </div>
+                
+                <div class="progress-info">
+                    <span>3 dari 6</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 50%"></div>
+                    </div>
+                    <span>50%</span>
+                </div>
+                
+                <div class="nav-buttons">
+                    <button class="btn btn-next" onclick="navigateSection('next')">
+                        Berikutnya <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Tahap Persiapan -->
+        <div id="tahap-persiapan" class="content-section">
+            <h2 class="section-title"><i class="fas fa-clipboard-check"></i> Tahap Persiapan (H-1 / Pagi Sebelum Lomba)</h2>
+            
+            <div class="phase-indicator">
+                <div class="phase active">1</div>
+                <div class="phase">2</div>
+                <div class="phase">3</div>
+            </div>
+            
+            <table class="checklist-table">
+                <thead>
+                    <tr>
+                        <th width="5%">No</th>
+                        <th width="45%">Item Ceklis</th>
+                        <th width="30%">Pihak Koordinasi</th>
+                        <th width="20%">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A1</td>
+                        <td>Sistem/Aplikasi/Spreadsheet Penilaian sudah final dan siap digunakan</td>
+                        <td>Pewara & Koord. IT</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="A1"></td>
+                    </tr>
+                    <tr>
+                        <td>A2</td>
+                        <td>Uji coba input nilai, rekapitulasi, dan perankingan di sistem</td>
+                        <td>Pewara</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="A2"></td>
+                    </tr>
+                    <tr>
+                        <td>A3</td>
+                        <td>Perangkat (Laptop/PC) untuk Pewara sudah siap di lokasi</td>
+                        <td>Koord. Perlengkapan & Pewara</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="A3"></td>
+                    </tr>
+                    <tr>
+                        <td>A4</td>
+                        <td>Sumber listrik (stopkontak/roll kabel) untuk Pewara sudah aman</td>
+                        <td>Koord. Perlengkapan</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="A4"></td>
+                    </tr>
+                    <tr>
+                        <td>A5</td>
+                        <td><span class="priority-high">SIMULASI/BRIEFING</span> Alur Kerja Spesifik WAJIB dilakukan</td>
+                        <td>Ketua, Pewara, & Seluruh Juri</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="A5"></td>
+                    </tr>
+                    <tr>
+                        <td>A6</td>
+                        <td>Formulir Penilaian Individual SUDAH DICETAK (Jumlah: [Peserta] x [Juri])</td>
+                        <td>Sekretaris</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="A6"></td>
+                    </tr>
+                    <tr>
+                        <td>A7</td>
+                        <td>Formulir Rekapitulasi (catatan validasi) Juri sudah dicetak (1 set per Juri)</td>
+                        <td>Sekretaris & Dewan Juri</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="A7"></td>
+                    </tr>
+                    <tr>
+                        <td>A8</td>
+                        <td>ATK (Pulpen, Clipboard/Papan Jalan) untuk Juri sudah lengkap</td>
+                        <td>Koord. Perlengkapan & Juri</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="A8"></td>
+                    </tr>
+                    <tr>
+                        <td>A9</td>
+                        <td>Daftar peserta dan urutan tampil sudah final</td>
+                        <td>Sekretaris & Pewara</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="A9"></td>
+                    </tr>
+                    <tr>
+                        <td>A10</td>
+                        <td>Formulir penilaian cadangan tersedia (minimal 10% extra)</td>
+                        <td>Sekretaris</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="A10"></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="role-card">
+                <h3 class="role-title"><i class="fas fa-lightbulb"></i> Catatan Penting Tahap Persiapan</h3>
+                <ul class="task-list">
+                    <li><i class="fas fa-exclamation-circle"></i> <span class="highlight">Briefing dan simulasi adalah kunci keberhasilan</span> koordinasi</li>
+                    <li><i class="fas fa-exclamation-circle"></i> Pastikan semua pihak paham alur: Juri menilai di kertas → Pewara mengambil → Pewara memberi kertas baru → Pewara input ke sistem → Juri mencatat di rekap pribadi</li>
+                    <li><i class="fas fa-exclamation-circle"></i> Siapkan <span class="highlight">plan B</span> untuk semua kemungkinan kendala teknis</li>
+                </ul>
+            </div>
+
+            <div class="controls">
+                <div class="nav-buttons">
+                    <button class="btn btn-prev" onclick="navigateSection('prev')">
+                        <i class="fas fa-arrow-left"></i> Sebelumnya
+                    </button>
+                </div>
+                
+                <div class="progress-info">
+                    <span>4 dari 6</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 66.66%"></div>
+                    </div>
+                    <span>66.7%</span>
+                </div>
+                
+                <div class="nav-buttons">
+                    <button class="btn btn-next" onclick="navigateSection('next')">
+                        Berikutnya <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Tahap Pelaksanaan -->
+        <div id="tahap-pelaksanaan" class="content-section">
+            <h2 class="section-title"><i class="fas fa-play-circle"></i> Tahap Pelaksanaan (Saat Lomba)</h2>
+            
+            <div class="phase-indicator">
+                <div class="phase completed">1</div>
+                <div class="phase active">2</div>
+                <div class="phase">3</div>
+            </div>
+            
+            <table class="checklist-table">
+                <thead>
+                    <tr>
+                        <th width="5%">No</th>
+                        <th width="45%">Item Ceklis</th>
+                        <th width="30%">Pihak Koordinasi</th>
+                        <th width="20%">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>B1</td>
+                        <td>Pewara mengkonfirmasi semua Juri telah menerima set formulir kosong pertama dan rekap pribadi</td>
+                        <td>Pewara & Dewan Juri</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="B1"></td>
+                    </tr>
+                    <tr>
+                        <td>B2</td>
+                        <td>Pewara standby di area yang mudah menjangkau Juri (tidak harus di panggung)</td>
+                        <td>Pewara & Koord. Acara</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="B2"></td>
+                    </tr>
+                    <tr>
+                        <td>B3</td>
+                        <td><span class="priority-high">ALUR SIRKULASI</span> (per peserta) dijalankan dengan benar</td>
+                        <td>Pewara & Juri</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="B3"></td>
+                    </tr>
+                    <tr>
+                        <td>B4</td>
+                        <td><span class="priority-high">VALIDASI BERKALA</span> (setiap 5 peserta) dilakukan</td>
+                        <td>Pewara & Dewan Juri</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="B4"></td>
+                    </tr>
+                    <tr>
+                        <td>B5</td>
+                        <td>Kertas formulir penilaian cadangan tersedia di meja Pewara</td>
+                        <td>Pewara & Sekretaris</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="B5"></td>
+                    </tr>
+                    <tr>
+                        <td>B6</td>
+                        <td>Ada jalur komunikasi cepat (WA/HT) jika sistem error atau ada kendala teknis</td>
+                        <td>Pewara & Koord. Acara/IT</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="B6"></td>
+                    </tr>
+                    <tr>
+                        <td>B7</td>
+                        <td>Pewara segera menginput nilai dari kertas ke sistem setelah mengambil dari Juri</td>
+                        <td>Pewara</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="B7"></td>
+                    </tr>
+                    <tr>
+                        <td>B8</td>
+                        <td>Juri menyalin nilai ke formulir rekap pribadi mereka secara konsisten</td>
+                        <td>Dewan Juri</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="B8"></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="role-card">
+                <h3 class="role-title"><i class="fas fa-lightbulb"></i> Detail Alur Sirkulasi (B3)</h3>
+                <ul class="task-list">
+                    <li><i class="fas fa-arrow-right"></i> a. Pewara mengambil kertas nilai yang sudah diisi Juri</li>
+                    <li><i class="fas fa-arrow-right"></i> b. Pewara memberikan kertas nilai kosong berikutnya ke Juri</li>
+                    <li><i class="fas fa-arrow-right"></i> c. Pewara segera menginput nilai dari kertas (poin a) ke sistem</li>
+                    <li><i class="fas fa-arrow-right"></i> d. Juri menyalin nilai (poin a) ke formulir rekap pribadi mereka</li>
+                </ul>
+            </div>
+            
+            <div class="role-card">
+                <h3 class="role-title"><i class="fas fa-lightbulb"></i> Detail Validasi Berkala (B4)</h3>
+                <ul class="task-list">
+                    <li><i class="fas fa-check"></i> Setiap 5 peserta, Pewara mengkonfirmasi total nilai di sistem kepada Juri</li>
+                    <li><i class="fas fa-check"></i> Juri dapat proaktif bertanya untuk memastikan kecocokan data</li>
+                    <li><i class="fas fa-check"></i> Jika ditemukan perbedaan, segera diskusikan dan koreksi</li>
+                </ul>
+            </div>
+
+            <div class="controls">
+                <div class="nav-buttons">
+                    <button class="btn btn-prev" onclick="navigateSection('prev')">
+                        <i class="fas fa-arrow-left"></i> Sebelumnya
+                    </button>
+                </div>
+                
+                <div class="progress-info">
+                    <span>5 dari 6</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 83.33%"></div>
+                    </div>
+                    <span>83.3%</span>
+                </div>
+                
+                <div class="nav-buttons">
+                    <button class="btn btn-next" onclick="navigateSection('next')">
+                        Berikutnya <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Tahap Finalisasi -->
+        <div id="tahap-finalisasi" class="content-section">
+            <h2 class="section-title"><i class="fas fa-flag-checkered"></i> Tahap Finalisasi (Pasca Lomba / Rapat Juri)</h2>
+            
+            <div class="phase-indicator">
+                <div class="phase completed">1</div>
+                <div class="phase completed">2</div>
+                <div class="phase active">3</div>
+            </div>
+            
+            <table class="checklist-table">
+                <thead>
+                    <tr>
+                        <th width="5%">No</th>
+                        <th width="45%">Item Ceklis</th>
+                        <th width="30%">Pihak Koordinasi</th>
+                        <th width="20%">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>C1</td>
+                        <td>Pewara mencetak atau menyiapkan file softcopy hasil rekapitulasi total dari sistem</td>
+                        <td>Pewara</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="C1"></td>
+                    </tr>
+                    <tr>
+                        <td>C2</td>
+                        <td>Pewara menyerahkan hasil rekap sistem kepada pimpinan Rapat Dewan Juri</td>
+                        <td>Pewara & Dewan Juri</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="C2"></td>
+                    </tr>
+                    <tr>
+                        <td>C3</td>
+                        <td>Juri membawa formulir rekap pribadi (catatan validasi) mereka ke Rapat Dewan Juri</td>
+                        <td>Dewan Juri</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="C3"></td>
+                    </tr>
+                    <tr>
+                        <td>C4</td>
+                        <td><span class="priority-high">PROSES VALIDASI</span>: Juri mencocokkan rekap sistem dengan rekap pribadi</td>
+                        <td>Seluruh Juri</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="C4"></td>
+                    </tr>
+                    <tr>
+                        <td>C5</td>
+                        <td>Pewara standby (di dalam/luar ruang rapat) untuk melakukan koreksi nilai di sistem JIKA diperlukan</td>
+                        <td>Pewara & Dewan Juri</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="C5"></td>
+                    </tr>
+                    <tr>
+                        <td>C6</td>
+                        <td>Hasil akhir dari sistem (setelah koreksi, jika ada) disahkan oleh Juri</td>
+                        <td>Dewan Juri</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="C6"></td>
+                    </tr>
+                    <tr>
+                        <td>C7</td>
+                        <td><span class="priority-high">Berita Acara Final</span> ditandatangani oleh Dewan Juri</td>
+                        <td>Dewan Juri & Ketua Panitia</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="C7"></td>
+                    </tr>
+                    <tr>
+                        <td>C8</td>
+                        <td>Semua kertas penilaian individual Juri dan rekap pribadi dikumpulkan untuk arsip</td>
+                        <td>Sekretaris & Juri</td>
+                        <td><input type="checkbox" class="status-checkbox" data-id="C8"></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="role-card">
+                <h3 class="role-title"><i class="fas fa-lightbulb"></i> Poin Kritis Tahap Finalisasi</h3>
+                <ul class="task-list">
+                    <li><i class="fas fa-exclamation-triangle"></i> <span class="highlight">Validasi adalah proses wajib</span> sebelum pengumuman pemenang</li>
+                    <li><i class="fas fa-exclamation-triangle"></i> <span class="highlight">Hanya Juri yang berwenang</span> memutuskan perubahan nilai</li>
+                    <li><i class="fas fa-exclamation-triangle"></i> <span class="highlight">Keputusan Juri bersifat mutlak</span> dan tidak dapat diganggu gugat setelah Berita Acara ditandatangani</li>
+                    <li><i class="fas fa-exclamation-triangle"></i> <span class="highlight">Dokumentasi lengkap</span> diperlukan untuk transparansi dan arsip</li>
+                </ul>
+            </div>
+
+            <div class="controls">
+                <div class="nav-buttons">
+                    <button class="btn btn-prev" onclick="navigateSection('prev')">
+                        <i class="fas fa-arrow-left"></i> Sebelumnya
+                    </button>
+                </div>
+                
+                <div class="progress-info">
+                    <span>6 dari 6</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%"></div>
+                    </div>
+                    <span>100%</span>
+                </div>
+                
+                <div class="nav-buttons">
+                    <button class="btn btn-outline" onclick="window.print()">
+                        <i class="fas fa-print"></i> Cetak
+                    </button>
+                    <button class="btn reset-btn" id="resetBtn">
+                        <i class="fas fa-undo"></i> Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="floating-nav">
+            <button class="floating-btn" onclick="navigateSection('prev')" title="Sebelumnya">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <button class="floating-btn" onclick="navigateSection('next')" title="Berikutnya">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <button class="floating-btn" onclick="window.print()" title="Cetak">
+                <i class="fas fa-print"></i>
+            </button>
+            <button class="floating-btn" id="resetBtnFloating" title="Reset Ceklis">
+                <i class="fas fa-undo"></i>
+            </button>
+        </div>
+
+        <div class="save-status" id="saveStatus">
+            <i class="fas fa-check-circle"></i> Status tersimpan
+        </div>
+
+        <div class="footer">
+            <p>Dokumen Ceklis Koordinasi Teknis MTQ 2025 | © Panitia MTQ Pelajar SD Kabupaten Bantul</p>
+        </div>
+    </div>
+
+    <script>
+        // Define section order
+        const sections = [
+            'struktur-panitia',
+            'pengantar',
+            'peran-tugas',
+            'tahap-persiapan',
+            'tahap-pelaksanaan',
+            'tahap-finalisasi'
+        ];
+
+        // Navigation between tabs
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and sections
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding section
+                tab.classList.add('active');
+                const targetId = tab.getAttribute('data-target');
+                document.getElementById(targetId).classList.add('active');
+                
+                updateNavigation();
+            });
+        });
+
+        // Navigate between sections
+        function navigateSection(direction) {
+            const currentSection = document.querySelector('.content-section.active');
+            const currentIndex = sections.indexOf(currentSection.id);
+            
+            let newIndex;
+            if (direction === 'next' && currentIndex < sections.length - 1) {
+                newIndex = currentIndex + 1;
+            } else if (direction === 'prev' && currentIndex > 0) {
+                newIndex = currentIndex - 1;
+            } else {
+                return;
+            }
+            
+            // Update active tab and section
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            
+            document.querySelector(`[data-target="${sections[newIndex]}"]`).classList.add('active');
+            document.getElementById(sections[newIndex]).classList.add('active');
+            
+            updateNavigation();
+        }
+
+        // Update navigation buttons and progress
+        function updateNavigation() {
+            const currentSection = document.querySelector('.content-section.active');
+            const currentIndex = sections.indexOf(currentSection.id);
+            
+            // Update progress bar
+            const progress = ((currentIndex + 1) / sections.length) * 100;
+            document.querySelectorAll('.progress-fill').forEach(fill => {
+                fill.style.width = `${progress}%`;
+            });
+            
+            // Update progress text
+            document.querySelectorAll('.progress-info span:first-child').forEach(span => {
+                span.textContent = `${currentIndex + 1} dari ${sections.length}`;
+            });
+            
+            document.querySelectorAll('.progress-info span:last-child').forEach(span => {
+                span.textContent = `${Math.round(progress)}%`;
+            });
+            
+            // Update navigation buttons state
+            document.querySelectorAll('.btn-prev').forEach(btn => {
+                btn.disabled = currentIndex === 0;
+            });
+            
+            // Update phase indicators
+            const phases = document.querySelectorAll('.phase');
+            phases.forEach(phase => phase.classList.remove('active', 'completed'));
+            
+            if (currentIndex >= 3) {
+                phases[0].classList.add('completed');
+            }
+            if (currentIndex >= 4) {
+                phases[1].classList.add('completed');
+            }
+            if (currentIndex >= 5) {
+                phases[2].classList.add('completed');
+            }
+            
+            if (currentIndex === 3) {
+                phases[0].classList.add('active');
+            } else if (currentIndex === 4) {
+                phases[1].classList.add('active');
+            } else if (currentIndex === 5) {
+                phases[2].classList.add('active');
+            }
+        }
+
+        // Save and load checkbox state
+        function saveCheckboxState() {
+            const checkboxes = document.querySelectorAll('.status-checkbox');
+            const state = {};
+            
+            checkboxes.forEach(checkbox => {
+                state[checkbox.dataset.id] = checkbox.checked;
+            });
+            
+            localStorage.setItem('mtq2025-checklist', JSON.stringify(state));
+            
+            // Show save status
+            const saveStatus = document.getElementById('saveStatus');
+            saveStatus.classList.add('show');
+            setTimeout(() => {
+                saveStatus.classList.remove('show');
+            }, 2000);
+        }
+        
+        function loadCheckboxState() {
+            const savedState = localStorage.getItem('mtq2025-checklist');
+            if (savedState) {
+                const state = JSON.parse(savedState);
+                
+                Object.keys(state).forEach(id => {
+                    const checkbox = document.querySelector(`.status-checkbox[data-id="${id}"]`);
+                    if (checkbox) {
+                        checkbox.checked = state[id];
+                    }
+                });
+            }
+        }
+        
+        // Reset checkboxes
+        function resetCheckboxes() {
+            if (confirm('Apakah Anda yakin ingin mereset semua status ceklis? Tindakan ini tidak dapat dibatalkan.')) {
+                document.querySelectorAll('.status-checkbox').forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                localStorage.removeItem('mtq2025-checklist');
+                
+                // Show save status
+                const saveStatus = document.getElementById('saveStatus');
+                saveStatus.textContent = '✓ Status telah direset';
+                saveStatus.classList.add('show');
+                setTimeout(() => {
+                    saveStatus.classList.remove('show');
+                    saveStatus.textContent = '✓ Status tersimpan';
+                }, 2000);
+            }
+        }
+
+        // Add event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load saved state
+            loadCheckboxState();
+            
+            // Add change event to checkboxes
+            document.querySelectorAll('.status-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', saveCheckboxState);
+            });
+            
+            // Add reset button event
+            document.getElementById('resetBtn').addEventListener('click', resetCheckboxes);
+            document.getElementById('resetBtnFloating').addEventListener('click', resetCheckboxes);
+            
+            updateNavigation();
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                navigateSection('next');
+            } else if (e.key === 'ArrowLeft') {
+                navigateSection('prev');
+            }
+        });
+    </script>
+</body>
+</html>
