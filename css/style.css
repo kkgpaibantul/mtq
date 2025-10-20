@@ -1663,7 +1663,7 @@ footer {
     text-align: center;
     margin-bottom: var(--space-xl);
     padding: var(--space-lg);
-    background-color: var(--card-color);
+    background-color: #294b29;
     border-radius: var(--border-radius-lg);
     box-shadow: 0 4px 16px rgba(0,0,0,0.1);
     border: 1px solid var(--border-color);
