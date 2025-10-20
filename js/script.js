@@ -1214,12 +1214,13 @@ function displayParticipantDataNilai(data) {
 }
 
 // ===== TAMPILAN UNTUK HALAMAN NOMOR URUT =====
+// ===== TAMPILAN UNTUK HALAMAN NOMOR URUT =====
 function displayParticipantDataNoUrut(data) {
     const participant = data.participant;
     const lomba = data.lomba;
     const resultSection = document.getElementById('resultSection');
     
-    // DETeksi LCP yang lebih komprehensif
+    // Deteksi LCP yang lebih komprehensif
     const cabangLomba = participant['Cabang Lomba'] || '';
     const lombaName = lomba.name || '';
     const lombaKode = lomba.kode || '';
@@ -1269,6 +1270,18 @@ function displayParticipantDataNoUrut(data) {
                     <td class="data-value">${participant['Cabang Lomba']}</td>
                 </tr>
         `;
+        
+        // Tampilkan nomor urut untuk LCP jika ada
+        if (participant['Nomor Urut'] || participant['No Urut']) {
+            const nomorUrut = participant['Nomor Urut'] || participant['No Urut'];
+            html += `
+                <tr>
+                    <td class="data-label">Nomor Urut</td>
+                    <td class="data-separator">:</td>
+                    <td class="data-value highlight">${nomorUrut}</td>
+                </tr>
+            `;
+        }
     } 
     // Tampilan untuk peserta selain LCP
     else {
@@ -1300,7 +1313,73 @@ function displayParticipantDataNoUrut(data) {
                     <td class="data-value">${participant['Cabang Lomba']}</td>
                 </tr>
         `;
+        
+        // Tampilkan nomor urut untuk non-LCP jika ada
+        if (participant['Nomor Urut'] || participant['No Urut']) {
+            const nomorUrut = participant['Nomor Urut'] || participant['No Urut'];
+            html += `
+                <tr>
+                    <td class="data-label">Nomor Urut</td>
+                    <td class="data-separator">:</td>
+                    <td class="data-value highlight">${nomorUrut}</td>
+                </tr>
+            `;
+        }
     }
+
+    // Tutup tabel dan tambahkan pesan jika nomor urut belum tersedia
+    html += `
+            </table>
+        </div>
+    `;
+
+    // Jika nomor urut belum tersedia
+    if (!participant['Nomor Urut'] && !participant['No Urut']) {
+        html += `
+            <div class="info-message">
+                <i class="fas fa-info-circle"></i>
+                <p>Nomor urut untuk peserta ini belum tersedia. Silakan cek kembali setelah pengundian nomor urut selesai.</p>
+            </div>
+        `;
+    }
+
+    // Tambahkan tombol aksi
+    html += `
+        <div class="action-buttons">
+            <button class="action-btn new-search" onclick="newSearch()">
+                <i class="fas fa-search"></i> Pencarian Baru
+            </button>
+            <button class="action-btn share" onclick="shareNoUrut()">
+                <i class="fas fa-share-alt"></i> Bagikan
+            </button>
+        </div>
+    `;
+
+    resultSection.innerHTML = html;
+    resultSection.style.display = 'block';
+    resultSection.scrollIntoView({ behavior: 'smooth' });
+}
+
+// Fungsi share khusus untuk nomor urut
+function shareNoUrut() {
+    if (navigator.share && currentParticipantData) {
+        const participant = currentParticipantData.participant;
+        const nomorUrut = participant['Nomor Urut'] || participant['No Urut'] || 'belum tersedia';
+        
+        navigator.share({
+            title: `Nomor Urut MTQ Bantul 2025 - ${participant['No Peserta']}`,
+            text: `Nomor urut ${participant.Nama || 'peserta'} di MTQ Bantul 2025: ${nomorUrut}`,
+            url: window.location.href
+        });
+    } else if (currentParticipantData) {
+        const participant = currentParticipantData.participant;
+        const nomorUrut = participant['Nomor Urut'] || participant['No Urut'] || 'belum tersedia';
+        const shareText = `Nomor urut ${participant.Nama || 'peserta'} (${participant['No Peserta']}) di MTQ Bantul 2025: ${nomorUrut}`;
+        
+        navigator.clipboard.writeText(shareText);
+        alert('Informasi nomor urut telah disalin ke clipboard!');
+    }
+}
 
 // ===== FUNGSI BANTUAN UNTUK TAMPILAN NILAI =====
 function generateLCPLayout(data) {
