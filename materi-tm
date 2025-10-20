@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentasi MTQ Pelajar SD Kab. Bantul 2025</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        :root {
+            --primary: #2c5aa0;
+            --secondary: #28a745;
+            --accent: #dc3545;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gold: #ffd700;
+            --slide-bg: linear-gradient(145deg, #ffffff, #f5f5f5);
+            --body-bg: linear-gradient(135deg, #1a2a6c, #2c5aa0, #4a90e2);
+        }
+        
+        /* Mode Gelap */
+        .dark-mode {
+            --primary: #4a86e8;
+            --secondary: #34c759;
+            --accent: #ff3b30;
+            --light: #1c1c1e;
+            --dark: #f2f2f7;
+            --slide-bg: linear-gradient(145deg, #2c2c2e, #3a3a3c);
+            --body-bg: linear-gradient(135deg, #0a0a0a, #1a1a1a, #2a2a2e);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--body-bg);
+            color: var(--dark);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+        
+        .presentation-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .slide {
+            background: var(--slide-bg);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            padding: 35px;
+            width: 85%;
+            max-width: 1000px;
+            height: 80vh;
+            box-sizing: border-box;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            overflow-y: auto;
+            transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.8) rotateY(10deg);
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .slide.active {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1) rotateY(0);
+            z-index: 2;
+        }
+        
+        .slide h2 {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 12px;
+            margin-top: 0;
+            font-size: 1.8em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .slide h1 {
+            color: var(--primary);
+            text-align: center;
+            margin-top: 10px;
+            font-size: 2.2em;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .slide h3 {
+            color: var(--secondary);
+            margin-top: 20px;
+            font-size: 1.3em;
+        }
+        
+        .slide ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .slide ul li {
+            background: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="6" fill="%232c5aa0"/></svg>') no-repeat left 8px;
+            background-size: 10px 10px;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            line-height: 1.7;
+            font-size: 1.05em;
+            transition: transform 0.3s ease;
+        }
+        
+        .dark-mode .slide ul li {
+            background: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="6" fill="%234a86e8"/></svg>') no-repeat left 8px;
+        }
+        
+        .slide ul li:hover {
+            transform: translateX(5px);
+        }
+        
+        .highlight {
+            font-weight: bold;
+            color: var(--accent);
+            background: linear-gradient(120deg, transparent 0%, rgba(255, 230, 230, 0.3) 50%, transparent 100%);
+            padding: 3px 8px;
+            border-radius: 4px;
+            animation: pulse 2s infinite;
+        }
+        
+        .dark-mode .highlight {
+            background: linear-gradient(120deg, transparent 0%, rgba(255, 100, 100, 0.2) 50%, transparent 100%);
+        }
+        
+        @keyframes pulse {
+            0% { background-position: -100px 0; }
+            100% { background-position: 100px 0; }
+        }
+        
+        .table-container {
+            margin-top: 15px;
+            overflow-x: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(10px);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+        
+        .table-container.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        .dark-mode table, .dark-mode th, .dark-mode td {
+            border: 1px solid #444;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: linear-gradient(135deg, var(--primary), #1e3d6f);
+            color: white;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        th::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        th:hover::after {
+            left: 100%;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .dark-mode tr:nth-child(even) {
+            background-color: #2c2c2e;
+        }
+        
+        tr {
+            transition: background-color 0.3s ease;
+        }
+        
+        tr:hover {
+            background-color: #e9ecef;
+        }
+        
+        .dark-mode tr:hover {
+            background-color: #3a3a3c;
+        }
+        
+        .notes {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-top: 15px;
+            border-left: 4px solid #ffc107;
+            padding-left: 12px;
+            background: linear-gradient(90deg, #fff9e6, #fff);
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .dark-mode .notes {
+            background: linear-gradient(90deg, #3a3a2e, #2c2c2e);
+            color: #aaa;
+        }
+        
+        .header-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            font-size: 2.5em;
+            color: var(--primary);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        hr {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--primary), transparent);
+            margin: 20px 0;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-style: italic;
+            color: #6c757d;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), #1e3d6f);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(135deg, var(--primary), #1e3d6f);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.4em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-btn:active {
+            transform: translateY(-2px) scale(1.05);
+        }
+        
+        .nav-btn:disabled {
+            background: linear-gradient(135deg, #cccccc, #aaaaaa);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .slide-counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--primary), #1e3d6f);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            z-index: 100;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            z-index: 100;
+            transition: width 0.5s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            padding: 20px;
+            width: calc(50% - 15px);
+            min-height: 150px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .dark-mode .card {
+            background: #2c2c2e;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+        }
+        
+        .card:hover::before {
+            width: 8px;
+        }
+        
+        .card h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 5px;
+        }
+        
+        .illustration {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 4em;
+            color: var(--primary);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .two-column {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .column {
+            flex: 1;
+        }
+        
+        .timeline {
+            position: relative;
+            margin: 20px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+            padding-left: 50px;
+            transition: transform 0.3s ease;
+        }
+        
+        .timeline-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 16px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--secondary);
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px var(--secondary);
+            transition: all 0.3s ease;
+        }
+        
+        .dark-mode .timeline-item::before {
+            border: 3px solid #2c2c2e;
+        }
+        
+        .timeline-item:hover::before {
+            transform: scale(1.2);
+            box-shadow: 0 0 0 3px var(--secondary);
+        }
+        
+        .criteria-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .criteria-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .dark-mode .criteria-item {
+            background: #2c2c2e;
+        }
+        
+        .criteria-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        
+        .criteria-item h4 {
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        
+        .quote {
+            font-style: italic;
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: linear-gradient(135deg, #f0f8ff, #e6f2ff);
+            border-radius: 12px;
+            border-left: 4px solid var(--secondary);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        .dark-mode .quote {
+            background: linear-gradient(135deg, #1a2a3a, #1a2a4a);
+        }
+        
+        .quote::before, .quote::after {
+            content: '"';
+            font-size: 2em;
+            color: var(--primary);
+            position: absolute;
+            opacity: 0.3;
+        }
+        
+        .quote::before {
+            top: 5px;
+            left: 10px;
+        }
+        
+        .quote::after {
+            bottom: 5px;
+            right: 10px;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .dark-mode .contact-item {
+            background: #2c2c2e;
+        }
+        
+        .contact-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        
+        .contact-item i {
+            color: var(--primary);
+            font-size: 1.2em;
+        }
+        
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .floating-element {
+            position: absolute;
+            font-size: 1.5em;
+            opacity: 0.1;
+            animation: floatAround 15s infinite linear;
+        }
+        
+        @keyframes floatAround {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(100px, 50px) rotate(90deg); }
+            50% { transform: translate(50px, 100px) rotate(180deg); }
+            75% { transform: translate(-50px, 50px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+        
+        .countdown {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-weight: bold;
+            color: var(--primary);
+            z-index: 100;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .dark-mode .countdown {
+            background: rgba(44, 44, 46, 0.9);
+        }
+        
+        .presentation-title {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-weight: bold;
+            color: var(--primary);
+            z-index: 100;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .dark-mode .presentation-title {
+            background: rgba(44, 44, 46, 0.9);
+        }
+        
+        .slide-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 15px;
+            border-left: 4px solid var(--secondary);
+            padding-left: 10px;
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, #f0f8ff, #e6f2ff);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        
+        .dark-mode .info-box {
+            background: linear-gradient(135deg, #1a2a3a, #1a2a4a);
+        }
+        
+        .info-box h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--primary);
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: var(--dark);
+        }
+        
+        .emphasis-box {
+            background: linear-gradient(135deg, var(--primary), #1e3d6f);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .emphasis-box h3 {
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .team-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .dark-mode .team-card {
+            background: #2c2c2e;
+        }
+        
+        .team-card h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Fitur Baru: Indikator Slide */
+        .slide-indicator {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 100;
+        }
+        
+        .slide-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .slide-dot.active {
+            background-color: white;
+            transform: scale(1.2);
+        }
+        
+        .slide-dot:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Fitur Baru: Kontrol Tambahan */
+        .control-panel {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+        
+        .control-btn {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--primary);
+            border: none;
+            border-radius: 25px;
+            padding: 8px 15px;
+            font-size: 0.9em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .dark-mode .control-btn {
+            background: rgba(44, 44, 46, 0.9);
+            color: var(--primary);
+        }
+        
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        
+        /* Responsivitas untuk Perangkat Mobile */
+        @media (max-width: 768px) {
+            .slide {
+                width: 95%;
+                height: 85vh;
+                padding: 20px;
+            }
+            
+            .slide h1 {
+                font-size: 1.8em;
+            }
+            
+            .slide h2 {
+                font-size: 1.5em;
+            }
+            
+            .two-column {
+                flex-direction: column;
+            }
+            
+            .card {
+                width: 100%;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .criteria-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-container {
+                flex-direction: column;
+            }
+            
+            .navigation {
+                bottom: 10px;
+            }
+            
+            .nav-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2em;
+            }
+            
+            .slide-counter {
+                bottom: 10px;
+                right: 10px;
+                font-size: 0.8em;
+            }
+            
+            .countdown, .presentation-title {
+                position: static;
+                margin: 10px auto;
+                width: 90%;
+                text-align: center;
+            }
+            
+            .control-panel {
+                top: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .slide-indicator {
+                bottom: 80px;
+            }
+        }
+        
+        /* Animasi untuk konten yang muncul */
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Mode Cetak */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+                overflow: visible !important;
+                height: auto !important;
+            }
+            
+            .presentation-container {
+                height: auto !important;
+                overflow: visible !important;
+            }
+            
+            .slide {
+                position: static !important;
+                opacity: 1 !important;
+                transform: none !important;
+                margin: 20px auto !important;
+                page-break-after: always;
+                height: auto !important;
+                box-shadow: none !important;
+                border: 1px solid #ccc !important;
+            }
+            
+            .navigation, .slide-counter, .progress-bar, .floating-elements,
+            .countdown, .presentation-title, .control-panel, .slide-indicator {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="floating-elements" id="floatingElements">
+        <!-- Floating elements will be generated by JavaScript -->
+    </div>
+    
+    <div class="countdown" id="countdown">
+        <i class="fas fa-clock"></i>
+        <span id="countdownText">MTQ 2025</span>
+    </div>
+    
+    <div class="presentation-title">
+        <i class="fas fa-quran"></i>
+        <span>MTQ Pelajar SD 2025</span>
+    </div>
+    
+    <!-- Panel Kontrol Baru -->
+    <div class="control-panel">
+        <button class="control-btn" id="themeToggle">
+            <i class="fas fa-moon"></i> Mode Gelap
+        </button>
+        <button class="control-btn" id="fullscreenToggle">
+            <i class="fas fa-expand"></i> Layar Penuh
+        </button>
+        <button class="control-btn" id="printBtn">
+            <i class="fas fa-print"></i> Cetak
+        </button>
+    </div>
+    
+    <div class="presentation-container" id="presentationContainer">
+        <!-- Slide 1: Judul -->
+        <div class="slide active" id="slide1">
+            <div class="header-section">
+                <div class="logo">📖</div>
+                <h2>PETUNJUK PELAKSANAAN</h2>
+                <h1>MUSABAQAH TILAWATIL QUR'AN (MTQ) PELAJAR SD</h1>
+                <h3>TINGKAT KABUPATEN BANTUL TAHUN 2025</h3>
+            </div>
+            <div class="illustration">
+                <i class="fas fa-quran"></i>
+            </div>
+            <p class="notes">Disusun oleh: KKG PAI Kabupaten Bantul</p>
+            
+            <div class="stats-container">
+                <div class="stat-item">
+                    <span class="stat-number">8</span>
+                    <span class="stat-label">Cabang Lomba</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">10</span>
+                    <span class="stat-label">Peserta per Kecamatan</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">29</span>
+                    <span class="stat-label">Oktober 2025</span>
+                </div>
+            </div>
+            
+            <div class="footer">
+                <p>Dibuka pada: <span id="currentDate"></span></p>
+                <p>Semoga kegiatan ini membawa keberkahan dan meningkatkan kecintaan terhadap Al-Qur'an</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Latar Belakang -->
+        <div class="slide" id="slide2">
+            <h2>LATAR BELAKANG</h2>
+            <div class="illustration">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            
+            <div class="info-box">
+                <h4>Pendidikan Agama Islam di Sekolah</h4>
+                <p>Bertujuan untuk menumbuhkan dan meningkatkan ketakwaan melalui pemberian pengetahuan, penghayatan, pengamalan, serta pengalaman peserta didik tentang Agama Islam.</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <h3>Pendidikan Agama Islam</h3>
+                    <ul>
+                        <li>Menumbuhkan dan meningkatkan <span class="highlight">ketakwaan</span></li>
+                        <li>Membentuk <span class="highlight">akhlak mulia</span></li>
+                        <li>Mengembangkan pribadi muslim yang berakhlakul karimah</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h3>Peran Strategis</h3>
+                    <ul>
+                        <li>Perlunya <span class="highlight">sinergi dan kreativitas guru</span></li>
+                        <li>Membina dan membimbing peserta didik</li>
+                        <li>MTQ sebagai implementasi PAI</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="quote">
+                "Musabaqoh Tilawatil Qur'an diharapkan mampu menumbuhkan semangat fastabiqui khairat dalam pribadi peserta didik"
+            </div>
+        </div>
+
+        <!-- Slide 3: Tujuan Kegiatan -->
+        <div class="slide" id="slide3">
+            <h2>TUJUAN KEGIATAN</h2>
+            <div class="illustration">
+                <i class="fas fa-bullseye"></i>
+            </div>
+            
+            <div class="emphasis-box">
+                <h3>Membangun Generasi Qur'ani</h3>
+                <p>Melalui MTQ, kita berupaya membentuk pelajar yang mencintai Al-Qur'an dan mengamalkan nilainya dalam kehidupan sehari-hari</p>
+            </div>
+            
+            <div class="card-container">
+                <div class="card">
+                    <h4><i class="fas fa-brain"></i> Peningkatan Kompetensi</h4>
+                    <p>Meningkatkan kompetensi peserta didik tentang Islam dan Al-Qur'an</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-trophy"></i> Pembinaan Prestasi</h4>
+                    <p>Membina prestasi di bidang Al-Qur'an dan keislaman</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-lightbulb"></i> Motivasi</h4>
+                    <p>Memberikan motivasi untuk melaksanakan nilai-nilai Al-Qur'an</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-seedling"></i> Pengembangan Bakat</h4>
+                    <p>Mengembangkan bakat dan potensi peserta didik</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Waktu & Tempat -->
+        <div class="slide" id="slide4">
+            <h2>WAKTU & TEMPAT PELAKSANAAN</h2>
+            <div class="illustration">
+                <i class="fas fa-calendar-alt"></i>
+            </div>
+            
+            <div class="info-box">
+                <h4>Detail Pelaksanaan</h4>
+                <p>Kegiatan akan dilaksanakan secara tatap muka (luring) dengan protokol kesehatan yang berlaku</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <h3>Detail Acara</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <h4>Hari/Tanggal</h4>
+                            <p><span class="highlight">Rabu, 29 Oktober 2025</span></p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>Waktu</h4>
+                            <p><span class="highlight">07.30 - Selesai</span></p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>Tempat</h4>
+                            <p><span class="highlight">SD IT Ar-Raihan, Kapanewon Bantul</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <h3>Metode Pelaksanaan</h3>
+                    <ul>
+                        <li>Pendekatan: <span class="highlight">Tatap Muka (Luring)</span></li>
+                        <li>Penjurian: <span class="highlight">Langsung</span></li>
+                        <li>Peserta dan dewan juri dalam satu ruang</li>
+                        <li>Semua cabang lomba dilaksanakan serentak</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Panitia & Penyelenggara -->
+        <div class="slide" id="slide5">
+            <h2>PANITIA & PENYELENGGARA</h2>
+            <div class="illustration">
+                <i class="fas fa-users-cog"></i>
+            </div>
+            
+            <div class="info-box">
+                <h4>Struktur Kepanitiaan</h4>
+                <p>Kegiatan MTQ Pelajar SD 2025 diselenggarakan oleh KKG PAI Kabupaten Bantul dengan dukungan berbagai pihak terkait</p>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-card">
+                    <h4><i class="fas fa-user-tie"></i> Panitia Pelaksana</h4>
+                    <ul>
+                        <li>Pengurus KKG PAI Kabupaten Bantul</li>
+                        <li>Bertanggung jawab atas keseluruhan pelaksanaan</li>
+                        <li>Menyiapkan sarana dan prasarana</li>
+                    </ul>
+                </div>
+                
+                <div class="team-card">
+                    <h4><i class="fas fa-user-friends"></i> Pendamping Peserta (Ofisial)</h4>
+                    <ul>
+                        <li>Guru PAI perwakilan kapanewon</li>
+                        <li>Bertanggung jawab atas peserta didik</li>
+                        <li>Media komunikasi dengan panitia</li>
+                    </ul>
+                </div>
+                
+                <div class="team-card">
+                    <h4><i class="fas fa-microphone"></i> Pewara</h4>
+                    <ul>
+                        <li>Bertugas di dalam ruang lomba</li>
+                        <li>Membacakan tata tertib lomba</li>
+                        <li>Membantu rekapitulasi penilaian</li>
+                    </ul>
+                </div>
+                
+                <div class="team-card">
+                    <h4><i class="fas fa-gavel"></i> Dewan Juri</h4>
+                    <ul>
+                        <li>Minimal 3 orang per cabang lomba</li>
+                        <li>Profesional di bidangnya</li>
+                        <li>Bertugas menilai dengan objektif dan adil</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="notes">
+                <p>Segala informasi dan hal-hal berkaitan dengan kegiatan disampaikan melalui pendamping peserta (ofisial)</p>
+            </div>
+        </div>
+
+        <!-- Slide 6: Peserta Kegiatan -->
+        <div class="slide" id="slide6">
+            <h2>PESERTA KEGIATAN</h2>
+            <div class="illustration">
+                <i class="fas fa-users"></i>
+            </div>
+            
+            <div class="info-box">
+                <h4>Syarat Peserta</h4>
+                <p>Peserta adalah siswa SD aktif yang memenuhi kriteria dan hanya boleh mengikuti satu cabang lomba</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <h3>Kriteria Peserta</h3>
+                    <ul>
+                        <li>Peserta didik SD Negeri/Swasta di Kabupaten Bantul</li>
+                        <li>Masih aktif dan beragama Islam</li>
+                        <li>Kelas <span class="highlight">I sampai VI</span></li>
+                        <li>Status: <span class="highlight">Warga Negara Indonesia (WNI)</span></li>
+                        <li>Memiliki <span class="highlight">akhlak mulia</span></li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h3>Ketentuan Peserta</h3>
+                    <ul>
+                        <li>Hanya diperbolehkan mengikuti <span class="highlight">satu cabang lomba</span></li>
+                        <li>Didampingi oleh guru pendamping</li>
+                        <li>Wajib mematuhi tata tertib lomba</li>
+                        <li>Menggunakan seragam yang ditentukan</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="notes">Setiap kapanewon wajib mengirimkan perwakilan untuk semua cabang lomba</p>
+        </div>
+
+        <!-- Slide 7: Cabang Lomba -->
+        <div class="slide" id="slide7">
+            <h2>CABANG LOMBA (8 BIDANG)</h2>
+            <div class="illustration">
+                <i class="fas fa-tasks"></i>
+            </div>
+            
+            <div class="info-box">
+                <h4>Variasi Kompetisi</h4>
+                <p>MTQ menyediakan 8 cabang lomba yang mencakup berbagai aspek keislaman untuk mengakomodasi bakat dan minat peserta</p>
+            </div>
+            
+            <div class="table-container" id="lombaTable">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Cabang Lomba</th>
+                            <th>Peserta per Kapanewon</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1.</td><td>Musabaqah Tilawatil Qur'an (MTQ)</td><td>1 putra atau putri</td><td>Bacaan mujawwad dan murattal</td></tr>
+                        <tr><td>2.</td><td>Puitisasi Saritilawah</td><td>1 putra atau putri</td><td>Membaca terjemahan dengan puitisasi</td></tr>
+                        <tr><td>3.</td><td>Musabaqah Tartil Qur'an (MTtQ)</td><td>1 putra atau putri</td><td>Bacaan tartil dengan irama</td></tr>
+                        <tr><td>4.</td><td>Musabaqah Hifdzil Qur'an (MHQ)</td><td>1 putra atau putri</td><td>Hafalan Juz Amma</td></tr>
+                        <tr><td>5.</td><td>Musabaqah Adzan (MAz)</td><td>1 putra</td><td>Azan, doa, dan ikamah</td></tr>
+                        <tr><td>6.</td><td>Lomba Pidato PAI (LPP)</td><td>1 putra atau putri</td><td>Pidato tanpa teks</td></tr>
+                        <tr><td>7.</td><td>Menggambar Islami</td><td>1 putra atau putri</td><td>Tema "Moderasi Beragama"</td></tr>
+                        <tr><td>8.</td><td>Lomba Cerdas Cermat PAI (LCP)</td><td>3 putra/putri/campuran</td><td>Babak penyisihan dan final</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p><span class="highlight">Total Jumlah Peserta tiap Kapanewon: 10 peserta</span></p>
+        </div>
+
+        <!-- Slide 8: MTQ & MTtQ -->
+        <div class="slide" id="slide8">
+            <h2>LOMBA BACAAN QUR'AN</h2>
+            <div class="illustration">
+                <i class="fas fa-book-open"></i>
+            </div>
+            
+            <div class="info-box">
+                <h4>Penekanan pada Kualitas Bacaan</h4>
+                <p>Lomba bacaan Al-Qur'an menekankan pada ketepatan tajwid, fashohah, dan keindahan lagu</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <h3>Musabaqah Tilawatil Qur'an (MTQ)</h3>
+                    <ul>
+                        <li>Durasi: <span class="highlight">7 menit</span></li>
+                        <li>Maqro': QS. al-Baqarah (21, 189) atau QS. Ali Imran (31, 144, 189)</li>
+                        <li>Kriteria Penilaian:
+                            <ul>
+                                <li>Tajwid: 30</li>
+                                <li>Fashohah: 30</li>
+                                <li>Lagu dan Adab: 40</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h3>Musabaqah Tartil Qur'an (MTtQ)</h3>
+                    <ul>
+                        <li>Durasi: <span class="highlight">7 menit</span></li>
+                        <li>Maqro': <span class="highlight">Juz 1 s.d. Juz 3</span> (ditentukan juri)</li>
+                        <li>Kriteria Penilaian:
+                            <ul>
+                                <li>Tajwid: 40</li>
+                                <li>Adab dan Fashohah: 30</li>
+                                <li>Irama: 30</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: MHQ & Puitisasi -->
+        <div class="slide" id="slide9">
+            <h2>LOMBA HAFALAN & SARITILAWAH</h2>
+            <div class="illustration">
+                <i class="fas fa-brain"></i>
+            </div>
+            
+            <div class="info-box">
+                <h4>Penguasaan Kandungan Al-Qur'an</h4>
+                <p>Lomba ini menguji hafalan dan pemahaman peserta terhadap kandungan Al-Qur'an</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <h3>Musabaqah Hifdzil Qur'an (MHQ)</h3>
+                    <ul>
+                        <li>Maqro': <span class="highlight">Juz Amma (QS 90 s.d. 114)</span></li>
+                        <li>Mekanisme:
+                            <ul>
+                                <li>Melanjutkan ayat</li>
+                                <li>Menyebutkan nama surah</li>
+                            </ul>
+                        </li>
+                        <li>Kriteria Penilaian:
+                            <ul>
+                                <li>Tahfidz: 30-50</li>
+                                <li>Tajwid: 15-25</li>
+                                <li>Fashohah dan Adab: 15-25</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h3>Puitisasi Saritilawah</h3>
+                    <ul>
+                        <li>Durasi: <span class="highlight">10 menit</span></li>
+                        <li>Surah: al-Fatihah, al-Ma'uun, ad-Dhuha, atau at-Takasur</li>
+                        <li>Membaca teks atau hafalan</li>
+                        <li>Kriteria Penilaian:
+                            <ul>
+                                <li>Penghayatan & Retorika: 40</li>
+                                <li>Vokal & Intonasi: 30</li>
+                                <li>Artikulasi: 30</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Azan & Pidato -->
+        <div class="slide" id="slide10">
+            <h2>LOMBA AZAN & PIDATO</h2>
+            <div class="illustration">
+                <i class="fas fa-microphone"></i>
+            </div>
+            
+            <div class="info-box">
+                <h4>Keterampilan Berbicara dan Berdakwah</h4>
+                <p>Lomba ini mengasah kemampuan peserta dalam menyampaikan pesan keislaman dengan efektif</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <h3>Musabaqah Azan (MAz)</h3>
+                    <ul>
+                        <li>Peserta: <span class="highlight">Putra</span></li>
+                        <li>Materi: Azan (bukan Subuh), doa setelah azan, ikamah</li>
+                        <li>Kriteria Penilaian:
+                            <ul>
+                                <li>Fashahah & Adab: 50</li>
+                                <li>Vokal & Kejernihan Suara: 30</li>
+                                <li>Lagu & Variasi: 20</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h3>Lomba Pidato PAI (LPP)</h3>
+                    <ul>
+                        <li>Durasi: <span class="highlight">7-10 menit</span> (tanpa teks)</li>
+                        <li>10 pilihan tema (contoh: Mensyukuri nikmat Allah, Toleransi)</li>
+                        <li>Wajib menyerahkan teks pidato (3 eksemplar)</li>
+                        <li>Kriteria Penilaian:
+                            <ul>
+                                <li>Kesesuaian Isi & Tema: 40</li>
+                                <li>Retorika & Ekspresi Mimik: 40</li>
+                                <li>Gaya Bahasa & Vokal: 20</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Menggambar Islami -->
+        <div class="slide" id="slide11">
+            <h2>LOMBA MENGGAMBAR ISLAMI</h2>
+            <div class="illustration">
+                <i class="fas fa-palette"></i>
+            </div>
+            
+            <div class="info-box">
+                <h4>Ekspresi Kreativitas Visual</h4>
+                <p>Lomba menggambar dengan tema "Moderasi Beragama" untuk mengekspresikan nilai-nilai Islam melalui seni visual</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <h3>Ketentuan Umum</h3>
+                    <ul>
+                        <li>Tema: <span class="highlight">"Moderasi Beragama"</span></li>
+                        <li>Media: Kertas <span class="highlight">A3</span> (disediakan panitia)</li>
+                        <li>Peralatan: <span class="highlight">Crayon</span> (dibawa peserta)</li>
+                        <li>Waktu: <span class="highlight">3 jam (180 menit)</span></li>
+                        <li>Bersifat individual, tidak boleh dibantu</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h3>Kriteria Penilaian</h3>
+                    <div class="criteria-grid">
+                        <div class="criteria-item">
+                            <h4>Kesesuaian Tema</h4>
+                            <p>5 - 15 poin</p>
+                        </div>
+                        <div class="criteria-item">
+                            <h4>Artistik & Imajinasi</h4>
+                            <p>30 - 50 poin</p>
+                        </div>
+                        <div class="criteria-item">
+                            <h4>Pemilihan Warna</h4>
+                            <p>10 - 25 poin</p>
+                        </div>
+                        <div class="criteria-item">
+                            <h4>Kebersihan & Kehalusan</h4>
+                            <p>5 - 10 poin</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Cerdas Cermat PAI -->
+        <div class="slide" id="slide12">
+            <h2>LOMBA CERDAS CERMAT PAI (LCP)</h2>
+            <div class="illustration">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            
+            <div class="info-box">
+                <h4>Kompetisi Tim Berbasis Pengetahuan</h4>
+                <p>Lomba yang menguji wawasan dan pengetahuan peserta tentang Pendidikan Agama Islam melalui format yang menarik</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <h3>Ketentuan Umum</h3>
+                    <ul>
+                        <li>Bentuk: <span class="highlight">Tim/Regu</span> (3 peserta)</li>
+                        <li>Materi: Kurikulum Merdeka kelas IV-VI & Juz Amma</li>
+                        <li>Babak: <span class="highlight">Penyisihan</span> dan <span class="highlight">Final</span></li>
+                        <li>5 regu terbaik masuk babak final</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h3>Babak Final</h3>
+                    <ul>
+                        <li><span class="highlight">Soal Wajib Timing</span>: 7 soal, 2 menit</li>
+                        <li><span class="highlight">Soal Wajib Lempar Rebut</span>: 7 soal, 5 detik</li>
+                        <li><span class="highlight">Soal Rebutan</span>: 10 soal, skor ±100</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="notes">
+                <p>Regu tercepat menekan bel berhak menjawab soal rebutan. Jawaban tidak lengkap dianggap salah dengan skor -100.</p>
+            </div>
+        </div>
+
+        <!-- Slide 13: Penghargaan -->
+        <div class="slide" id="slide13">
+            <h2>PENGHARGAAN & KEJUARAAN</h2>
+            <div class="illustration">
+                <i class="fas fa-trophy"></i>
+            </div>
+            
+            <div class="info-box">
+                <h4>Apresiasi untuk Prestasi</h4>
+                <p>Setiap prestasi yang diraih peserta akan mendapatkan penghargaan sebagai bentuk apresiasi dan motivasi</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <h3>Penghargaan Per Cabang</h3>
+                    <ul>
+                        <li>Juara I, II, III</li>
+                        <li>Harapan I, dan Harapan II</li>
+                        <li>Mendapatkan <span class="highlight">trophy dan piagam penghargaan</span></li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h3>Kejuaraan Umum Kapanewon</h3>
+                    <p>Diraih oleh kapanewon dengan poin terbanyak:</p>
+                    <ul>
+                        <li>Juara I: <span class="highlight">5 poin</span></li>
+                        <li>Juara II: <span class="highlight">4 poin</span></li>
+                        <li>Juara III: <span class="highlight">3 poin</span></li>
+                        <li>Harapan I: <span class="highlight">2 poin</span></li>
+                        <li>Harapan II: <span class="highlight">1 poin</span></li>
+                    </ul>
+                </div>
+            </div>
+            <p class="notes">Jika poin sama, kejuaraan umum ditentukan dengan melihat perolehan Juara I terbanyak, dan seterusnya</p>
+        </div>
+
+        <!-- Slide 14: Ketentuan Lain -->
+        <div class="slide" id="slide14">
+            <h2>KETENTUAN LAIN</h2>
+            <div class="illustration">
+                <i class="fas fa-clipboard-list"></i>
+            </div>
+            
+            <div class="info-box">
+                <h4>Ketentuan Umum</h4>
+                <p>Beberapa ketentuan tambahan yang perlu diperhatikan oleh semua pihak terkait pelaksanaan MTQ</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <h3>Seragam Peserta</h3>
+                    <ul>
+                        <li>Memakai <span class="highlight">seragam merah putih</span></li>
+                        <li>Menutup aurat, sopan, dan rapi</li>
+                        <li>Memakai <span class="highlight">tanda nomor peserta</span></li>
+                        <li>Pakaian sesuai nilai-nilai Islami</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h3>Tindakan Pelanggaran</h3>
+                    <ul>
+                        <li>Pemberitahuan lisan untuk perbaikan</li>
+                        <li>Pengurangan nilai</li>
+                        <li><span class="highlight">Diskualifikasi</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="quote">
+                <p class="highlight">Keputusan dewan juri tidak dapat diganggu gugat</p>
+            </div>
+        </div>
+
+        <!-- Slide 15: Penutup -->
+        <div class="slide" id="slide15">
+            <h2>PENUTUP</h2>
+            <div class="illustration">
+                <i class="fas fa-handshake"></i>
+            </div>
+            
+            <div class="emphasis-box">
+                <h3>Mari Sukseskan MTQ Pelajar SD 2025</h3>
+                <p>Bersama kita wujudkan generasi Qur'ani yang berakhlak mulia dan berprestasi</p>
+            </div>
+            
+            <p>Petunjuk Pelaksanaan ini disusun sebagai pedoman dalam pelaksanaan MTQ Pelajar SD Tingkat Kabupaten Bantul Tahun 2025.</p>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-users"></i>
+                    <span>KKG PAI Kabupaten Bantul</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-calendar"></i>
+                    <span>Rabu, 29 Oktober 2025</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>SD IT Ar-Raihan, Bantul</span>
+                </div>
+            </div>
+            
+            <div class="footer">
+                <p>Dibuka pada: <span id="closingDate"></span></p>
+                <p>Panitia MTQ Pelajar SD Kabupaten Bantul 2025</p>
+                <p>Semoga kegiatan ini membawa keberkahan bagi semua pihak</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Indikator Slide Baru -->
+    <div class="slide-indicator" id="slideIndicator">
+        <!-- Slide dots akan di-generate oleh JavaScript -->
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" disabled>←</button>
+        <button class="nav-btn" id="nextBtn">→</button>
+    </div>
+    
+    <div class="slide-counter" id="slideCounter">
+        <i class="fas fa-layer-group"></i>
+        <span>1/15</span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const slideCounter = document.getElementById('slideCounter');
+            const progressBar = document.getElementById('progressBar');
+            const floatingElements = document.getElementById('floatingElements');
+            const countdownText = document.getElementById('countdownText');
+            const currentDateElement = document.getElementById('currentDate');
+            const closingDateElement = document.getElementById('closingDate');
+            const slideIndicator = document.getElementById('slideIndicator');
+            const themeToggle = document.getElementById('themeToggle');
+            const fullscreenToggle = document.getElementById('fullscreenToggle');
+            const printBtn = document.getElementById('printBtn');
+            
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+            
+            // Set tanggal berjalan
+            function setCurrentDate() {
+                const now = new Date();
+                const options = { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                };
+                const dateString = now.toLocaleDateString('id-ID', options);
+                currentDateElement.textContent = dateString;
+                closingDateElement.textContent = dateString;
+            }
+            
+            // Generate floating elements
+            function generateFloatingElements() {
+                const icons = ['📖', '🕌', '⭐', '🎯', '🏆', '✏️', '📝', '🔔', '💡', '🎨'];
+                for (let i = 0; i < 15; i++) {
+                    const element = document.createElement('div');
+                    element.className = 'floating-element';
+                    element.textContent = icons[Math.floor(Math.random() * icons.length)];
+                    element.style.left = `${Math.random() * 100}%`;
+                    element.style.top = `${Math.random() * 100}%`;
+                    element.style.animationDuration = `${15 + Math.random() * 20}s`;
+                    element.style.fontSize = `${1 + Math.random() * 2}em`;
+                    floatingElements.appendChild(element);
+                }
+            }
+            
+            // Generate slide indicator dots
+            function generateSlideIndicator() {
+                for (let i = 0; i < totalSlides; i++) {
+                    const dot = document.createElement('div');
+                    dot.className = 'slide-dot';
+                    if (i === currentSlide) {
+                        dot.classList.add('active');
+                    }
+                    dot.addEventListener('click', () => {
+                        goToSlide(i);
+                    });
+                    slideIndicator.appendChild(dot);
+                }
+            }
+            
+            // Update slide indicator
+            function updateSlideIndicator() {
+                const dots = document.querySelectorAll('.slide-dot');
+                dots.forEach((dot, index) => {
+                    if (index === currentSlide) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Countdown to event
+            function updateCountdown() {
+                const eventDate = new Date('2025-10-29');
+                const now = new Date();
+                const diff = eventDate - now;
+                
+                if (diff > 0) {
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    countdownText.textContent = `${days} Hari Menuju MTQ 2025`;
+                } else {
+                    countdownText.textContent = 'MTQ 2025 Telah Berlangsung!';
+                }
+            }
+            
+            // Fungsi untuk memperbarui tampilan slide
+            function updateSlide() {
+                // Sembunyikan semua slide
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                });
+                
+                // Tampilkan slide aktif
+                slides[currentSlide].classList.add('active');
+                
+                // Animasi tabel
+                const tableContainer = document.querySelector('.table-container');
+                if (tableContainer) {
+                    setTimeout(() => {
+                        tableContainer.classList.add('visible');
+                    }, 300);
+                }
+                
+                // Perbarui tombol navigasi
+                prevBtn.disabled = currentSlide === 0;
+                nextBtn.disabled = currentSlide === totalSlides - 1;
+                
+                // Perbarui counter slide
+                slideCounter.textContent = `${currentSlide + 1}/${totalSlides}`;
+                
+                // Perbarui progress bar
+                progressBar.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+                
+                // Perbarui indikator slide
+                updateSlideIndicator();
+            }
+            
+            // Fungsi untuk pindah ke slide tertentu
+            function goToSlide(slideIndex) {
+                if (slideIndex >= 0 && slideIndex < totalSlides) {
+                    currentSlide = slideIndex;
+                    updateSlide();
+                }
+            }
+            
+            // Fungsi untuk pindah ke slide berikutnya
+            function nextSlide() {
+                if (currentSlide < totalSlides - 1) {
+                    currentSlide++;
+                    updateSlide();
+                }
+            }
+            
+            // Fungsi untuk pindah ke slide sebelumnya
+            function prevSlide() {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateSlide();
+                }
+            }
+            
+            // Toggle mode gelap
+            function toggleDarkMode() {
+                document.body.classList.toggle('dark-mode');
+                const icon = themeToggle.querySelector('i');
+                if (document.body.classList.contains('dark-mode')) {
+                    icon.className = 'fas fa-sun';
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i> Mode Terang';
+                } else {
+                    icon.className = 'fas fa-moon';
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i> Mode Gelap';
+                }
+            }
+            
+            // Toggle layar penuh
+            function toggleFullscreen() {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen().catch(err => {
+                        console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                    });
+                    fullscreenToggle.innerHTML = '<i class="fas fa-compress"></i> Keluar Layar Penuh';
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                        fullscreenToggle.innerHTML = '<i class="fas fa-expand"></i> Layar Penuh';
+                    }
+                }
+            }
+            
+            // Event listener untuk tombol navigasi
+            prevBtn.addEventListener('click', prevSlide);
+            nextBtn.addEventListener('click', nextSlide);
+            
+            // Event listener untuk keyboard
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                    nextSlide();
+                } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                    prevSlide();
+                } else if (e.key === 'Home') {
+                    goToSlide(0);
+                } else if (e.key === 'End') {
+                    goToSlide(totalSlides - 1);
+                }
+            });
+            
+            // Event listener untuk sentuhan (mobile)
+            let startX = 0;
+            let endX = 0;
+            
+            document.addEventListener('touchstart', function(e) {
+                startX = e.touches[0].clientX;
+            });
+            
+            document.addEventListener('touchend', function(e) {
+                endX = e.changedTouches[0].clientX;
+                handleSwipe();
+            });
+            
+            function handleSwipe() {
+                const diffX = startX - endX;
+                
+                if (Math.abs(diffX) > 50) { // Minimum swipe distance
+                    if (diffX > 0) {
+                        nextSlide(); // Swipe kiri
+                    } else {
+                        prevSlide(); // Swipe kanan
+                    }
+                }
+            }
+            
+            // Event listener untuk kontrol tambahan
+            themeToggle.addEventListener('click', toggleDarkMode);
+            fullscreenToggle.addEventListener('click', toggleFullscreen);
+            printBtn.addEventListener('click', () => window.print());
+            
+            // Inisialisasi
+            setCurrentDate();
+            generateFloatingElements();
+            generateSlideIndicator();
+            updateCountdown();
+            updateSlide();
+            
+            // Update countdown setiap hari
+            setInterval(updateCountdown, 24 * 60 * 60 * 1000);
+        });
+    </script>
+</body>
+</html>
