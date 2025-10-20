@@ -1214,32 +1214,13 @@ function displayParticipantDataNilai(data) {
 }
 
 // ===== TAMPILAN UNTUK HALAMAN NOMOR URUT =====
-// ===== TAMPILAN UNTUK HALAMAN NOMOR URUT =====
 function displayParticipantDataNoUrut(data) {
     const participant = data.participant;
     const lomba = data.lomba;
     const resultSection = document.getElementById('resultSection');
     
-    // Deteksi LCP yang lebih komprehensif
-    const cabangLomba = participant['Cabang Lomba'] || '';
-    const lombaName = lomba.name || '';
-    const lombaKode = lomba.kode || '';
-    
-    console.log("Debug LCP:", {
-        cabangLomba,
-        lombaName, 
-        lombaKode,
-        participant,
-        lomba
-    });
-    
-    const isLCP = cabangLomba.includes('LCP') || 
-                  lombaName.includes('LCP') || 
-                  lombaKode.includes('LCP') ||
-                  cabangLomba.includes('Cerdas Cermat') ||
-                  lombaName.includes('Cerdas Cermat');
-    
-    console.log("isLCP result:", isLCP);
+    // Cek apakah ini LCP
+    const isLCP = participant['Cabang Lomba'] === 'LCP' || lomba.name === 'LCP';
     
     let html = `
         <div class="success-badge">
@@ -1257,7 +1238,6 @@ function displayParticipantDataNoUrut(data) {
     
     // Tampilan khusus untuk LCP
     if (isLCP) {
-        console.log("Menampilkan tampilan LCP");
         html += `
                 <tr>
                     <td class="data-label">Kapanewon</td>
@@ -1270,22 +1250,9 @@ function displayParticipantDataNoUrut(data) {
                     <td class="data-value">${participant['Cabang Lomba']}</td>
                 </tr>
         `;
-        
-        // Tampilkan nomor urut untuk LCP jika ada
-        if (participant['Nomor Urut'] || participant['No Urut']) {
-            const nomorUrut = participant['Nomor Urut'] || participant['No Urut'];
-            html += `
-                <tr>
-                    <td class="data-label">Nomor Urut</td>
-                    <td class="data-separator">:</td>
-                    <td class="data-value highlight">${nomorUrut}</td>
-                </tr>
-            `;
-        }
     } 
     // Tampilan untuk peserta selain LCP
     else {
-        console.log("Menampilkan tampilan non-LCP");
         html += `
                 <tr>
                     <td class="data-label">Nama</td>
@@ -1313,72 +1280,54 @@ function displayParticipantDataNoUrut(data) {
                     <td class="data-value">${participant['Cabang Lomba']}</td>
                 </tr>
         `;
-        
-        // Tampilkan nomor urut untuk non-LCP jika ada
-        if (participant['Nomor Urut'] || participant['No Urut']) {
-            const nomorUrut = participant['Nomor Urut'] || participant['No Urut'];
-            html += `
-                <tr>
-                    <td class="data-label">Nomor Urut</td>
-                    <td class="data-separator">:</td>
-                    <td class="data-value highlight">${nomorUrut}</td>
-                </tr>
-            `;
-        }
     }
-
-    // Tutup tabel dan tambahkan pesan jika nomor urut belum tersedia
+    
     html += `
             </table>
         </div>
-    `;
-
-    // Jika nomor urut belum tersedia
-    if (!participant['Nomor Urut'] && !participant['No Urut']) {
-        html += `
-            <div class="info-message">
-                <i class="fas fa-info-circle"></i>
-                <p>Nomor urut untuk peserta ini belum tersedia. Silakan cek kembali setelah pengundian nomor urut selesai.</p>
-            </div>
-        `;
-    }
-
-    // Tambahkan tombol aksi
-    html += `
+        
         <div class="action-buttons">
             <button class="action-btn new-search" onclick="newSearch()">
-                <i class="fas fa-search"></i> Pencarian Baru
-            </button>
-            <button class="action-btn share" onclick="shareNoUrut()">
-                <i class="fas fa-share-alt"></i> Bagikan
+                <i class="fas fa-search"></i> Cari Data Lain
             </button>
         </div>
     `;
+
+    // Tambahkan info anggota tim untuk LCP
+    if (lomba.isTeam && data.teamMembers && data.teamMembers.length > 0) {
+        const teamHtml = `
+            <div class="team-section">
+                <h4><i class="fas fa-users"></i> Anggota Tim</h4>
+                <table class="team-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Anggota</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Asal Sekolah</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${data.teamMembers.map((member, index) => `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>${member.Nama}</td>
+                                <td>${member['Jenis Kelamin'] || '-'}</td>
+                                <td>${member['Asal Sekolah']}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+        
+        // Sisipkan sebelum action-buttons
+        html = html.replace('<div class="action-buttons">', teamHtml + '<div class="action-buttons">');
+    }
 
     resultSection.innerHTML = html;
     resultSection.style.display = 'block';
     resultSection.scrollIntoView({ behavior: 'smooth' });
-}
-
-// Fungsi share khusus untuk nomor urut
-function shareNoUrut() {
-    if (navigator.share && currentParticipantData) {
-        const participant = currentParticipantData.participant;
-        const nomorUrut = participant['Nomor Urut'] || participant['No Urut'] || 'belum tersedia';
-        
-        navigator.share({
-            title: `Nomor Urut MTQ Bantul 2025 - ${participant['No Peserta']}`,
-            text: `Nomor urut ${participant.Nama || 'peserta'} di MTQ Bantul 2025: ${nomorUrut}`,
-            url: window.location.href
-        });
-    } else if (currentParticipantData) {
-        const participant = currentParticipantData.participant;
-        const nomorUrut = participant['Nomor Urut'] || participant['No Urut'] || 'belum tersedia';
-        const shareText = `Nomor urut ${participant.Nama || 'peserta'} (${participant['No Peserta']}) di MTQ Bantul 2025: ${nomorUrut}`;
-        
-        navigator.clipboard.writeText(shareText);
-        alert('Informasi nomor urut telah disalin ke clipboard!');
-    }
 }
 
 // ===== FUNGSI BANTUAN UNTUK TAMPILAN NILAI =====
@@ -1659,3 +1608,5 @@ function updateCopyrightYear() {
 
 // Panggil update copyright tahun
 updateCopyrightYear();
+
+coba kamu cek
