@@ -1670,7 +1670,7 @@ footer {
 }
 
 .header h1 {
-    color: var(--primary-color);
+    color: white;
     font-size: var(--font-size-2xl);
     font-weight: 700;
     margin-bottom: var(--space-sm);
@@ -1681,7 +1681,7 @@ footer {
 }
 
 .header p {
-    color: var(--text-secondary);
+    color: white;
     font-size: var(--font-size-md);
 }
 
