@@ -1219,8 +1219,26 @@ function displayParticipantDataNoUrut(data) {
     const lomba = data.lomba;
     const resultSection = document.getElementById('resultSection');
     
-    // Cek apakah ini LCP
-    const isLCP = participant['Cabang Lomba'] === 'LCP' || lomba.name === 'LCP';
+    // DETeksi LCP yang lebih komprehensif
+    const cabangLomba = participant['Cabang Lomba'] || '';
+    const lombaName = lomba.name || '';
+    const lombaKode = lomba.kode || '';
+    
+    console.log("Debug LCP:", {
+        cabangLomba,
+        lombaName, 
+        lombaKode,
+        participant,
+        lomba
+    });
+    
+    const isLCP = cabangLomba.includes('LCP') || 
+                  lombaName.includes('LCP') || 
+                  lombaKode.includes('LCP') ||
+                  cabangLomba.includes('Cerdas Cermat') ||
+                  lombaName.includes('Cerdas Cermat');
+    
+    console.log("isLCP result:", isLCP);
     
     let html = `
         <div class="success-badge">
@@ -1238,6 +1256,7 @@ function displayParticipantDataNoUrut(data) {
     
     // Tampilan khusus untuk LCP
     if (isLCP) {
+        console.log("Menampilkan tampilan LCP");
         html += `
                 <tr>
                     <td class="data-label">Kapanewon</td>
@@ -1253,6 +1272,7 @@ function displayParticipantDataNoUrut(data) {
     } 
     // Tampilan untuk peserta selain LCP
     else {
+        console.log("Menampilkan tampilan non-LCP");
         html += `
                 <tr>
                     <td class="data-label">Nama</td>
@@ -1608,5 +1628,3 @@ function updateCopyrightYear() {
 
 // Panggil update copyright tahun
 updateCopyrightYear();
-
-coba kamu cek
