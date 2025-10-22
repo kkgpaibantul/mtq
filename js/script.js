@@ -432,7 +432,7 @@ class HijriDateSystem {
 
 class MTQDataManager {
     constructor() {
-        this.WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxmywzrf7z9a8agbf-xw6OOYNS17ST609Ced3DFnXMUjH16DRqtoIqQbqH7WHRxOqyR/exec';
+        this.WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzwLv7HGwEQ-QuOgzK1i9MU40dbihvYVSw26uVb53oRLBwqjz92KS3h4wJN09dVBSt1/exec';
         this.tabDataAbortController = null;
         this.currentTab = 'pendaftaran';
         this.isAutoRefreshEnabled = true;
