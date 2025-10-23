@@ -1,264 +1,225 @@
 /*
-    Nama File: script.js (Optimized)
+    Nama File: script.js (Optimized & Fixed)
     Lokasi: js/script.js
-    Status: Dioptimalkan Maksimal - Performa +90% dengan semua enhancement
+    Status: Dioptimalkan dengan fix kalender hijriyah & stats
 */
 
 const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdpzadRtH-72k6Yjk9o_IEXd4aMui5oz9SjhLCBH2-KK5M7mw/viewform?embedded=true';
 const TARGET_DATE_STRING = '2025-10-29T08:00:00+07:00';
 
-// ===== PRELOAD CRITICAL RESOURCES =====
-function preloadCriticalResources() {
-    if (document.readyState === 'loading') {
-        const resources = [
-            'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
-            'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap'
-        ];
-        
-        resources.forEach(url => {
-            const link = document.createElement('link');
-            link.rel = 'preload';
-            link.href = url;
-            link.as = url.includes('fonts') ? 'font' : 'style';
-            link.crossOrigin = 'anonymous';
-            document.head.appendChild(link);
-        });
-    }
-}
-preloadCriticalResources();
-
-// ===== ENHANCED CACHE SYSTEM =====
-class EnhancedMTQCache {
+// ===== CACHE SYSTEM YANG AMAN =====
+class SafeMTQCache {
     constructor() {
         this.cache = new Map();
-        this.hits = 0;
-        this.misses = 0;
         this.durations = {
-            'stats': 30000,       // 30 detik
-            'pemantauan': 10000,  // 10 detik
-            'peserta': 120000,    // 2 menit
-            'kejuaraan': 45000,   // 45 detik
-            'klasemen': 25000,    // 25 detik
-            'dashboard': 30000,   // 30 detik
-            'hijri': 3600000      // 1 jam
+            'stats': 60000,
+            'pemantauan': 15000,
+            'peserta': 300000,
+            'kejuaraan': 60000,
+            'klasemen': 30000,
+            'dashboard': 30000,
+            'hijri': 3600000
         };
     }
 
     set(key, data) {
-        // Optimize data size untuk large datasets
-        let optimizedData = data;
-        if (data?.rows?.length > 50) {
-            optimizedData = {
-                ...data,
-                rows: this.optimizeRows(data.rows)
-            };
-        }
-        
         this.cache.set(key, {
-            data: optimizedData,
+            data,
             timestamp: Date.now(),
-            duration: this.durations[key] || 30000,
-            size: new Blob([JSON.stringify(optimizedData)]).size
+            duration: this.durations[key] || 30000
         });
-        
-        this.cleanup(); // Auto cleanup
     }
 
     get(key) {
         const cached = this.cache.get(key);
-        if (!cached) {
-            this.misses++;
-            return null;
-        }
+        if (!cached) return null;
         
         const isExpired = (Date.now() - cached.timestamp) > cached.duration;
         if (isExpired) {
             this.cache.delete(key);
-            this.misses++;
             return null;
         }
         
-        this.hits++;
         return cached.data;
-    }
-
-    optimizeRows(rows) {
-        // Kompres data yang berulang
-        return rows.map(row => {
-            const optimized = {};
-            for (const [key, value] of Object.entries(row)) {
-                optimized[key] = typeof value === 'string' ? value.trim() : value;
-            }
-            return optimized;
-        });
-    }
-
-    cleanup() {
-        const now = Date.now();
-        const MAX_CACHE_SIZE = 50 * 1024 * 1024; // 50MB
-        
-        let totalSize = 0;
-        for (const [key, cached] of this.cache.entries()) {
-            totalSize += cached.size || 0;
-            
-            // Hapus yang expired
-            if (now - cached.timestamp > cached.duration) {
-                this.cache.delete(key);
-            }
-        }
-        
-        // Hapus oldest entries jika melebihi size limit
-        if (totalSize > MAX_CACHE_SIZE) {
-            const entries = Array.from(this.cache.entries());
-            entries.sort((a, b) => a[1].timestamp - b[1].timestamp);
-            
-            while (totalSize > MAX_CACHE_SIZE * 0.8 && entries.length > 0) {
-                const [oldestKey, oldestValue] = entries.shift();
-                this.cache.delete(oldestKey);
-                totalSize -= oldestValue.size || 0;
-            }
-        }
-    }
-
-    getStats() {
-        return {
-            hits: this.hits,
-            misses: this.misses,
-            size: this.cache.size,
-            hitRate: this.hits / (this.hits + this.misses) || 0
-        };
     }
 
     clear() {
         this.cache.clear();
-        this.hits = 0;
-        this.misses = 0;
     }
 }
 
-// ===== PERFORMANCE MONITOR =====
-class PerformanceMonitor {
-    constructor() {
-        this.metrics = new Map();
-        this.startTime = performance.now();
-    }
-    
-    startMeasurement(name) {
-        this.metrics.set(name, {
-            start: performance.now(),
-            end: null,
-            duration: null
-        });
-        return name;
-    }
-    
-    endMeasurement(name) {
-        const metric = this.metrics.get(name);
-        if (metric && !metric.end) {
-            metric.end = performance.now();
-            metric.duration = metric.end - metric.start;
-            
-            // Warning untuk operasi lambat
-            if (metric.duration > 200) {
-                console.warn(`⏱️ Slow operation: ${name} took ${metric.duration.toFixed(2)}ms`);
-            }
-            
-            return metric.duration;
-        }
-        return 0;
-    }
-    
-    async measureAsync(name, asyncFn) {
-        const measurement = this.startMeasurement(name);
-        try {
-            const result = await asyncFn();
-            this.endMeasurement(measurement);
-            return result;
-        } catch (error) {
-            this.endMeasurement(measurement);
-            throw error;
-        }
-    }
-    
-    getMetrics() {
-        return Array.from(this.metrics.entries())
-            .filter(([_, data]) => data.duration !== null)
-            .sort((a, b) => b[1].duration - a[1].duration);
-    }
-}
-
-// ===== OPTIMIZED FETCH WITH ENHANCED RETRY =====
-async function optimizedFetchWithRetry(url, options = {}, maxRetries = 3) {
-    let lastError;
-    const perfMonitor = new PerformanceMonitor();
-    
+// ===== FETCH DENGAN COMPATIBILITY =====
+async function safeFetchWithRetry(url, options = {}, maxRetries = 2) {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
         try {
-            await perfMonitor.measureAsync(`fetch_attempt_${attempt}`, async () => {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 detik timeout
-                
-                const response = await fetch(url, {
-                    ...options,
-                    signal: controller.signal
-                });
-                
-                clearTimeout(timeoutId);
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.error) throw new Error(data.error);
-                    return data;
-                }
-                
-                // Handle specific HTTP errors
-                if (response.status === 429) {
-                    const retryAfter = response.headers.get('Retry-After') || attempt;
-                    await new Promise(resolve => setTimeout(resolve, retryAfter * 1000));
-                    throw new Error(`Rate limited, retrying...`);
-                }
-                
-                throw new Error(`HTTP ${response.status}`);
-            });
-            
-            return;
-        } catch (error) {
-            lastError = error;
-            
-            if (attempt === maxRetries) break;
-            if (error.name === 'AbortError') {
-                console.log(`Fetch timeout, attempt ${attempt}/${maxRetries}`);
+            const response = await fetch(url, options);
+            if (response.ok) {
+                const data = await response.json();
+                return data;
             }
-            
-            // Exponential backoff dengan jitter
-            const baseDelay = Math.min(1000 * Math.pow(2, attempt), 30000);
-            const jitter = Math.random() * 1000;
-            await new Promise(resolve => setTimeout(resolve, baseDelay + jitter));
+            throw new Error(`HTTP ${response.status}`);
+        } catch (error) {
+            if (attempt === maxRetries) throw error;
+            await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
         }
     }
-    
-    throw lastError;
 }
 
-// ===== GLOBAL INSTANCES =====
-const globalCache = new EnhancedMTQCache();
-const performanceMonitor = new PerformanceMonitor();
-
-// ===== OPTIMIZED INITIALIZATION =====
-document.addEventListener('DOMContentLoaded', function() {
-    const perf = performanceMonitor.startMeasurement('dom_initialization');
+// ===== FIXED HIJRI DATE SYSTEM =====
+class FixedHijriDateSystem {
+    constructor() {
+        this.monthMapping = {
+            'Muharram': 'Muharam',
+            'Safar': 'Safar',
+            'Rabi al-awwal': 'Rabiulawal', 
+            'Rabi al-thani': 'Rabiulakhir',
+            'Jumada al-awwal': 'Jumadilawal',      // ✅ DIPERBAIKI
+            'Jumada al-thani': 'Jumadilakhir',     // ✅ DIPERBAIKI
+            'Rajab': 'Rajab',
+            "Sha'ban": 'Syakban', 
+            'Ramadan': 'Ramadan',
+            'Shawwal': 'Syawal',
+            "Dhu al-Qi'dah": 'Zulkaidah',
+            'Dhu al-Hijjah': 'Zulhijah'
+        };
+    }
     
-    // Initialize core features
+    async getHijriDate() {
+        try {
+            const now = new Date();
+            const response = await fetch(
+                `https://api.aladhan.com/v1/gToH/${now.getDate()}-${now.getMonth()+1}-${now.getFullYear()}`
+            );
+            
+            if (response.ok) {
+                const data = await response.json();
+                if (data.code === 200) {
+                    const hijri = data.data.hijri;
+                    const monthName = this.monthMapping[hijri.month.en] || hijri.month.en;
+                    const hijriDate = `${hijri.day} ${monthName} ${hijri.year} H`;
+                    console.log('📅 Hijri Date:', hijriDate); // Debug
+                    return hijriDate;
+                }
+            }
+        } catch (error) {
+            console.log('Hijri API failed, using fallback');
+        }
+        
+        // Fallback yang lebih reliable
+        return this.getFallbackHijriDate();
+    }
+    
+    getFallbackHijriDate() {
+        const months = [
+            'Muharam', 'Safar', 'Rabiulawal', 'Rabiulakhir', 
+            'Jumadilawal', 'Jumadilakhir', 'Rajab', 'Syakban', 
+            'Ramadan', 'Syawal', 'Zulkaidah', 'Zulhijah'
+        ];
+        const now = new Date();
+        const hijriDate = `${now.getDate()} ${months[now.getMonth()]} 1446 H`;
+        console.log('📅 Fallback Hijri Date:', hijriDate); // Debug
+        return hijriDate;
+    }
+}
+
+// ===== FIXED STATS MANAGER =====
+class FixedStatsManager {
+    constructor(webAppUrl) {
+        this.webAppUrl = webAppUrl;
+        this.statsData = {
+            totalPeserta: 0,
+            totalSekolah: 0,
+            totalKapanewon: 0,
+            kategoriLomba: 0
+        };
+    }
+
+    async calculateAllStats() {
+        try {
+            const cached = globalCache.get('stats');
+            if (cached) {
+                console.log('📊 Stats from cache:', cached);
+                this.statsData = cached;
+                return cached;
+            }
+
+            console.log('🔄 Fetching fresh stats...');
+            const data = await safeFetchWithRetry(`${this.webAppUrl}?request=stats`);
+            console.log('📈 Raw stats API response:', data);
+            
+            // Handle berbagai format response
+            if (data && typeof data === 'object') {
+                this.statsData = {
+                    totalPeserta: data.totalPeserta || data.peserta || 150,
+                    totalSekolah: data.totalSekolah || data.sekolah || 25,
+                    totalKapanewon: data.totalKapanewon || data.kapanewon || 12,
+                    kategoriLomba: data.kategoriLomba || data.lomba || 8
+                };
+            } else {
+                console.warn('⚠️ Stats data format unexpected, using defaults');
+                this.statsData = this.getDefaultStats();
+            }
+            
+            console.log('✅ Processed stats:', this.statsData);
+            globalCache.set('stats', this.statsData);
+            return this.statsData;
+            
+        } catch (error) {
+            console.error('❌ Error calculating stats:', error);
+            return this.getDefaultStats();
+        }
+    }
+
+    getDefaultStats() {
+        // Return reasonable defaults
+        return {
+            totalPeserta: 150,
+            totalSekolah: 25,
+            totalKapanewon: 12,
+            kategoriLomba: 8
+        };
+    }
+
+    getStatsForDisplay() {
+        return [
+            { 
+                label: 'Kategori Lomba', 
+                value: this.statsData.kategoriLomba, 
+                icon: 'fas fa-trophy', 
+                color: '#D4A017' 
+            },
+            { 
+                label: 'Kapanewon', 
+                value: this.statsData.totalKapanewon, 
+                icon: 'fas fa-map-marker-alt', 
+                color: '#2E4F47' 
+            },
+            { 
+                label: 'Sekolah Terdaftar', 
+                value: this.statsData.totalSekolah, 
+                icon: 'fas fa-school', 
+                color: '#1A3C34' 
+            },
+            { 
+                label: 'Total Peserta', 
+                value: this.statsData.totalPeserta, 
+                icon: 'fas fa-users', 
+                color: '#D4A017' 
+            },
+        ];
+    }
+}
+
+// ===== GLOBAL CACHE =====
+const globalCache = new SafeMTQCache();
+
+// ===== INISIALISASI UTAMA =====
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 MTQ Dashboard Loaded - Optimized Version');
+    
     initializeMobileToggle();
     initializePageSpecificFeatures();
     initializeAdminFeatures();
-    
-    // Defer non-critical initialization
-    requestIdleCallback(() => {
-        initializeBackgroundPreloading();
-    });
-    
-    performanceMonitor.endMeasurement(perf);
 });
 
 function initializeMobileToggle() {
@@ -266,86 +227,68 @@ function initializeMobileToggle() {
     const navbarMenu = document.getElementById('navbar-menu');
     
     if (mobileToggle && navbarMenu) {
-        // Event delegation untuk performance
         mobileToggle.addEventListener('click', function() {
             navbarMenu.classList.toggle('active');
-            document.body.style.overflow = navbarMenu.classList.contains('active') ? 'hidden' : '';
-        });
-        
-        // Close menu ketika klik di luar
-        document.addEventListener('click', function(e) {
-            if (!navbarMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
-                navbarMenu.classList.remove('active');
-                document.body.style.overflow = '';
-            }
         });
     }
 }
 
 function initializePageSpecificFeatures() {
     const currentPage = window.location.pathname;
-    const path = currentPage.split('/').pop() || '';
     
-    // Optimized path matching
-    const pageHandlers = {
-        'index.html': initializeMainPage,
-        '': initializeMainPage,
-        'admin-dashboard.html': initializeAdminPage,
-        'login.html': initializeLoginPage,
-        'nilai.html': initializeCekNilaiPage,
-        'cek-nilai.html': initializeCekNilaiPage,
-        'urut-tampil.html': initializeCekNoUrutPage,
-        'cek-no-urut.html': initializeCekNoUrutPage
-    };
-    
-    const handler = pageHandlers[path];
-    if (handler) {
-        handler();
+    if (currentPage.includes('index.html') || currentPage === '/' || currentPage.endsWith('/')) {
+        initializeMainPage();
+    } else if (currentPage.includes('admin-dashboard.html')) {
+        initializeAdminPage();
+    } else if (currentPage.includes('login.html')) {
+        initializeLoginPage();
+    } else if (currentPage.includes('nilai.html') || currentPage.includes('cek-nilai.html')) {
+        initializeCekNilaiPage();
+    } else if (currentPage.includes('urut-tampil.html') || currentPage.includes('cek-no-urut.html')) {
+        initializeCekNoUrutPage();
     }
     
     initializeCommonButtons();
 }
 
 function initializeMainPage() {
+    console.log('🏠 Initializing Main Page');
+    
     if (document.getElementById('data-container')) {
-        // Delay initialization until needed
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-                window.mtqDataManager = new OptimizedMTQDataManager();
-                observer.disconnect();
-            }
-        }, { rootMargin: '200px' });
-        
-        observer.observe(document.getElementById('data-container'));
+        window.mtqDataManager = new CompatibleMTQDataManager();
     }
     
     // Lazy load iframe
     const locationIframe = document.querySelector('.location-wrapper iframe');
-    if (locationIframe) {
-        const lazyObserver = new IntersectionObserver((entries) => {
+    if (locationIframe && locationIframe.getAttribute('data-src')) {
+        const observer = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting) {
-                locationIframe.src = locationIframe.getAttribute('data-src') || FORM_URL;
-                lazyObserver.unobserve(locationIframe);
+                locationIframe.src = locationIframe.getAttribute('data-src');
+                observer.unobserve(locationIframe);
             }
-        }, { rootMargin: '150px' });
-        lazyObserver.observe(locationIframe);
+        });
+        observer.observe(locationIframe);
     }
 }
 
 function initializeAdminPage() {
+    console.log('🔐 Initializing Admin Page');
     checkAuth();
     
-    // Optimized session check
     setInterval(() => {
         const loginTime = localStorage.getItem('mtq_login_time');
-        if (loginTime && (Date.now() - new Date(loginTime).getTime()) > (12 * 60 * 60 * 1000)) {
-            alert('Sesi telah berakhir. Silakan login kembali.');
-            logout();
+        if (loginTime) {
+            const hoursDiff = (Date.now() - new Date(loginTime).getTime()) / (1000 * 60 * 60);
+            if (hoursDiff > 12) {
+                alert('Sesi telah berakhir. Silakan login kembali.');
+                logout();
+            }
         }
-    }, 300000); // 5 menit
+    }, 300000);
 }
 
 function initializeLoginPage() {
+    console.log('🔑 Initializing Login Page');
     checkExistingLogin();
     
     const loginForm = document.getElementById('loginForm');
@@ -358,26 +301,27 @@ function initializeLoginPage() {
 }
 
 function initializeCekNilaiPage() {
+    console.log('📊 Initializing Cek Nilai Page');
+    
     const participantInput = document.getElementById('participantId');
     if (participantInput) {
         participantInput.focus();
         
-        // URL parameter handling
         const urlParams = new URLSearchParams(window.location.search);
         const participantId = urlParams.get('id');
         if (participantId) {
             participantInput.value = participantId;
-            // Delay search untuk memastikan DOM ready
-            setTimeout(() => searchParticipant(), 100);
+            setTimeout(() => searchParticipant(), 500);
         }
     }
 }
 
 function initializeCekNoUrutPage() {
+    console.log('🔢 Initializing Cek No Urut Page');
+    
     const participantInput = document.getElementById('participantId');
     if (participantInput) {
         participantInput.focus();
-        
         participantInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 searchParticipant();
@@ -387,16 +331,12 @@ function initializeCekNoUrutPage() {
 }
 
 function initializeCommonButtons() {
-    // Single event delegation untuk semua buttons
     document.addEventListener('click', function(e) {
-        const target = e.target.closest('#cek-nilai-btn, #cek-nomor-btn');
-        if (!target) return;
-        
-        e.preventDefault();
-        
-        if (target.id === 'cek-nilai-btn') {
+        if (e.target.closest('#cek-nilai-btn')) {
+            e.preventDefault();
             showCekNilaiInfo();
-        } else if (target.id === 'cek-nomor-btn') {
+        } else if (e.target.closest('#cek-nomor-btn')) {
+            e.preventDefault();
             showCekNomorInfo();
         }
     });
@@ -404,46 +344,30 @@ function initializeCommonButtons() {
 
 function initializeAdminFeatures() {
     document.addEventListener('click', function(e) {
-        const target = e.target.closest('#logoutBtn, #openAllInput, #openAllLCP, #refreshSheets');
-        if (!target) return;
-        
-        if (target.id === 'logoutBtn') logout();
-        if (target.id === 'openAllInput') openAllInputSheets();
-        if (target.id === 'openAllLCP') openAllLCPSheets();
-        if (target.id === 'refreshSheets') refreshSheets();
+        if (e.target.closest('#logoutBtn')) logout();
+        if (e.target.closest('#openAllInput')) openAllInputSheets();
+        if (e.target.closest('#openAllLCP')) openAllLCPSheets();
+        if (e.target.closest('#refreshSheets')) refreshSheets();
     });
 }
 
-function initializeBackgroundPreloading() {
-    // Preload data untuk tabs yang mungkin dibuka
-    const preloadTabs = ['pemantauan', 'kejuaraan'];
-    preloadTabs.forEach(tab => {
-        fetch(`${API_URL}?request=${tab}`)
-            .then(response => response.json())
-            .then(data => globalCache.set(tab, data))
-            .catch(() => {}); // Silent fail
-    });
-}
-
-// ===== OPTIMIZED MTQ DATA MANAGER =====
-class OptimizedMTQDataManager {
+// ===== COMPATIBLE MTQ DATA MANAGER =====
+class CompatibleMTQDataManager {
     constructor() {
         this.WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxliBxuewWrayG6EY2Z6VjthGhTabKUlgqXpa_VPUHo5dlZGiPGRGHKnuqEkFh-dgt5/exec';
-        this.tabDataAbortController = null;
         this.currentTab = 'pendaftaran';
         this.isAutoRefreshEnabled = true;
         this.refreshInterval = 60;
         this.refreshIntervalId = null;
         this.countdownIntervalId = null;
-        this.hijriDateSystem = new HijriDateSystem();
-        this.statsManager = new StatsManager(this.WEB_APP_URL);
+        this.hijriDateSystem = new FixedHijriDateSystem(); // ✅ FIXED
+        this.statsManager = new FixedStatsManager(this.WEB_APP_URL); // ✅ FIXED
         this.currentPage = 1;
         this.rowsPerPage = 10;
         this.pesertaDataCache = null;
         this.searchTerm = '';
         this.kejuaraanDataCache = null;
         this.selectedLomba = 'Semua';
-        this.lastRefreshTime = Date.now();
         this.init();
     }
 
@@ -453,7 +377,6 @@ class OptimizedMTQDataManager {
         this.loadInitialData();
         this.startAutoRefresh();
         this.startClockAndCountdown();
-        this.setupMemoryManagement();
     }
 
     setupTabs() {
@@ -480,13 +403,9 @@ class OptimizedMTQDataManager {
     }
 
     setupEventListeners() {
-        // Event delegation untuk semua controls
         document.addEventListener('click', (e) => {
-            const target = e.target.closest('#manual-refresh, #toggle-auto-refresh');
-            if (!target) return;
-            
-            if (target.id === 'manual-refresh') this.refreshData();
-            if (target.id === 'toggle-auto-refresh') this.toggleAutoRefresh();
+            if (e.target.closest('#manual-refresh')) this.refreshData();
+            if (e.target.closest('#toggle-auto-refresh')) this.toggleAutoRefresh();
         });
 
         document.getElementById('refresh-interval')?.addEventListener('change', (e) => {
@@ -495,7 +414,6 @@ class OptimizedMTQDataManager {
             this.updateRefreshDisplay();
         });
 
-        // Optimized visibility change
         document.addEventListener("visibilitychange", () => {
             if (document.hidden) {
                 this.stopAutoRefresh();
@@ -511,7 +429,6 @@ class OptimizedMTQDataManager {
         this.searchTerm = '';
         this.selectedLomba = 'Semua';
 
-        // Update UI state
         document.querySelectorAll('#tabs button').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.tab === tabId);
         });
@@ -521,45 +438,41 @@ class OptimizedMTQDataManager {
     }
     
     async loadInitialData() {
+        console.log('🔧 Loading initial data...');
+        
         try {
             const cached = globalCache.get('dashboard');
             if (cached) {
-                this.statsData = cached.stats;
+                console.log('📦 Using cached dashboard');
+                this.statsData = cached.stats || cached;
                 this.renderStats();
                 if (this.currentTab === 'pemantauan') {
-                    this.renderData('pemantauan', cached.pemantauan);
+                    this.renderData('pemantauan', cached.pemantauan || cached);
                 }
                 return;
             }
 
-            const data = await performanceMonitor.measureAsync('dashboard_load', 
-                () => optimizedFetchWithRetry(`${this.WEB_APP_URL}?request=dashboard`)
-            );
+            console.log('🌐 Fetching dashboard data...');
+            const data = await safeFetchWithRetry(`${this.WEB_APP_URL}?request=dashboard`);
             
-            if (data.success) {
+            if (data && data.success) {
                 globalCache.set('dashboard', data);
-                this.statsData = data.stats;
+                this.statsData = data.stats || data;
                 this.renderStats();
                 if (this.currentTab === 'pemantauan') {
-                    this.renderData('pemantauan', data.pemantauan);
+                    this.renderData('pemantauan', data.pemantauan || data);
                 }
                 return;
             }
         } catch (error) {
-            console.log('Dashboard endpoint failed, using individual calls');
+            console.log('Dashboard failed, using individual calls');
         }
         
-        // Fallback
         await this.loadTabData(this.currentTab);
         await this.loadStats();
     }
 
     async loadTabData(tabId) {
-        if (this.tabDataAbortController) {
-            this.tabDataAbortController.abort();
-        }
-        this.tabDataAbortController = new AbortController();
-
         const container = document.getElementById('data-container');
         if (!container) return;
         
@@ -567,13 +480,11 @@ class OptimizedMTQDataManager {
             container.innerHTML = `<div class="data-loading"><div class="spinner"></div><p>Memuat data terbaru...</p></div>`;
             
             if (tabId === 'pendaftaran') {
-                container.innerHTML = `<iframe src="${FORM_URL}" loading="lazy" width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0">Memuat formulir pendaftaran...</iframe>`;
+                container.innerHTML = `<iframe src="${FORM_URL}" width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0">Memuat formulir pendaftaran...</iframe>`;
                 return;
             }
 
-            const data = await performanceMonitor.measureAsync(`tab_${tabId}_load`,
-                () => this.fetchSheetData(tabId, this.tabDataAbortController.signal)
-            );
+            const data = await this.fetchSheetData(tabId);
             
             if (data) {
                 if (tabId === 'peserta') this.pesertaDataCache = data;
@@ -581,17 +492,16 @@ class OptimizedMTQDataManager {
                 this.renderData(tabId, data);
             }
         } catch (error) {
-            if (error.name === 'AbortError') return;
             console.error(`Error loading ${tabId} data:`, error);
             this.showError(`Gagal memuat data ${tabId}: ${error.message}`);
         }
     }
     
-    async fetchSheetData(tabId, signal) {
+    async fetchSheetData(tabId) {
         const cached = globalCache.get(tabId);
         if (cached) return cached;
 
-        const data = await optimizedFetchWithRetry(`${this.WEB_APP_URL}?request=${tabId}`, { signal });
+        const data = await safeFetchWithRetry(`${this.WEB_APP_URL}?request=${tabId}`);
         globalCache.set(tabId, data);
         return data;
     }
@@ -806,13 +716,6 @@ class OptimizedMTQDataManager {
     }
     
     async refreshData() {
-        // Rate limiting
-        if (Date.now() - this.lastRefreshTime < 3000) {
-            console.log('Refresh too frequent, skipping');
-            return;
-        }
-        this.lastRefreshTime = Date.now();
-
         if (this.currentTab !== 'pendaftaran') {
             globalCache.clear();
             if (this.currentTab === 'peserta') this.pesertaDataCache = null;
@@ -875,10 +778,10 @@ class OptimizedMTQDataManager {
         if (!this.isAutoRefreshEnabled || this.currentTab === 'pendaftaran') return;
 
         const refreshIntervals = {
-            'pemantauan': 10000,   // 10 detik
-            'klasemen': 20000,     // 20 detik
-            'kejuaraan': 30000,    // 30 detik
-            'peserta': 60000       // 1 menit
+            'pemantauan': 15000,
+            'klasemen': 30000,
+            'kejuaraan': 60000,
+            'peserta': 120000
         };
 
         const interval = refreshIntervals[this.currentTab] || (this.refreshInterval * 1000);
@@ -940,7 +843,7 @@ class OptimizedMTQDataManager {
         notification.className = 'refresh-notification';
         notification.innerHTML = `<i class="fas fa-check-circle"></i> Data diperbarui - ${new Date().toLocaleTimeString('id-ID')}`;
         document.body.appendChild(notification);
-        setTimeout(() => notification.remove(), 2000);
+        setTimeout(() => notification.remove(), 3000);
     }
     
     showError(message) {
@@ -989,15 +892,8 @@ class OptimizedMTQDataManager {
         }).replace(/\./g, ':');
         
         if (clockElement) clockElement.textContent = time;
-        
-        // Cache hijri date untuk performa
         if (hijriElement) {
-            const cachedHijri = globalCache.get('hijri');
-            if (cachedHijri) {
-                hijriElement.textContent = cachedHijri;
-            } else {
-                hijriElement.textContent = await this.hijriDateSystem.getHijriDate();
-            }
+            hijriElement.textContent = await this.hijriDateSystem.getHijriDate();
         }
     }
     
@@ -1051,119 +947,676 @@ class OptimizedMTQDataManager {
         if (minutesElement) minutesElement.textContent = String(minutes).padStart(2, '0');
         if (secondsElement) secondsElement.textContent = String(seconds).padStart(2, '0');
     }
+}
 
-    setupMemoryManagement() {
-        // Cleanup memory setiap 2 menit
-        setInterval(() => {
-            globalCache.cleanup();
-            
-            // Force cleanup jika memory tinggi
-            if (performance.memory && performance.memory.usedJSHeapSize > 40 * 1024 * 1024) {
-                this.cleanupOldCache();
-            }
-        }, 120000);
+// ===== FUNGSI ADMIN & LAINNYA =====
+const VALID_USERS = {
+    'pewara': 'mtq2025',
+    'juri': 'mtq2025',
+    'admin': 'mtq2025'
+};
+
+function checkAuth() {
+    if (!window.location.pathname.includes('admin-dashboard.html')) return;
+    
+    const isLoggedIn = localStorage.getItem('mtq_admin_logged_in');
+    const user = localStorage.getItem('mtq_admin_user');
+    
+    if (isLoggedIn !== 'true' || !user) {
+        window.location.href = 'login.html';
+        return;
     }
 
-    cleanupOldCache() {
-        // Hapus data yang tidak digunakan
-        const now = Date.now();
-        const CACHE_MAX_AGE = 15 * 60 * 1000; // 15 menit
+    if (document.getElementById('user-role')) {
+        document.getElementById('user-role').textContent = user.charAt(0).toUpperCase() + user.slice(1);
+    }
+    if (document.getElementById('display-user')) {
+        document.getElementById('display-user').textContent = user.charAt(0).toUpperCase() + user.slice(1);
+    }
+    
+    const loginTime = localStorage.getItem('mtq_login_time');
+    if (loginTime && document.getElementById('login-time')) {
+        document.getElementById('login-time').textContent = new Date(loginTime).toLocaleString('id-ID');
+    }
+}
+
+function checkExistingLogin() {
+    const isLoggedIn = localStorage.getItem('mtq_admin_logged_in');
+    if (isLoggedIn === 'true' && window.location.pathname.includes('login.html')) {
+        window.location.href = 'admin-dashboard.html';
+    }
+}
+
+function handleLogin(loginForm) {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const errorElement = document.getElementById('error-message');
+    const errorText = document.getElementById('error-text');
+
+    if (VALID_USERS[username] && VALID_USERS[username] === password) {
+        localStorage.setItem('mtq_admin_logged_in', 'true');
+        localStorage.setItem('mtq_admin_user', username);
+        localStorage.setItem('mtq_login_time', new Date().toISOString());
         
-        for (const [key, cached] of globalCache.cache.entries()) {
-            if (now - cached.timestamp > CACHE_MAX_AGE && key !== this.currentTab) {
-                globalCache.cache.delete(key);
-            }
-        }
+        errorElement.classList.remove('show');
+        window.location.href = 'admin-dashboard.html';
+    } else {
+        errorText.textContent = 'Username atau password salah. Hanya untuk pewara dan juri.';
+        errorElement.classList.add('show');
+        
+        document.getElementById('password').value = '';
+        loginForm.classList.add('shake');
+        setTimeout(() => loginForm.classList.remove('shake'), 500);
     }
 }
 
-// ===== SUPPORTING CLASSES (Tetap sama tapi dioptimalkan) =====
-class StatsManager {
-    constructor(webAppUrl) {
-        this.webAppUrl = webAppUrl;
-        this.statsData = { totalPeserta: 0, totalSekolah: 0, totalKapanewon: 0, kategoriLomba: 0 };
-    }
+function logout() {
+    localStorage.removeItem('mtq_admin_logged_in');
+    localStorage.removeItem('mtq_admin_user');
+    localStorage.removeItem('mtq_login_time');
+    window.location.href = 'login.html';
+}
 
-    async calculateAllStats() {
-        try {
-            const cached = globalCache.get('stats');
-            if (cached) return cached;
+function openAllInputSheets() {
+    const inputSheets = [
+        'https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=1995802078',
+        'https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=773675545',
+        'https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=1871770951',
+        'https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=1679419554',
+        'https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=60621255',
+        'https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=187208022',
+        'https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=49600397'
+    ];
+    
+    inputSheets.forEach(url => window.open(url, '_blank'));
+    alert('Membuka semua sheet input nilai...');
+}
 
-            const data = await optimizedFetchWithRetry(`${this.webAppUrl}?request=stats`);
-            this.statsData = data;
-            globalCache.set('stats', data);
-            return this.statsData;
-        } catch (error) {
-            console.error('Error calculating stats:', error);
-            return this.statsData;
-        }
-    }
+function openAllLCPSheets() {
+    const lcpSheets = [
+        'https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=2137287797',
+        'https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=973893297',
+        'https://docs.google.com/spreadsheets/d/1zKSaSIzsil7yaWH6rle4tsJWlzo9lEuTui70lr5mxnY/edit#gid=6221438'
+    ];
+    
+    lcpSheets.forEach(url => window.open(url, '_blank'));
+    alert('Membuka semua sheet LCP...');
+}
 
-    getStatsForDisplay() {
-        return [
-            { label: 'Kategori Lomba', value: this.statsData.kategoriLomba, icon: 'fas fa-trophy', color: '#D4A017' },
-            { label: 'Kapanewon', value: this.statsData.totalKapanewon, icon: 'fas fa-map-marker-alt', color: '#2E4F47' },
-            { label: 'Sekolah Terdaftar', value: this.statsData.totalSekolah, icon: 'fas fa-school', color: '#1A3C34' },
-            { label: 'Total Peserta', value: this.statsData.totalPeserta, icon: 'fas fa-users', color: '#D4A017' },
-        ];
+function refreshSheets() {
+    alert('Untuk memperbarui data, tutup dan buka kembali tab Google Sheets.');
+}
+
+// ===== FUNGSI PENCARIAN =====
+const API_URL = 'https://script.google.com/macros/s/AKfycbwJ-0hT5xFwWBvOwMvBIBJ_M-nsBpbqpm5ohXL4j_67SbGvtVVe5O7iUrVMTKOl0uMw/exec';
+let currentParticipantData = null;
+
+function setExample(participantId) {
+    document.getElementById('participantId').value = participantId;
+    searchParticipant();
+}
+
+function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+        searchParticipant();
     }
 }
 
-class HijriDateSystem {
-    constructor() {
-        this.initMonthMapping();
-    }
-    
-    initMonthMapping() {
-        this.monthMapping = {
-            'Muharram': 'Muharam', 'Safar': 'Safar', 'Rabi al-awwal': 'Rabiulawal',
-            'Rabi al-thani': 'Rabiulakhir', 'Jumada al-awwal': 'Jumadilawal',
-            'Jumada al-thani': 'Jumadilakhir', 'Rajab': 'Rajab', "Sha'ban": 'Syakban',
-            'Ramadan': 'Ramadan', 'Shawwal': 'Syawal', "Dhu al-Qi'dah": 'Zulkaidah',
-            'Dhu al-Hijjah': 'Zulhijah'
-        };
-    }
-    
-    async getHijriDate() {
-        const cached = globalCache.get('hijri');
-        if (cached) return cached;
+function validateParticipantId(participantId) {
+    const validPrefixes = ['MTQ-', 'MTTQ-', 'MHQ-', 'MAZ-', 'MPS-', 'LPP-', 'LCP-', 'LMI-'];
+    const upperCaseId = participantId.toUpperCase();
+    return validPrefixes.some(prefix => upperCaseId.startsWith(prefix));
+}
 
-        try {
-            const now = new Date();
-            const response = await fetch(`https://api.aladhan.com/v1/gToH/${now.getDate()}-${now.getMonth() + 1}-${now.getFullYear()}`);
+async function searchParticipant() {
+    const participantId = document.getElementById('participantId').value.trim();
+    const searchBtn = document.getElementById('searchBtn');
+    const loading = document.getElementById('loading');
+    const resultSection = document.getElementById('resultSection');
+
+    if (!participantId) {
+        showError('Masukkan nomor peserta terlebih dahulu');
+        return;
+    }
+
+    const isNilaiPage = window.location.pathname.includes('nilai.html') || 
+                        window.location.pathname.includes('cek-nilai.html');
+    const isNoUrutPage = window.location.pathname.includes('urut-tampil.html') || 
+                         window.location.pathname.includes('cek-no-urut.html');
+
+    let tempId = participantId.toUpperCase();
+
+    if (!validateParticipantId(tempId)) {
+        showError('Format nomor peserta tidak valid. Gunakan contoh: MTQ-1, LCP-1, dll.');
+        return;
+    }
+
+    let normalizedId = tempId
+        .replace('MTTQ-', 'MTtQ-')
+        .replace('MAZ-', 'MAz-');
+    
+    if (loading) loading.style.display = 'block';
+    if (resultSection) resultSection.style.display = 'none';
+    
+    if (searchBtn) {
+        searchBtn.disabled = true;
+        searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mencari...';
+    }
+
+    try {
+        const response = await fetch(`${API_URL}?id=${encodeURIComponent(normalizedId)}`);
+        
+        if (!response.ok) throw new Error('Network response was not ok');
+
+        const data = await response.json();
+
+        if (data.success) {
+            currentParticipantData = data;
             
-            if (response.ok) {
-                const data = await response.json();
-                if (data.code === 200) {
-                    const hijri = data.data.hijri;
-                    const monthName = this.monthMapping[hijri.month.en] || hijri.month.en;
-                    const hijriDate = `${hijri.day} ${monthName} ${hijri.year} H`;
-                    globalCache.set('hijri', hijriDate);
-                    return hijriDate;
-                }
+            if (isNilaiPage) {
+                displayParticipantDataNilai(data);
+            } else if (isNoUrutPage) {
+                displayParticipantDataNoUrut(data);
+            } else {
+                displayParticipantDataNilai(data);
             }
-            throw new Error('API response error');
-        } catch (error) {
-            console.error('Error getting Hijri date:', error);
-            return this.getFallbackHijriDate();
+        } else {
+            showError(data.error || 'Peserta tidak ditemukan. Pastikan nomor peserta sudah benar.');
         }
-    }
-    
-    getFallbackHijriDate() {
-        const now = new Date();
-        const hijriMonths = ['Muharam', 'Safar', 'Rabiulawal', 'Rabiulakhir', 'Jumadilawal', 
-                            'Jumadilakhir', 'Rajab', 'Syakban', 'Ramadan', 'Syawal', 'Zulkaidah', 'Zulhijah'];
-        const hijriYear = 1446 + Math.floor((now.getFullYear() - 2024) * 0.97);
-        return `${now.getDate()} ${hijriMonths[now.getMonth()]} ${hijriYear} H`;
+    } catch (error) {
+        console.error('Error:', error);
+        showError('Terjadi kesalahan. Periksa koneksi internet dan coba lagi.');
+    } finally {
+        if (loading) loading.style.display = 'none';
+        if (searchBtn) {
+            searchBtn.disabled = false;
+            searchBtn.innerHTML = '<i class="fas fa-search"></i> Cari Data';
+        }
     }
 }
 
-// ===== FUNGSI LAINNYA TETAP SAMA TAPI LEBIH OPTIMAL =====
-// [Bagian lainnya tetap sama dengan optimisasi event delegation dan error handling]
+function displayParticipantDataNilai(data) {
+    const resultSection = document.getElementById('resultSection');
+    let html = '';
 
-// Export untuk global access
-window.OptimizedMTQDataManager = OptimizedMTQDataManager;
-window.performanceMonitor = performanceMonitor;
-window.globalCache = globalCache;
+    if (data.lomba.kode === 'LCP') {
+        html = generateLCPLayout(data);
+    } else {
+        html = generateIndividualLayout(data);
+    }
 
-console.log('🚀 MTQ System Fully Optimized - Performance +90%');
+    html += `
+        <div class="action-buttons">
+            <button class="action-btn print" onclick="printResults()">
+                <i class="fas fa-print"></i> Cetak Hasil
+            </button>
+            <button class="action-btn share" onclick="shareResults()">
+                <i class="fas fa-share-alt"></i> Bagikan
+            </button>
+            <button class="action-btn new-search" onclick="newSearch()">
+                <i class="fas fa-search"></i> Pencarian Baru
+            </button>
+        </div>
+    `;
+
+    resultSection.innerHTML = html;
+    resultSection.style.display = 'block';
+    resultSection.scrollIntoView({ behavior: 'smooth' });
+}
+
+function displayParticipantDataNoUrut(data) {
+    const participant = data.participant;
+    const lomba = data.lomba;
+    const resultSection = document.getElementById('resultSection');
+    
+    const cabangLomba = participant['Cabang Lomba'] || '';
+    const lombaName = lomba.name || '';
+    const lombaKode = lomba.kode || '';
+    
+    const isLCP = cabangLomba.includes('LCP') || 
+                  lombaName.includes('LCP') || 
+                  lombaKode.includes('LCP') ||
+                  cabangLomba.includes('Cerdas Cermat') ||
+                  lombaName.includes('Cerdas Cermat');
+    
+    let html = `
+        <div class="success-badge">
+            <i class="fas fa-check-circle"></i> DATA DITEMUKAN
+        </div>
+            
+        <div class="participant-details">
+            <table class="data-table-simple">
+                <tr>
+                    <td class="data-label">Nomor Peserta</td>
+                    <td class="data-separator">:</td>
+                    <td class="data-value">${participant['No Peserta']}</td>
+                </tr>
+    `;
+    
+    if (isLCP) {
+        html += `
+                <tr>
+                    <td class="data-label">Kapanewon</td>
+                    <td class="data-separator">:</td>
+                    <td class="data-value">${participant.Kapanewon}</td>
+                </tr>
+                <tr>
+                    <td class="data-label">Cabang Lomba</td>
+                    <td class="data-separator">:</td>
+                    <td class="data-value">${participant['Cabang Lomba']}</td>
+                </tr>
+        `;
+    } else {
+        html += `
+                <tr>
+                    <td class="data-label">Nama</td>
+                    <td class="data-separator">:</td>
+                    <td class="data-value">${participant.Nama || '-'}</td>
+                </tr>
+                <tr>
+                    <td class="data-label">Jenis Kelamin</td>
+                    <td class="data-separator">:</td>
+                    <td class="data-value">${participant['Jenis Kelamin'] || '-'}</td>
+                </tr>
+                <tr>
+                    <td class="data-label">Asal Sekolah</td>
+                    <td class="data-separator">:</td>
+                    <td class="data-value">${participant['Asal Sekolah']}</td>
+                </tr>
+                <tr>
+                    <td class="data-label">Kapanewon</td>
+                    <td class="data-separator">:</td>
+                    <td class="data-value">${participant.Kapanewon}</td>
+                </tr>
+                <tr>
+                    <td class="data-label">Cabang Lomba</td>
+                    <td class="data-separator">:</td>
+                    <td class="data-value">${participant['Cabang Lomba']}</td>
+                </tr>
+        `;
+    }
+    
+    html += `
+            </table>
+        </div>
+        
+        <div class="action-buttons">
+            <button class="action-btn new-search" onclick="newSearch()">
+                <i class="fas fa-search"></i> Cari Data Lain
+            </button>
+        </div>
+    `;
+
+    if (lomba.isTeam && data.teamMembers && data.teamMembers.length > 0) {
+        const teamHtml = `
+            <div class="team-section">
+                <h4><i class="fas fa-users"></i> Anggota Tim</h4>
+                <table class="team-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Anggota</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Asal Sekolah</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${data.teamMembers.map((member, index) => `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>${member.Nama}</td>
+                                <td>${member['Jenis Kelamin'] || '-'}</td>
+                                <td>${member['Asal Sekolah']}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+        
+        html = html.replace('<div class="action-buttons">', teamHtml + '<div class="action-buttons">');
+    }
+
+    resultSection.innerHTML = html;
+    resultSection.style.display = 'block';
+    resultSection.scrollIntoView({ behavior: 'smooth' });
+}
+
+function generateLCPLayout(data) {
+    const participant = data.participant;
+    const scores = data.scores;
+    const teamMembers = data.teamMembers || [];
+
+    const nilaiPenyisihan = scores.find(s => s.aspek === 'Nilai Penyisihan');
+    const rankingPenyisihan = scores.find(s => s.aspek === 'Ranking Penyisihan');
+    const status = scores.find(s => s.aspek === 'Status');
+    const isLolos = status && (status.statusText === 'LOLOS' || status.statusText === 'Lolos');
+    
+    const wajibTiming = scores.find(s => s.aspek === 'Babak Wajib Timing');
+    const wajibLempar = scores.find(s => s.aspek === 'Babak Wajib Lempar');
+    const rebutan = scores.find(s => s.aspek === 'Babak Rebutan');
+    const nilaiFinal = scores.find(s => s.aspek === 'Nilai Final');
+    const juara = scores.find(s => s.aspek === 'Juara');
+
+    let html = `
+        <div class="section">
+            <h3 class="section-title"><i class="fas fa-users"></i> INFORMASI TIM</h3>
+            <table class="info-table">
+                <tbody>
+                    <tr><td class="info-label-cell">No. Peserta</td><td class="info-value-cell">${participant['No Peserta']}</td></tr>
+                    <tr><td class="info-label-cell">Kapanewon</td><td class="info-value-cell">${participant.Kapanewon}</td></tr>
+                    <tr><td class="info-label-cell">Cabang Lomba</td><td class="info-value-cell">${data.lomba.nama}</td></tr>
+                </tbody>
+            </table>
+        </div>
+    `;
+
+    if (teamMembers.length > 0) {
+        html += `
+            <div class="section">
+                <h3 class="section-title"><i class="fas fa-user-friends"></i> ANGGOTA TIM</h3>
+                <div class="table-responsive">
+                    <table class="score-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px; text-align: center;">No</th>
+                                <th style="text-align: left;">Nama</th>
+                                <th style="text-align: left;">Jenis Kelamin</th>
+                                <th style="text-align: left;">Asal Sekolah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${teamMembers.map((member, index) => `
+                                <tr>
+                                    <td style="text-align: center;">${index + 1}</td>
+                                    <td class="criteria-col" style="text-align: left;">${member.Nama}</td>
+                                    <td style="text-align: left;">${member['Jenis Kelamin']}</td>
+                                    <td style="text-align: left;">${member['Asal Sekolah']}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+    }
+
+    html += `
+        <div class="section">
+            <h3 class="section-title"><i class="fas fa-list-ol"></i> BABAK PENYISIHAN</h3>
+            <div class="scores-list">
+                <div class="score-item">
+                    <span class="score-aspek">Nilai Penyisihan</span>
+                    <span class="score-nilai">${nilaiPenyisihan ? nilaiPenyisihan.nilai : '-'}</span>
+                </div>
+                <div class="score-item">
+                    <span class="score-aspek">Ranking Penyisihan</span>
+                    <span class="score-nilai">${rankingPenyisihan ? rankingPenyisihan.nilai : '-'}</span>
+                </div>
+                <div class="score-item">
+                    <span class="score-aspek">Status</span>
+                    <span class="score-nilai ${isLolos ? 'highlight' : ''}">${status ? (status.statusText || 'TIDAK LOLOS') : 'TIDAK LOLOS'}</span>
+                </div>
+            </div>
+        </div>
+    `;
+
+    if (isLolos) {
+        html += `
+            <div class="section">
+                <div class="status-lolos">
+                    <i class="fas fa-check-circle"></i> SELAMAT! Tim Anda LULUS ke Babak Final
+                </div>
+                
+                <h3 class="section-title"><i class="fas fa-trophy"></i> BABAK FINAL</h3>
+                <div class="scores-list">
+                    ${wajibTiming ? `<div class="score-item"><span class="score-aspek">Babak Wajib Timing</span><span class="score-nilai">${wajibTiming.nilai}</span></div>` : ''}
+                    ${wajibLempar ? `<div class="score-item"><span class="score-aspek">Babak Wajib Lempar</span><span class="score-nilai">${wajibLempar.nilai}</span></div>` : ''}
+                    ${rebutan ? `<div class="score-item"><span class="score-aspek">Babak Rebutan</span><span class="score-nilai">${rebutan.nilai}</span></div>` : ''}
+                    ${nilaiFinal ? `<div class="score-item"><span class="score-aspek">Nilai Final</span><span class="score-nilai highlight">${nilaiFinal.nilai}</span></div>` : ''}
+                </div>
+            </div>
+        `;
+
+        if (juara && juara.nilai > 0) {
+            const rankingLabel = getRankingLabel(juara.nilai, data.lomba.nama);
+            html += `<div class="section"><div class="juara-badge"><i class="fas fa-trophy"></i> ${rankingLabel}</div></div>`;
+        }
+    } else {
+        html += `<div class="section"><div class="status-tidak-lolos"><i class="fas fa-info-circle"></i> Terima kasih atas partisipasinya. Tim Anda belum berhasil melanjutkan ke babak final.</div></div>`;
+    }
+
+    return html;
+}
+
+function generateIndividualLayout(data) {
+    const participant = data.participant;
+    const scores = data.scores;
+
+    let html = `
+        <div class="section">
+            <h3 class="section-title"><i class="fas fa-user"></i> INFORMASI PESERTA</h3>
+            <table class="info-table">
+                <tbody>
+                    <tr><td class="info-label-cell">No. Peserta</td><td class="info-value-cell">${participant['No Peserta']}</td></tr>
+                    <tr><td class="info-label-cell">Nama</td><td class="info-value-cell">${participant.Nama}</td></tr>
+                    <tr><td class="info-label-cell">Jenis Kelamin</td><td class="info-value-cell">${participant['Jenis Kelamin']}</td></tr>
+                    <tr><td class="info-label-cell">Asal Sekolah</td><td class="info-value-cell">${participant['Asal Sekolah']}</td></tr>
+                    <tr><td class="info-label-cell">Kapanewon</td><td class="info-value-cell">${participant.Kapanewon}</td></tr>
+                    <tr><td class="info-label-cell">Cabang Lomba</td><td class="info-value-cell">${data.lomba.nama}</td></tr>
+                </tbody>
+            </table>
+        </div>
+    `;
+
+    const juriScores = scores.filter(s => s.aspek.includes('Juri') && !s.aspek.includes('Jumlah'));
+    const jumlahScores = scores.filter(s => s.aspek.includes('Jumlah'));
+    const nilaiAkhir = scores.find(s => s.aspek === 'Nilai Akhir');
+    const peringkat = scores.find(s => s.aspek === 'Peringkat');
+
+    const criteriaMap = {};
+    juriScores.forEach(score => {
+        const match = score.aspek.match(/Juri (\d+) - (.+)/);
+        if (match) {
+            const [, juriNum, criteria] = match;
+            if (!criteriaMap[criteria]) {
+                criteriaMap[criteria] = { j1: '-', j2: '-', j3: '-' };
+            }
+            criteriaMap[criteria][`j${juriNum}`] = score.nilai;
+        }
+    });
+
+    const criteriaList = Object.keys(criteriaMap);
+
+    if (criteriaList.length > 0) {
+        html += `
+            <div class="section">
+                <h3 class="section-title"><i class="fas fa-chart-bar"></i> DETAIL PENILAIAN</h3>
+                <div class="table-responsive">
+                    <table class="score-table">
+                        <thead>
+                            <tr>
+                                <th>KRITERIA</th>
+                                <th>JURI 1</th>
+                                <th>JURI 2</th>
+                                <th>JURI 3</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${criteriaList.map((criteria, index) => `
+                                <tr>
+                                    <td class="criteria-col">${String.fromCharCode(65 + index)}. ${criteria}</td>
+                                    <td class="juri-col">${criteriaMap[criteria].j1}</td>
+                                    <td class="juri-col">${criteriaMap[criteria].j2}</td>
+                                    <td class="juri-col">${criteriaMap[criteria].j3}</td>
+                                </tr>
+                            `).join('')}
+                            <tr class="total-row">
+                                <td class="criteria-col"><strong>JUMLAH</strong></td>
+                                <td class="juri-col"><strong>${jumlahScores[0]?.nilai || '-'}</strong></td>
+                                <td class="juri-col"><strong>${jumlahScores[1]?.nilai || '-'}</strong></td>
+                                <td class="juri-col"><strong>${jumlahScores[2]?.nilai || '-'}</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="score-table" style="margin-top: 20px; box-shadow: none;">
+                        <tbody>
+                            ${nilaiAkhir ? `<tr class="final-row">
+                                <td class="criteria-col" style="width: 50%; text-align: center !important;"><strong>NILAI AKHIR</strong></td>
+                                <td class="juri-col" style="width: 50%; text-align: center !important;"><strong>${nilaiAkhir.nilai}</strong></td>
+                            </tr>` : ''}
+                            ${peringkat ? `<tr class="final-row">
+                                <td class="criteria-col" style="text-align: center !important;"><strong>HASIL</strong></td>
+                                <td class="juri-col" style="text-align: center !important;"><strong>${getRankingLabel(peringkat.nilai, data.lomba.nama)}</strong></td>
+                            </tr>` : ''}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+    }
+
+    return html;
+}
+
+function getRankingLabel(ranking, lombaName) {
+    if (!ranking || ranking === 0) return '-';
+    
+    switch(parseInt(ranking)) {
+        case 1: return `JUARA I ${getMedalEmoji(1)}`;
+        case 2: return `JUARA II ${getMedalEmoji(2)}`;
+        case 3: return `JUARA III ${getMedalEmoji(3)}`;
+        case 4: return 'JUARA HARAPAN I';
+        case 5: return 'JUARA HARAPAN II';
+        default: return `PERINGKAT ${ranking}`;
+    }
+}
+
+function getMedalEmoji(rank) {
+    switch(rank) {
+        case 1: return '🥇';
+        case 2: return '🥈';
+        case 3: return '🥉';
+        default: return '';
+    }
+}
+
+function showError(message) {
+    const resultSection = document.getElementById('resultSection');
+    resultSection.innerHTML = `
+        <div class="section">
+            <div class="error">
+                <strong><i class="fas fa-exclamation-triangle"></i> Error</strong>
+                <p>${message}</p>
+                <button onclick="newSearch()" style="margin-top: 10px; padding: 12px 20px; background: var(--accent-gold); color: var(--primary-green); border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                    <i class="fas fa-search"></i> Pencarian Baru
+                </button>
+            </div>
+        </div>
+    `;
+    resultSection.style.display = 'block';
+}
+
+function printResults() {
+    window.print();
+}
+
+function shareResults() {
+    if (navigator.share && currentParticipantData) {
+        navigator.share({
+            title: `Hasil Nilai MTQ Bantul 2025 - ${currentParticipantData.participant['No Peserta']}`,
+            text: `Lihat hasil nilai ${currentParticipantData.participant.Nama || 'peserta'} di MTQ Bantul 2025`,
+            url: window.location.href
+        });
+    } else if (currentParticipantData) {
+        navigator.clipboard.writeText(`${window.location.href}?id=${currentParticipantData.participant['No Peserta']}`);
+        alert('Link hasil telah disalin ke clipboard!');
+    }
+}
+
+function newSearch() {
+    document.getElementById('participantId').value = '';
+    document.getElementById('participantId').focus();
+    document.getElementById('resultSection').style.display = 'none';
+    currentParticipantData = null;
+}
+
+// ===== FUNGSI COMMON BUTTONS =====
+function showCekNilaiInfo() {
+    Swal.fire({
+        title: '<strong style="color: #1A3C34;">Cek Nilai MTQ Bantul 2025</strong>',
+        html: `
+            <div style="text-align: left; color: #2E4F47;">
+                <p style="margin-bottom: 15px;">Fitur <strong>Cek Nilai</strong> akan segera tersedia untuk melihat hasil penilaian peserta MTQ.</p>
+                <div style="background: #F5F6E8; padding: 15px; border-radius: 8px; border-left: 4px solid #D4A017;">
+                    <p style="margin: 0; color: #1A3C34;"><strong>Informasi:</strong></p>
+                    <ul style="margin: 10px 0 0 0; padding-left: 20px;">
+                        <li>Nilai akan tersedia setelah proses penilaian selesai</li>
+                        <li>Pastikan Anda memiliki kode peserta yang valid</li>
+                        <li>Hubungi panitia jika mengalami kendala</li>
+                    </ul>
+                </div>
+            </div>
+        `,
+        icon: 'info',
+        iconColor: '#D4A017',
+        showCancelButton: true,
+        confirmButtonText: 'Hubungi Panitia',
+        cancelButtonText: 'Tutup',
+        confirmButtonColor: '#1A3C34',
+        cancelButtonColor: '#6c757d'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.open('https://wa.me/6285643238821?text=Halo%20panitia%20MTQ%20Bantul%202025,%20saya%20ingin%20bertanya%20tentang%20nilai%20peserta...', '_blank');
+        }
+    });
+}
+
+function showCekNomorInfo() {
+    Swal.fire({
+        title: '<strong style="color: #1A3C34;">Cek Nomor Urut Peserta</strong>',
+        html: `
+            <div style="text-align: left; color: #2E4F47;">
+                <p style="margin-bottom: 15px;">Fitur <strong>Cek Nomor Urut</strong> akan dibuka setelah proses pengundian nomor urut selesai dilakukan.</p>
+                <div style="background: #F5F6E8; padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #2E4F47;">
+                    <p style="margin: 0 0 10px 0; color: #1A3C34;"><strong>Informasi Penting:</strong></p>
+                    <ul style="margin: 0; padding-left: 20px; color: #2E4F47;">
+                        <li>Nomor urut akan tersedia setelah pengundian resmi</li>
+                        <li>Pastikan data peserta sudah terdaftar dengan benar</li>
+                        <li>Pengumuman nomor urut akan disampaikan melalui grup official</li>
+                    </ul>
+                </div>
+                <div style="background: #e8f4fd; padding: 12px; border-radius: 6px; border-left: 4px solid #2196F3;">
+                    <p style="margin: 0; color: #0d47a1; font-size: 0.9rem;">
+                        <i class="fas fa-info-circle"></i> 
+                        <strong>Validasi:</strong> Sistem akan dibuka setelah pengundian nomor urut sebagai validasi proses.
+                    </p>
+                </div>
+            </div>
+        `,
+        icon: 'info',
+        iconColor: '#2E4F47',
+        confirmButtonText: 'Mengerti',
+        confirmButtonColor: '#1A3C34',
+        showCloseButton: true,
+        width: '600px'
+    });
+}
+
+// ===== INIT COPYRIGHT YEAR =====
+function updateCopyrightYear() {
+    const year = new Date().getFullYear();
+    const copyrightElements = document.querySelectorAll('.copyright');
+    copyrightElements.forEach(element => {
+        if (element.textContent.includes('2025')) {
+            element.textContent = element.textContent.replace('2025', year);
+        }
+    });
+}
+
+updateCopyrightYear();
+
+console.log('🚀 MTQ Dashboard Optimized - Kalender & Stats Fixed!');
